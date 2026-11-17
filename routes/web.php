@@ -90,6 +90,14 @@ Route::get('/interviews', function () {
     return view('interviews.calendar');
 })->middleware(['auth', 'verified'])->name('interviews');
 
+// Public vacancy and company pages (TraKerja 2.0, Fase 5)
+Route::get('/loker', [\App\Http\Controllers\PublicJobsController::class, 'index'])->name('loker.index');
+Route::get('/loker/{slug}', [\App\Http\Controllers\PublicJobsController::class, 'show'])
+    ->where('slug', '[a-z0-9-]*[0-9a-z]{26}')->name('loker.show');
+Route::get('/perusahaan/{slug}', [\App\Http\Controllers\PublicJobsController::class, 'company'])
+    ->where('slug', '[a-z0-9-]+')->name('perusahaan.show');
+Route::get('/sitemap-loker.xml', [\App\Http\Controllers\PublicJobsController::class, 'sitemap'])->name('loker.sitemap');
+
 Route::get('/explore', \App\Livewire\ExploreJobs::class)
     ->middleware(['auth', 'verified'])
     ->name('jobs.explore');
@@ -439,6 +447,9 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::view('/operations-center', 'admin.operations-center')->name('operations-center');
     Route::view('/golden-set', 'admin.golden-set')->name('golden-set');
     Route::view('/job-engine', 'admin.job-engine')->name('job-engine');
+    Route::view('/loker', 'admin.vacancies')->name('vacancies');
+    Route::view('/promosi', 'admin.promotions')->name('promotions');
+    Route::get('/promosi/logo/{vacancy}', [\App\Http\Controllers\Admin\PromotionAssetController::class, 'logo'])->name('promotions.logo');
 
     // Monetization control
     Route::get('/monetization', function () {

@@ -111,6 +111,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'notify_goal_reminders',
         'notify_interview_reminders',
         'notify_goal_achieved',
+        'notify_job_alerts',
+        'notify_job_closed',
     ];
 
     /**
@@ -181,6 +183,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             'notify_interview_reminders' => 'boolean',
             'last_activity_at' => 'datetime',
             'notify_goal_achieved' => 'boolean',
+            'notify_job_alerts' => 'boolean',
+            'notify_job_closed' => 'boolean',
         ];
     }
 
@@ -621,6 +625,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         $preference = match ($type) {
             'interview' => 'notify_interview_reminders',
             'goal_achieved' => 'notify_goal_achieved',
+            'job_alerts' => 'notify_job_alerts',
+            'job_closed' => 'notify_job_closed',
             'goal_reminder' => 'notify_goal_reminders',
             default => null,
         };

@@ -1,20 +1,27 @@
 <?php
 
 return [
-    'meta_title' => 'TraKerja',
-    'meta_description' => 'Satukan lamaran, jadwal seleksi, CV, dan persiapan karier dalam satu ruang kerja. Siapkan langkah berikutnya bareng TraKerja.',
-    'nav' => ['product' => 'Produk', 'workflow' => 'Cerita kami', 'plans' => 'Paket', 'faq' => 'FAQ', 'support' => 'Bantuan', 'login' => 'Masuk', 'start' => 'Buat ruang kerjamu', 'dashboard' => 'Buka ruang kerja', 'menu' => 'Menu', 'close' => 'Tutup menu', 'theme' => 'Ganti tampilan', 'skip' => 'Langsung ke konten'],
+    'meta_title' => 'TraKerja · Semua loker. Satu tempat. Sampai diterima.',
+    'meta_description' => 'Cari lowongan kerja di Indonesia dari berbagai platform dan situs karier perusahaan, dicek berkala apakah masih buka. Lamar di sumber aslinya, lalu pantau lamaran dan CV-mu di TraKerja.',
+    'nav' => ['jobs' => 'Loker', 'product' => 'Produk', 'workflow' => 'Cerita kami', 'plans' => 'Paket', 'faq' => 'FAQ', 'support' => 'Bantuan', 'login' => 'Masuk', 'start' => 'Buat ruang kerjamu', 'dashboard' => 'Cari loker', 'menu' => 'Menu', 'close' => 'Tutup menu', 'theme' => 'Ganti tampilan', 'skip' => 'Langsung ke konten'],
     'hero' => [
-        'line_one' => 'Langkah kariermu.', 'line_two' => 'Lebih terarah.',
-        'intro' => 'Lamaran, wawancara, sampai CV yang lebih siap. Satukan langkah berikutnya di satu ruang kerja.',
-        'primary' => 'Mulai ruang kerjaku', 'secondary' => 'Lihat cara kerjanya',
-        'note' => 'Mulai gratis. Lanjut sesuai ritmemu.', 'portrait_alt' => 'Profesional tersenyum mengenakan kaos hitam',
-        'card_label' => 'Langkah berikutnya', 'card_title' => 'Jadwal wawancara, sudah dicatat.', 'card_detail' => 'Waktu, tautan, dan persiapan dalam satu tempat.',
+        'line_one' => 'Semua loker. Satu tempat.', 'line_two' => 'Sampai diterima.',
+        'intro' => 'Lowongan dari berbagai platform dan situs karier perusahaan, dicek berkala apakah masih buka. Lamar di sumber aslinya, lalu pantau lamaran, jadwal, dan CV-mu di satu ruang kerja.',
+        'primary' => 'Mulai cari loker', 'secondary' => 'Lihat cara kerjanya',
+        'note' => 'Gratis untuk mulai. Kamu selalu melamar di sumber aslinya.', 'portrait_alt' => 'Profesional tersenyum mengenakan kaos hitam',
+        'card_label' => 'Masih buka', 'card_title' => 'Dicek ulang secara berkala.', 'card_detail' => 'Loker yang sudah tutup tidak ditampilkan sebagai buka.',
         'cv_label' => 'Siap saat kamu butuh', 'cv_title' => 'Ceritamu. CV yang lebih rapi.',
         'nara_label' => 'Nara', 'nara_detail' => 'Yuk, siapkan jawaban berikutnya.',
         'caption' => 'Lebih tertata. Lebih siap melangkah.', 'illustration' => 'Ilustrasi produk',
     ],
     'sources' => ['title' => 'Dari berbagai platform, catat di satu tempat.', 'label' => 'Sumber yang bisa kamu catat di tracker lamaran', 'pause' => 'Jeda logo', 'resume' => 'Jalankan logo'],
+    'jobs' => [
+        'eyebrow' => 'Loker hari ini', 'title' => 'Masih buka.\nDari banyak sumber.',
+        'intro' => 'Lowongan dari platform loker dan situs karier perusahaan. Yang sama digabung jadi satu, yang sudah tutup tidak tampil sebagai buka.',
+        'open' => 'Loker masih buka', 'companies' => 'Perusahaan', 'sources' => 'Sumber aktif', 'checked' => 'Terakhir dicek',
+        'still_open' => 'Masih buka', 'no_location' => 'Lokasi belum disebut',
+        'action' => 'Lihat semua loker', 'note' => 'Lamar selalu di sumber aslinya. TraKerja tidak memungut biaya dari pelamar.',
+    ],
     'demo' => [
         'eyebrow' => 'Biar lebih jelas', 'title' => 'Tahu progresmu.\nSiap langkah berikutnya.',
         'intro' => 'Ganti tampilan dan coba demo singkatnya. Ruang kerja aslimu dimulai setelah kamu membuat akun.',
@@ -66,7 +73,7 @@ return [
     'faq' => [
         'title' => 'Mungkin ini\nyang kamu tanyakan.', 'contact' => 'Masih ada pertanyaan?', 'help' => 'Tanya kami',
         'items' => [
-            ['q' => 'TraKerja itu portal lowongan?', 'a' => 'TraKerja adalah ruang kerja untuk mengelola lamaran dan persiapan kariermu. Kamu tetap melamar lewat perusahaan atau portal lowongan aslinya.'],
+            ['q' => 'TraKerja itu portal lowongan?', 'a' => 'TraKerja mengumpulkan lowongan dari platform dan situs karier perusahaan yang mengizinkannya, menggabungkan duplikat, dan mengecek berkala apakah masih buka. Kamu tetap melamar lewat sumber aslinya, lalu bisa memantau lamaranmu di TraKerja.'],
             ['q' => 'Bisa mulai gratis?', 'a' => 'Bisa. Buat akun untuk mulai. Batas penggunaan dan pilihan upgrade terbaru ada di tab Paket & Kredit pada profilmu.'],
             ['q' => 'Bisa pindahkan catatan lamaran yang lama?', 'a' => 'Kamu bisa menambah manual atau memakai impor CSV sesuai akses akun. Unduh templatenya dulu supaya kolom datanya sesuai.'],
             ['q' => 'AI menjamin CV-ku lolos seleksi?', 'a' => 'Tidak. AI membantu meninjau dan menyiapkan konten, tetapi tidak menjamin hasil rekrutmen. Cocokkan setiap saran dengan pengalamanmu dan kebutuhan posisi.'],

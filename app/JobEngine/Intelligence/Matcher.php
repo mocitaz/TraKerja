@@ -125,6 +125,14 @@ class Matcher
             return true;
         }
 
+        // Level numbers: "Engineer I" vs "Engineer II", "Staff 1" vs "Staff 2" are different roles.
+        $level = fn (string $t) => preg_match('/\b(I{1,3}|IV|V|[1-5])\b(?!\s*(?:tahun|years?|yrs?|bulan|months?)\b)/u', $t, $m) ? $m[1] : null;
+        $levelA = $level($title);
+        $levelB = $level($candidate->title);
+        if ($levelA !== $levelB && ($levelA !== null || $levelB !== null)) {
+            return true;
+        }
+
         // Place qualifiers: "( ... )" or " - ..." segments, plus any region named in the title.
         $places = fn (string $t) => array_values(array_unique(array_merge(
             $this->regions->mentioned($t),

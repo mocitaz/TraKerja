@@ -27,6 +27,9 @@ return [
     // Source-health alerts to the admin Telegram channel. Off by default; otherwise only logged.
     'telegram_alerts' => (bool) env('JOB_ENGINE_TELEGRAM_ALERTS', false),
 
+    // New vacancies flow straight into AI enrichment and embedding (queue "ai"). On with the schedule by default.
+    'auto_pipeline' => (bool) env('JOB_ENGINE_AUTO_PIPELINE', env('JOB_ENGINE_SCHEDULE_ENABLED', false)),
+
     // Verifier: how many listings to check per run.
     'verify_budget' => (int) env('JOB_ENGINE_VERIFY_BUDGET', 300),
 
@@ -81,7 +84,7 @@ return [
             'endpoint' => 'https://api.lever.co/v0/postings/{slug}?mode=json',
             'robots' => 'allowed (crawl-delay 1)',
             // Ninja Van is regional; keep Indonesian locations only.
-            'boards' => ['ninjavan'],
+            'boards' => ['ninjavan', 'lalamove'],
             'location_filter' => '/indonesia|jakarta|surabaya|bandung|medan|bekasi|tangerang|semarang|makassar/i',
         ],
 
@@ -93,7 +96,7 @@ return [
             'endpoint' => 'https://apply.workable.com/api/v1/widget/accounts/{account}?details=true',
             'robots' => 'public widget API',
             // Verified 2026-11-17: Ajaib (60 jobs in Indonesia), Funding Societies | Modalku (18).
-            'boards' => ['ajaib', 'fundingsocieties'],
+            'boards' => ['ajaib', 'fundingsocieties', 'amartha'],
         ],
 
         'smartrecruiters' => [
@@ -177,8 +180,10 @@ return [
             'region' => 'id',
             'enabled' => false,
             'robots' => '/jobs/ and /karir/ disallowed; /opportunities/ allowed',
-            'notes' => 'Not collected yet. The internal gateway API used by the asep bot requires spoofed '
-                .'Origin/Referer headers and is not a public API. Needs a compliant discovery path first.',
+            'notes' => 'Not collected. Compliant path found 2026-11-17: /opportunities/{id} pages are allowed, listed in '
+                .'sitemap.xml (165 URLs) and carry __NEXT_DATA__ with company, location, posted_at and is_expired. '
+                .'Blocked on terms: section 8.5 forbids reproducing or commercial use of content without written permission. '
+                .'Ask Karir.com for permission or a feed before enabling. (The asep gateway API needs spoofed headers: never.)',
         ],
 
         'remoteok' => [
@@ -204,7 +209,8 @@ return [
             'tier' => 'D',
             'kind' => 'html',
             'enabled' => false,
-            'notes' => 'robots.txt disallows the job search paths; sitemap returned nothing to our bot.',
+            'notes' => 'robots.txt now allows /opportunities/jobs/ detail pages, but glints.com answers our bot with 403 '
+                .'(2026-11-17). Active blocking is a refusal: no workaround. Partnership only.',
         ],
 
         // ---------------------------------------------------------- Indonesian survey, 2026-11-17
@@ -227,8 +233,9 @@ return [
             'enabled' => false,
             'discovery' => 'https://www.kitalulus.com/sitemap/sitemap-jobs/job-detail-1.xml',
             'robots' => 'generic bots allowed; GPTBot disallowed',
-            'notes' => 'Sitemaps list job-detail URLs (1,000 per file). No JSON-LD: data sits in Next.js RSC chunks, '
-                .'so it needs an HTML parser with AI fallback (Fase 3).',
+            'notes' => 'Sitemaps list job-detail URLs (1,000 per file). No JSON-LD, but the RSC payload has structured fields '
+                .'(company, city, province, education, googleType, work site, status). Blocked on terms: users may not '
+                .'reproduce, copy, distribute or use content commercially without written permission. Ask for permission first.',
         ],
 
         'karirhub' => [

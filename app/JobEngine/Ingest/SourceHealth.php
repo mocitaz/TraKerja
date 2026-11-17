@@ -16,6 +16,12 @@ class SourceHealth
     public function afterRun(JobSource $source, CrawlRun $run, int $limit): void
     {
         [$health, $reason] = $this->evaluate($source, $run);
+        // Self-healing: three failed runs in a row pause the source for 6 hours instead of retrying every 2.
+        $lastThree = CrawlRun::where('job_source_id', $source->id)->where('run_type', 'discover')->latest('id')->limit(3)->pluck('status');
+        $paused = $health === 'failing' && $lastThree->count() === 3 && $lastThree->every(fn ($s) => $s === 'failed');
+        if ($paused) {
+            [$health, $reason] = ['paused', 'Dijeda otomatis 6 jam setelah 3 run gagal berturut-turut. '.$reason];
+        }
         $interval = $this->nextInterval($source, $run, $health);
         $previous = $source->health;
 
@@ -23,7 +29,7 @@ class SourceHealth
             'health' => $health,
             'health_reason' => $reason,
             'discovery_interval_minutes' => $interval,
-            'next_discovery_at' => now()->addMinutes($health === 'failing' ? 120 : $interval),
+            'next_discovery_at' => now()->addMinutes(match ($health) { 'failing' => 120, 'paused' => 360, default => $interval }),
             'last_success_at' => $run->status === 'failed' ? $source->last_success_at : now(),
         ]);
 

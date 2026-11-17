@@ -15,7 +15,7 @@ class VerifyEmailController extends Controller
         $verification->verify($request->user(), $request->string('otp')->toString());
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
+        return redirect()->intended(\App\Support\WorkspaceHome::path().'?verified=1');
     }
 
     public function legacy(Request $request): RedirectResponse

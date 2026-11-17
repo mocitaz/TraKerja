@@ -17,7 +17,11 @@ class RegionResolver
     {
         $this->load();
 
-        foreach (array_filter([$city, $locationText ? explode(',', $locationText)[0] : null]) as $candidate) {
+        // Most specific first: an explicit "X Regency" / "Kabupaten X" / "X City" segment, then the city
+        // field, then every other segment ("Omdo, Pacitan, Indonesia": the village is not a region).
+        $segments = $locationText ? array_values(array_filter(array_map('trim', explode(',', $locationText)))) : [];
+        $explicit = array_filter($segments, fn ($s) => preg_match('/\b(regency|city|kabupaten|kab\.?|kota)\b/iu', $s));
+        foreach (array_unique(array_filter([...$explicit, $city, ...$segments])) as $candidate) {
             $key = self::key($candidate);
             if (isset($this->cities[$key])) {
                 return $this->cities[$key];
@@ -72,6 +76,12 @@ class RegionResolver
     public static function key(string $value): string
     {
         $value = mb_strtolower(trim($value));
+        // English forms used by international ATS boards: "Jember Regency", "Kupang City", "South Jakarta".
+        $value = preg_replace('/^(south|west|east|north|central)\s+jakarta(\s+city)?$/u', 'jakarta $1', $value);
+        $value = strtr($value, ['jakarta south' => 'jakarta selatan', 'jakarta west' => 'jakarta barat', 'jakarta east' => 'jakarta timur', 'jakarta north' => 'jakarta utara', 'jakarta central' => 'jakarta pusat']);
+        $value = preg_replace('/^(.+?)\s+regency$/u', 'kab $1', $value);
+        $value = preg_replace('/^(.+?)\s+city$/u', '$1', $value);
+        $value = preg_replace('/^special (capital )?region of\s+/u', '', $value);
         $value = preg_replace('/^(kota administrasi|kota adm\.?|kotamadya)\s+/u', '', $value);
         $value = preg_replace('/^(kab\.|kab|kabupaten)\s+/u', 'kab ', $value);
         $value = preg_replace('/^(kota)\s+/u', '', $value);

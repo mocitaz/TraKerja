@@ -220,5 +220,113 @@
     "site": "https://www.urbanhire.com",
     "file": null,
     "status": "needs_verified_asset"
+  },
+  "Himalayas": {
+    "site": "https://himalayas.app",
+    "source": "https://himalayas.app/apple-icon.png?apple-icon.25onb6977ckzx.png",
+    "file": "himalayas.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Jobicy": {
+    "site": "https://jobicy.com",
+    "source": "https://jobicy.com/data/elements/img/icon-default.192.png",
+    "file": "jobicy.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "We Work Remotely": {
+    "site": "https://weworkremotely.com",
+    "source": "https://weworkremotely.com/apple-icon-180x180.png",
+    "file": "weworkremotely.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Greenhouse": {
+    "site": "https://www.greenhouse.com",
+    "source": "https://cdn.prod.website-files.com/6668a687e71e2722fccb8357/679a83f9b21b5caab0c682c9_GH-logo-web.png",
+    "file": "greenhouse.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Lever": {
+    "site": "https://www.lever.co",
+    "source": "https://www.lever.co/images/favicon-lever.png",
+    "file": "lever.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Workable": {
+    "site": "https://www.workable.com",
+    "source": "https://www.workable.com/static/apple-touch-icon.png",
+    "file": "workable.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Ashby": {
+    "site": "https://www.ashbyhq.com",
+    "source": "https://www.ashbyhq.com/icon.png",
+    "file": "ashby.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "SmartRecruiters": {
+    "site": "https://www.smartrecruiters.com",
+    "source": "https://www.smartrecruiters.com/wp-content/uploads/cropped-web-app-manifest-192x192-1-180x180.png",
+    "file": "smartrecruiters.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Careerjet": {
+    "site": "https://www.careerjet.co.id",
+    "source": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://careerjet.co.id&size=128",
+    "file": "careerjet.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Jooble": {
+    "site": "https://id.jooble.org",
+    "source": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://jooble.org&size=128",
+    "file": "jooble.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "RemoteOK": {
+    "site": "https://remoteok.com",
+    "source": "https://remoteok.com/assets/apple-icon-180x180.png?2",
+    "file": "remoteok.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "Remotive": {
+    "site": "https://remotive.com",
+    "source": "https://remotive.com/remotive_website_layout/static/src/img/apple-touch-icon.png",
+    "file": "remotive.png",
+    "size": [
+      128,
+      128
+    ]
   }
 }

@@ -73,6 +73,17 @@ class JobIntelligenceTest extends TestCase
         $this->assertSame(2, Vacancy::count());
     }
 
+    /** Real wrong AI merge (Ajaib, 2026-11-17): "Engineer I" and "Engineer II" are different levels. */
+    public function test_level_numbers_are_never_merged(): void
+    {
+        $matcher = app(\App\JobEngine\Intelligence\Matcher::class);
+        $one = new Vacancy(['title' => 'Senior Backend Engineer I - Money']);
+        $this->assertTrue($matcher->conflicts('Senior Backend Engineer II - Money', null, $one));
+        $this->assertTrue($matcher->conflicts('Staff Admin 2', null, new Vacancy(['title' => 'Staff Admin'])));
+        $this->assertFalse($matcher->conflicts('Senior Backend Engineer I - Money', null, $one));
+        $this->assertFalse($matcher->conflicts('Staff Admin min. 2 tahun', null, new Vacancy(['title' => 'Staff Admin'])));
+    }
+
     /** Real wrong merges seen on 2026-11-17: template postings that differ only by place, language or level. */
     public function test_hard_rules_keep_different_places_languages_and_levels_apart_even_if_the_ai_says_same(): void
     {

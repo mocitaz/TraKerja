@@ -63,6 +63,10 @@ class BuildDataExport implements ShouldQueue, ShouldBeUnique
             $file = null;
             $updated = DataExport::whereKey($export->id)->where('status', 'processing')->update(['status' => 'ready', 'path' => $path, 'row_count' => $count, 'updated_at' => now()]);
             if (!$updated) $disk->delete($path);
+            if ($updated && ($owner = \App\Models\User::find($export->user_id))) {
+                rescue(fn () => $owner->notify(new \App\Notifications\ActivityNotice('export_ready', 'ph-download-simple', 'blue',
+                    'Your export is ready', [], ':count rows. The download link expires in 24 hours.', ['count' => $count], route('data-exports.show', $export->id))), null, false);
+            }
         } catch (\Throwable $exception) {
             if (is_resource($file)) fclose($file);
             $this->failed($exception);

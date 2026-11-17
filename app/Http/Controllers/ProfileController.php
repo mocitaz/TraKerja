@@ -131,6 +131,8 @@ class ProfileController extends Controller
             'notify_goal_reminders' => $request->boolean('notify_goal_reminders'),
             'notify_interview_reminders' => $request->boolean('notify_interview_reminders'),
             'notify_goal_achieved' => $request->boolean('notify_goal_achieved'),
+            'notify_job_alerts' => $request->boolean('notify_job_alerts'),
+            'notify_job_closed' => $request->boolean('notify_job_closed'),
         ]);
 
         ActivityLogger::log(

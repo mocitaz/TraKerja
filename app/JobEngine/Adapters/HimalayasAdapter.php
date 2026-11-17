@@ -23,8 +23,11 @@ class HimalayasAdapter implements SourceAdapter
                 return;
             }
             foreach ($jobs as $job) {
-                $restrictions = implode(', ', (array) ($job['locationRestrictions'] ?? []));
-                if (! RemoteEligibility::openToIndonesia($restrictions)) {
+                // Eligibility is judged on the full list; the shortened label is only for display.
+                $countries = (array) ($job['locationRestrictions'] ?? []);
+                $restrictions = self::locationLabel($countries);
+                $full = implode(', ', array_map(fn ($c) => is_array($c) ? (string) ($c['name'] ?? '') : (string) $c, $countries));
+                if (! RemoteEligibility::openToIndonesia($full)) {
                     continue;
                 }
                 if ($yielded++ >= $limit) {
@@ -38,7 +41,7 @@ class HimalayasAdapter implements SourceAdapter
                     employmentType: Vocabulary::employmentType($job['employmentType'] ?? null),
                     salaryMin: isset($job['minSalary']) ? (int) $job['minSalary'] : null,
                     salaryMax: isset($job['maxSalary']) ? (int) $job['maxSalary'] : null,
-                    salaryCurrency: $job['currency'] ?? null, salaryPeriod: isset($job['minSalary']) ? 'year' : null,
+                    salaryCurrency: $job['currency'] ?? null, salaryPeriod: isset($job['minSalary']) ? (Vocabulary::salaryPeriod($job['salaryPeriod'] ?? null) ?? 'year') : null,
                     datePosted: isset($job['pubDate']) ? date('Y-m-d', (int) $job['pubDate']) : null,
                     validThrough: isset($job['expiryDate']) ? date('Y-m-d', (int) $job['expiryDate']) : null,
                     description: isset($job['description']) ? trim(strip_tags(html_entity_decode($job['description']))) : null,
@@ -47,5 +50,16 @@ class HimalayasAdapter implements SourceAdapter
                 );
             }
         }
+    }
+
+    /** Eligible countries as a short label: long lists (often every country) become "Worldwide". */
+    public static function locationLabel(array $countries): string
+    {
+        $names = array_values(array_filter(array_map(fn ($c) => trim(is_array($c) ? (string) ($c['name'] ?? '') : (string) $c), $countries)));
+
+        return match (true) {
+            $names === [] || count($names) > 20 => 'Worldwide',
+            default => implode(', ', $names),
+        };
     }
 }

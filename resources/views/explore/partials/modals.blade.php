@@ -1,14 +1,5 @@
 @if($previewJob)
-    <div class="explore-dialog-backdrop" x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.previewJobId" data-dialog-close="$wire.closePreview()" aria-labelledby="explore-preview-title" wire:key="explore-preview-{{ $previewJob->id }}">
-        <section class="explore-dialog explore-dialog--detail">
-            <header class="explore-dialog-heading"><div><p class="workspace-eyebrow">{{ __('Role details') }}</p><x-platform-brand :name="$previewJob->source_platform" /></div><button type="button" wire:click="closePreview" class="explore-dialog-close" aria-label="{{ __('Close role details') }}"><i class="ph ph-x" aria-hidden="true"></i></button></header>
-            <div class="explore-dialog-body"><h2 id="explore-preview-title">{{ $previewJob->title }}</h2><p class="explore-preview-company">{{ $previewJob->company_name }}</p><div class="explore-preview-meta"><span>{{ $previewJob->location ?: __('Location not listed') }}</span>@if($previewJob->work_type)<span>{{ $previewJob->work_type }}</span>@endif</div>
-                @if($previewJob->tech_stack)<div class="explore-job-skills">@foreach(array_filter($previewJob->tech_stack, 'is_string') as $tech)<span>{{ $tech }}</span>@endforeach</div>@endif
-                <h3>{{ __('About this role') }}</h3><p class="explore-preview-description">{{ $previewJob->plain_description ?: __('No description was collected. Open the source for requirements and application instructions.') }}</p><div class="explore-dialog-note"><p>{{ __('This is collected source content. Check the original listing for the latest requirements, availability, and application instructions.') }}</p></div>
-            </div>
-            <footer class="explore-dialog-footer"><button type="button" wire:click="toggleBookmark({{ $previewJob->id }})" wire:loading.attr="disabled" wire:target="toggleBookmark({{ $previewJob->id }})" class="workspace-button workspace-button--quiet" @disabled(!$workspaceReady)>{{ in_array($previewJob->id, $bookmarkedIds) ? __('Remove from saved') : __('Save for later') }}</button>@if($previewApplicationId)<a href="{{ route('jobs.show', $previewApplicationId) }}" wire:navigate class="workspace-button workspace-button--quiet">{{ __('In your tracker') }}</a>@else<button type="button" @click="window.TraKerjaDialogs.close($el.closest('[role=dialog]')); $wire.initiateTrackJob({{ $previewJob->id }})" class="workspace-button workspace-button--quiet">{{ __('Already applied?') }}</button>@endif@if($previewJob->source_url)<a href="{{ $previewJob->source_url }}" target="_blank" rel="noopener noreferrer" class="workspace-button workspace-button--primary">{{ __('Open listing') }} <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>@endif</footer>
-        </section>
-    </div>
+    @include('explore.partials.job-drawer')
 @endif
 @if($confirmingTrackJobId)
     <div class="explore-dialog-backdrop" x-data role="dialog" aria-modal="true" tabindex="-1" x-dialog="$wire.confirmingTrackJobId" data-dialog-close="$wire.cancelTrackJob()" aria-labelledby="explore-track-title">

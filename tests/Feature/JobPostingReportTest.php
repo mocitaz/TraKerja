@@ -7,13 +7,15 @@ use App\Models\JobPosting;
 use App\Models\ScraperSource;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
+use Tests\Concerns\MakesVacancies;
 use Tests\TestCase;
 
 class JobPostingReportTest extends TestCase
 {
-    use RefreshDatabase;
+    use MakesVacancies, RefreshDatabase;
 
     private function posting(): JobPosting
     {
@@ -23,24 +25,24 @@ class JobPostingReportTest extends TestCase
 
     public function test_repeated_report_is_counted_once(): void
     {
-        Queue::fake();
-        $posting = $this->posting();
+        $vacancy = $this->makeVacancy(['title' => 'Engineer', 'company' => 'Example']);
         Livewire::actingAs(User::factory()->create())->test(ExploreJobs::class)
-            ->call('reportExpired', $posting->id)->call('reportExpired', $posting->id)->call('reportExpired', $posting->id);
-        $this->assertSame(1, $posting->fresh()->report_dead_count);
-        $this->assertSame('active', $posting->fresh()->status);
+            ->call('reportExpired', $vacancy->id)->call('reportExpired', $vacancy->id)->call('reportExpired', $vacancy->id);
+        $this->assertSame(1, DB::table('vacancy_reports')->where('vacancy_id', $vacancy->id)->count());
+        $this->assertSame('active', $vacancy->fresh()->status);
     }
 
     public function test_distinct_reports_request_verification_without_closing(): void
     {
-        Queue::fake();
-        $posting = $this->posting();
+        $vacancy = $this->makeVacancy(['title' => 'Engineer', 'company' => 'Example']);
+        $vacancy->listings()->update(['next_check_at' => now()->addDays(5)]);
         foreach (range(1, 3) as $i) {
-            Livewire::actingAs(User::factory()->create())->test(ExploreJobs::class)->call('reportExpired', $posting->id);
+            Livewire::actingAs(User::factory()->create())->test(ExploreJobs::class)->call('reportExpired', $vacancy->id);
         }
-        $this->assertSame(3, $posting->fresh()->report_dead_count);
-        $this->assertSame('active', $posting->fresh()->status);
-        Queue::assertPushed(\App\Jobs\VerifyReportedJobPosting::class, 3);
+        $this->assertSame(3, DB::table('vacancy_reports')->where('vacancy_id', $vacancy->id)->count());
+        $this->assertSame('active', $vacancy->fresh()->status);
+        // Reports move the listing to the front of the verifier queue; the verifier decides.
+        $this->assertTrue($vacancy->listings()->first()->next_check_at->lte(now()));
     }
 
     public function test_report_ledger_has_database_unique_constraint(): void

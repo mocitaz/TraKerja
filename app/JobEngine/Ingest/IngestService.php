@@ -119,6 +119,10 @@ class IngestService
             if ($match) {
                 return 'merged';
             }
+            // Pipeline: a brand-new vacancy is enriched (then embedded) as soon as the transaction commits.
+            if ($vacancy->wasRecentlyCreated && config('job_sources.auto_pipeline')) {
+                \App\Jobs\EnrichVacancyJob::dispatch($vacancy->id)->afterCommit();
+            }
 
             return $isNew ? 'new' : 'updated';
         });

@@ -3,18 +3,16 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use App\Models\ScraperSource;
-use App\Models\JobPosting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use Tests\Concerns\MakesVacancies;
 use Tests\TestCase;
 
 class ExploreJobsTest extends TestCase
 {
-    use RefreshDatabase;
+    use MakesVacancies, RefreshDatabase;
 
     protected User $user;
-    protected ScraperSource $source;
 
     protected function setUp(): void
     {
@@ -26,12 +24,7 @@ class ExploreJobsTest extends TestCase
             'payment_status' => User::PAYMENT_STATUS_FREE,
         ]);
 
-        $this->source = ScraperSource::create([
-            'name' => 'LinkedIn Indonesia',
-            'target_domain' => 'linkedin.com',
-            'seed_url' => 'https://linkedin.com/jobs',
-            'selectors_config' => ['title' => '.job-title'],
-        ]);
+        $this->seed(\Database\Seeders\JobEngineReferenceSeeder::class);
         \App\Models\Setting::set('explore_maintenance', false);
     }
 
@@ -95,25 +88,9 @@ class ExploreJobsTest extends TestCase
 
     public function test_user_can_search_active_job_listings()
     {
-        JobPosting::create([
-            'scraper_source_id' => $this->source->id,
-            'title' => 'Laravel Programmer',
-            'company_name' => 'TechCorp',
-            'description' => 'Great job description',
-            'raw_url' => 'https://linkedin.com/jobs/view/100',
-            'unique_hash' => md5('https://linkedin.com/jobs/view/100'),
-            'status' => 'active',
-        ]);
+        $this->makeVacancy(['title' => 'Laravel Programmer', 'company' => 'TechCorp', 'url' => 'https://linkedin.com/jobs/view/100']);
 
-        JobPosting::create([
-            'scraper_source_id' => $this->source->id,
-            'title' => 'Python Coder',
-            'company_name' => 'PyCorp',
-            'description' => 'Great python job description',
-            'raw_url' => 'https://linkedin.com/jobs/view/101',
-            'unique_hash' => md5('https://linkedin.com/jobs/view/101'),
-            'status' => 'active',
-        ]);
+        $this->makeVacancy(['title' => 'Python Coder', 'company' => 'PyCorp', 'url' => 'https://linkedin.com/jobs/view/101']);
 
         Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)
@@ -124,51 +101,21 @@ class ExploreJobsTest extends TestCase
 
     public function test_user_can_filter_by_platform()
     {
-        $jobStreetSource = ScraperSource::create([
-            'name' => 'JobStreet Indonesia',
-            'target_domain' => 'jobstreet.co.id',
-            'seed_url' => 'https://jobstreet.co.id',
-            'selectors_config' => ['title' => 'h1'],
-        ]);
 
-        JobPosting::create([
-            'scraper_source_id' => $this->source->id,
-            'title' => 'LinkedIn Job Listing',
-            'company_name' => 'LinkedIn Inc',
-            'description' => 'Description',
-            'raw_url' => 'https://linkedin.com/jobs/view/200',
-            'unique_hash' => md5('https://linkedin.com/jobs/view/200'),
-            'status' => 'active',
-        ]);
+        $this->makeVacancy(['title' => 'LinkedIn Job Listing', 'company' => 'LinkedIn Inc', 'url' => 'https://linkedin.com/jobs/view/200']);
 
-        JobPosting::create([
-            'scraper_source_id' => $jobStreetSource->id,
-            'title' => 'JobStreet Listing',
-            'company_name' => 'JobStreet Inc',
-            'description' => 'Description',
-            'raw_url' => 'https://jobstreet.co.id/view/201',
-            'unique_hash' => md5('https://jobstreet.co.id/view/201'),
-            'status' => 'active',
-        ]);
+        $this->makeVacancy(['title' => 'JobStreet Listing', 'company' => 'JobStreet Inc', 'url' => 'https://jobstreet.co.id/view/201', 'source' => 'kalibrr']);
 
         Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)
-            ->set('selectedPlatform', 'linkedin.com')
+            ->set('selectedPlatform', 'dealls')
             ->assertSee('LinkedIn Job Listing')
             ->assertDontSee('JobStreet Listing');
     }
 
     public function test_user_reporting_expired_is_deduplicated_without_archiving()
     {
-        $posting = JobPosting::create([
-            'scraper_source_id' => $this->source->id,
-            'title' => 'Vue Developer',
-            'company_name' => 'VueCorp',
-            'description' => 'Sample description',
-            'raw_url' => 'https://linkedin.com/jobs/view/300',
-            'unique_hash' => md5('https://linkedin.com/jobs/view/300'),
-            'status' => 'active',
-        ]);
+        $posting = $this->makeVacancy(['title' => 'Vue Developer', 'company' => 'VueCorp', 'url' => 'https://linkedin.com/jobs/view/300']);
 
         // First report
         Livewire::actingAs($this->user)
@@ -176,7 +123,7 @@ class ExploreJobsTest extends TestCase
             ->call('reportExpired', $posting->id)
             ->assertSee('Report submitted.');
 
-        $this->assertEquals(1, $posting->fresh()->report_dead_count);
+        $this->assertSame(1, \DB::table('vacancy_reports')->where('vacancy_id', $posting->id)->count());
         $this->assertEquals('active', $posting->fresh()->status);
 
         // Repeated reports from the same user add no evidence.
@@ -185,21 +132,13 @@ class ExploreJobsTest extends TestCase
             ->call('reportExpired', $posting->id)
             ->call('reportExpired', $posting->id);
 
-        $this->assertEquals(1, $posting->fresh()->report_dead_count);
+        $this->assertSame(1, \DB::table('vacancy_reports')->where('vacancy_id', $posting->id)->count());
         $this->assertEquals('active', $posting->fresh()->status);
     }
 
     public function test_user_can_save_scraped_job_to_job_tracker()
     {
-        $posting = JobPosting::create([
-            'scraper_source_id' => $this->source->id,
-            'title' => 'Ruby Programmer',
-            'company_name' => 'RubyCorp',
-            'description' => 'Ruby job description',
-            'raw_url' => 'https://linkedin.com/jobs/view/400',
-            'unique_hash' => md5('https://linkedin.com/jobs/view/400'),
-            'status' => 'active',
-        ]);
+        $posting = $this->makeVacancy(['title' => 'Ruby Programmer', 'company' => 'RubyCorp', 'url' => 'https://linkedin.com/jobs/view/400']);
 
         $component = Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)
@@ -220,15 +159,7 @@ class ExploreJobsTest extends TestCase
 
     public function test_user_can_save_scraped_job_via_confirmation_modal()
     {
-        $posting = JobPosting::create([
-            'scraper_source_id' => $this->source->id,
-            'title' => 'Swift Programmer',
-            'company_name' => 'SwiftCorp',
-            'description' => 'Swift job description',
-            'raw_url' => 'https://linkedin.com/jobs/view/401',
-            'unique_hash' => md5('https://linkedin.com/jobs/view/401'),
-            'status' => 'active',
-        ]);
+        $posting = $this->makeVacancy(['title' => 'Swift Programmer', 'company' => 'SwiftCorp', 'url' => 'https://linkedin.com/jobs/view/401']);
 
         $component = \Livewire\Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)
@@ -250,15 +181,7 @@ class ExploreJobsTest extends TestCase
 
     public function test_user_can_report_expired_job_via_confirmation_modal()
     {
-        $posting = JobPosting::create([
-            'scraper_source_id' => $this->source->id,
-            'title' => 'Stale Tech Job',
-            'company_name' => 'StaleCorp',
-            'description' => 'Stale job description',
-            'raw_url' => 'https://linkedin.com/jobs/view/405',
-            'unique_hash' => md5('https://linkedin.com/jobs/view/405'),
-            'status' => 'active',
-        ]);
+        $posting = $this->makeVacancy(['title' => 'Stale Tech Job', 'company' => 'StaleCorp', 'url' => 'https://linkedin.com/jobs/view/405']);
 
         \Livewire\Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)
@@ -267,32 +190,14 @@ class ExploreJobsTest extends TestCase
             ->call('confirmReportExpired')
             ->assertSee('Report submitted.');
 
-        $this->assertEquals(1, $posting->fresh()->report_dead_count);
+        $this->assertSame(1, \DB::table('vacancy_reports')->where('vacancy_id', $posting->id)->count());
     }
 
     public function test_user_can_filter_by_location()
     {
-        JobPosting::create([
-            'scraper_source_id' => $this->source->id,
-            'title' => 'Jakarta Senior Engineer',
-            'company_name' => 'GoCorp',
-            'description' => 'Great job description',
-            'raw_url' => 'https://linkedin.com/jobs/view/500',
-            'unique_hash' => md5('https://linkedin.com/jobs/view/500'),
-            'status' => 'active',
-            'location' => 'Jakarta Selatan',
-        ]);
+        $this->makeVacancy(['title' => 'Jakarta Senior Engineer', 'company' => 'GoCorp', 'url' => 'https://linkedin.com/jobs/view/500', 'region' => 'Jakarta Selatan']);
 
-        JobPosting::create([
-            'scraper_source_id' => $this->source->id,
-            'title' => 'Surabaya Senior Engineer',
-            'company_name' => 'SuraCorp',
-            'description' => 'Great job description',
-            'raw_url' => 'https://linkedin.com/jobs/view/501',
-            'unique_hash' => md5('https://linkedin.com/jobs/view/501'),
-            'status' => 'active',
-            'location' => 'Kota Surabaya',
-        ]);
+        $this->makeVacancy(['title' => 'Surabaya Senior Engineer', 'company' => 'SuraCorp', 'url' => 'https://linkedin.com/jobs/view/501', 'region' => 'Kota Surabaya']);
 
         Livewire::actingAs($this->user)
             ->test(\App\Livewire\ExploreJobs::class)

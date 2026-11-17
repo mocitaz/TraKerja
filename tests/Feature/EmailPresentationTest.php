@@ -52,6 +52,11 @@ class EmailPresentationTest extends TestCase
             'subject' => 'A short workspace update', 'emailContent' => 'Keep moving forward.',
             'buttonText' => 'Open workspace', 'buttonUrl' => 'https://example.test/dashboard',
             'otp' => '123456', 'monthName' => 'October', 'year' => 2026,
+            // Fase 6: job alerts and closed-job notices.
+            'searches' => [['name' => 'Remote design & research', 'total' => 7, 'search_id' => 1, 'jobs' => [
+                ['title' => 'Product Designer', 'company' => 'Example & Co', 'location' => 'Jakarta Selatan', 'salary' => 'Rp8–12 jt/bulan', 'url' => 'https://example.test/loker/product-designer-01m7ksfxkj8nvv2jhhd10m7cd7'],
+            ]]],
+            'title' => 'Product Designer', 'company' => 'Example & Co', 'relation' => 'applied', 'applicationId' => 7,
         ];
     }
 

@@ -18,7 +18,11 @@ class AiGateway
     public const PRICES = [
         'gpt-5-nano' => ['input' => 0.05, 'cached' => 0.005, 'output' => 0.40],
         'gpt-5-mini' => ['input' => 0.25, 'cached' => 0.025, 'output' => 2.00],
+        'text-embedding-3-small' => ['input' => 0.02, 'cached' => 0.02, 'output' => 0.0],
     ];
+
+    /** Embedding size: 256 dimensions keep vectors at 1 KB with little loss for matching. */
+    public const EMBEDDING_DIMENSIONS = 256;
 
     /**
      * @param  array<string, mixed>  $schema  JSON schema for the answer (object)
@@ -82,6 +86,49 @@ class AiGateway
         ]);
 
         return is_array($answer) ? $answer : null;
+    }
+
+    /**
+     * Embeddings for several texts in one request (same budget and ledger as chat calls).
+     *
+     * @param  array<int, string>  $texts
+     * @return array<int, array<int, float>>|null  one vector per text, in order; null when skipped or failed
+     */
+    public function embed(string $purpose, array $texts): ?array
+    {
+        $config = config('services.openai.jobs');
+        $model = $config['embedding_model'];
+        $base = ['purpose' => $purpose, 'model' => $model, 'input_hash' => hash('sha256', $model.'|'.implode("\n\u{1F}", $texts)), 'service_tier' => 'default'];
+
+        if (empty($config['key']) || $texts === []) {
+            return null;
+        }
+        if ($this->spentToday() >= (float) $config['daily_budget_usd']) {
+            AiCall::create($base + ['status' => 'budget_skipped']);
+
+            return null;
+        }
+
+        $started = microtime(true);
+        $response = Http::withToken($config['key'])->timeout(60)->post('https://api.openai.com/v1/embeddings', [
+            'model' => $model, 'input' => array_values($texts), 'dimensions' => self::EMBEDDING_DIMENSIONS,
+        ]);
+        $latency = (int) ((microtime(true) - $started) * 1000);
+
+        if (! $response->successful()) {
+            AiCall::create($base + ['status' => 'error', 'latency_ms' => $latency, 'response' => ['error' => mb_substr($response->body(), 0, 500)]]);
+
+            return null;
+        }
+        $tokens = (int) $response->json('usage.prompt_tokens', 0);
+        $vectors = collect($response->json('data', []))->sortBy('index')->pluck('embedding')->values()->all();
+        AiCall::create($base + [
+            'prompt_tokens' => $tokens, 'cached_tokens' => 0, 'output_tokens' => 0,
+            'cost_usd' => self::cost($model, $tokens, 0, 0, null), 'latency_ms' => $latency,
+            'status' => count($vectors) === count($texts) ? 'ok' : 'invalid_output',
+        ]);
+
+        return count($vectors) === count($texts) ? $vectors : null;
     }
 
     public function spentToday(): float

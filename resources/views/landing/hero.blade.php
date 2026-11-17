@@ -7,7 +7,7 @@
         </h1>
         <p class="lp-hero-intro">{{ __('landing.hero.intro') }}</p>
         <div class="lp-hero-actions">
-            <a href="{{ $workspaceUrl }}" class="lp-button lp-button--dark">{{ auth()->check() ? __('landing.nav.dashboard') : __('landing.hero.primary') }}</a>
+            <a href="{{ auth()->check() ? $workspaceUrl : route('loker.index') }}" class="lp-button lp-button--dark">{{ auth()->check() ? __('landing.nav.dashboard') : __('landing.hero.primary') }}</a>
             <a href="#product" class="lp-button lp-button--outline" data-open-demo>{{ __('landing.hero.secondary') }} @include('landing.icon', ['name' => 'play'])</a>
         </div>
         <p class="lp-hero-note">{{ __('landing.hero.note') }}</p>

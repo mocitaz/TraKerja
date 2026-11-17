@@ -35,5 +35,9 @@ class EnrichVacancyJob implements ShouldBeUnique, ShouldQueue
         if ($vacancy && $vacancy->enriched_at === null) {
             $enricher->enrich($vacancy);
         }
+        // Next pipeline step: the CV-match embedding (skipped quietly without an AI key or budget).
+        if ($vacancy && config('job_sources.auto_pipeline')) {
+            rescue(fn () => app(\App\JobEngine\Personalization\Embeddings::class)->embedIds([$vacancy->id]), null, false);
+        }
     }
 }

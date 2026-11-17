@@ -46,6 +46,16 @@ if (config('job_sources.schedule_enabled')) {
         ->description('Check whether stored vacancies are still open');
     Schedule::command('jobs:enrich --queue --limit=500')->everyThirtyMinutes()->withoutOverlapping()
         ->description('Queue AI enrichment for new vacancies (within the daily AI budget)');
+    Schedule::command('jobs:embed --limit=1000')->hourlyAt(40)->withoutOverlapping()
+        ->description('Embed new vacancies for CV match scores');
+    Schedule::command('jobs:alerts')->dailyAt('07:30')->timezone('Asia/Jakarta')->withoutOverlapping()
+        ->description('Send saved-search alerts for new matching vacancies');
+    Schedule::command('jobs:housekeeping')->dailyAt('03:15')->timezone('Asia/Jakarta')->withoutOverlapping()
+        ->description('Archive long-closed vacancies, prune logs, weekly QA sample, retry failed engine jobs');
+    Schedule::command('jobs:daily-report')->dailyAt('08:00')->timezone('Asia/Jakarta')
+        ->description('Daily job-engine summary to the admin Telegram channel');
+    Schedule::command('jobs:dedup --no-ai')->dailyAt('04:00')->timezone('Asia/Jakarta')->withoutOverlapping()
+        ->description('Merge duplicates the ingest-time matcher missed (no AI)');
 }
 
 // Telegram Admin Channel: Daily Morning Briefing (10:00 WIB)

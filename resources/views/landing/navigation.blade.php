@@ -2,6 +2,7 @@
     <nav class="lp-nav lp-wrap" aria-label="{{ __('Main navigation') }}">
         <a class="lp-brand" href="{{ url('/') }}" aria-label="{{ __('TraKerja home') }}"><img draggable="false" src="{{ asset('images/icon.png') }}" width="29" height="29" alt=""><span>TraKerja</span></a>
         <div class="lp-nav-links">
+            <a href="{{ route('loker.index') }}">{{ __('landing.nav.jobs') }}</a>
             <a href="#product">{{ __('landing.nav.product') }}</a>
             <a href="#our-story">{{ __('landing.nav.workflow') }}</a>
             <a href="#testimonials">{{ __('landing.testimonials.nav') }}</a>
@@ -19,6 +20,7 @@
             <details class="lp-mobile-menu">
                 <summary>{{ __('landing.nav.menu') }}<span aria-hidden="true">+</span></summary>
                 <nav aria-label="{{ __('Mobile navigation') }}">
+                    <a href="{{ route('loker.index') }}">{{ __('landing.nav.jobs') }}</a>
                     <a href="#product">{{ __('landing.nav.product') }}</a>
                     <a href="#our-story">{{ __('landing.nav.workflow') }}</a>
                     <a href="#pricing">{{ __('landing.nav.plans') }}</a>

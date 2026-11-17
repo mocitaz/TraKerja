@@ -11,6 +11,7 @@ import { installApplicationDialog } from './application-dialog';
 installApplicationDialog(window, document);
 
 import './payment-waiting';
+import './promo-pamphlet';
 
 import { installToasts } from './toasts';
 installToasts(window, document);

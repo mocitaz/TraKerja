@@ -1,20 +1,27 @@
 <?php
 
 return [
-    'meta_title' => 'TraKerja',
-    'meta_description' => 'Keep applications, selection schedules, CVs and career preparation in one workspace. Make your next move with TraKerja.',
-    'nav' => ['product' => 'Product', 'workflow' => 'Our story', 'plans' => 'Plans', 'faq' => 'FAQ', 'support' => 'Support', 'login' => 'Log in', 'start' => 'Create your workspace', 'dashboard' => 'Open workspace', 'menu' => 'Menu', 'close' => 'Close menu', 'theme' => 'Switch appearance', 'skip' => 'Skip to content'],
+    'meta_title' => 'TraKerja · Every job. One place. All the way to hired.',
+    'meta_description' => 'Search jobs in Indonesia from many platforms and company career sites, checked regularly to see if they are still open. Apply at the source, then track your applications and CV in TraKerja.',
+    'nav' => ['jobs' => 'Jobs', 'product' => 'Product', 'workflow' => 'Our story', 'plans' => 'Plans', 'faq' => 'FAQ', 'support' => 'Support', 'login' => 'Log in', 'start' => 'Create your workspace', 'dashboard' => 'Find jobs', 'menu' => 'Menu', 'close' => 'Close menu', 'theme' => 'Switch appearance', 'skip' => 'Skip to content'],
     'hero' => [
-        'line_one' => 'Your next career move.', 'line_two' => 'A little clearer.',
-        'intro' => 'Applications, interviews, and a stronger CV. Bring your next steps together in one calm workspace.',
-        'primary' => 'Start my workspace', 'secondary' => 'See it in action',
-        'note' => 'Start free. Find your own pace.', 'portrait_alt' => 'A smiling professional wearing a black T-shirt',
-        'card_label' => 'Your next step', 'card_title' => 'Interview, on your calendar.', 'card_detail' => 'Time, meeting link, and preparation together.',
+        'line_one' => 'Every job. One place.', 'line_two' => 'All the way to hired.',
+        'intro' => 'Openings from many platforms and company career sites, checked regularly to see if they are still open. Apply at the source, then track applications, interviews, and your CV in one workspace.',
+        'primary' => 'Start finding jobs', 'secondary' => 'See it in action',
+        'note' => 'Free to start. You always apply at the original source.', 'portrait_alt' => 'A smiling professional wearing a black T-shirt',
+        'card_label' => 'Still open', 'card_title' => 'Checked again, regularly.', 'card_detail' => 'Closed jobs are never shown as open.',
         'cv_label' => 'Ready when you are', 'cv_title' => 'Your story. A clearer CV.',
         'nara_label' => 'Nara', 'nara_detail' => 'Let’s prepare your next answer.',
         'caption' => 'A little less scattered. A little more prepared.', 'illustration' => 'Product illustration',
     ],
     'sources' => ['title' => 'From different platforms. Keep track in one place.', 'label' => 'Sources you can record in your application tracker', 'pause' => 'Pause logos', 'resume' => 'Resume logos'],
+    'jobs' => [
+        'eyebrow' => 'Jobs today', 'title' => 'Still open.\nFrom many sources.',
+        'intro' => 'Openings from job platforms and company career sites. Duplicates become one listing, and closed jobs are never shown as open.',
+        'open' => 'Jobs still open', 'companies' => 'Companies', 'sources' => 'Active sources', 'checked' => 'Last checked',
+        'still_open' => 'Still open', 'no_location' => 'Location not stated',
+        'action' => 'See all jobs', 'note' => 'Always apply at the original source. TraKerja never charges applicants.',
+    ],
     'demo' => [
         'eyebrow' => 'A clearer picture', 'title' => 'See where you are.\nKnow what comes next.',
         'intro' => 'Switch views and try a short walkthrough. Your real workspace starts when you create an account.',
@@ -66,7 +73,7 @@ return [
     'faq' => [
         'title' => 'A few things\nyou might be wondering.', 'contact' => 'Still have a question?', 'help' => 'Talk to us',
         'items' => [
-            ['q' => 'Is TraKerja a job portal?', 'a' => 'TraKerja is a workspace for managing your own applications and career preparation. You still apply through the employer or the original job portal.'],
+            ['q' => 'Is TraKerja a job portal?', 'a' => 'TraKerja collects openings from platforms and company career sites that allow it, merges duplicates, and regularly checks whether they are still open. You still apply at the original source, then track your application in TraKerja.'],
             ['q' => 'Can I start for free?', 'a' => 'Yes. Create an account to start. Current limits and optional upgrades are shown in your account under Membership & Credits.'],
             ['q' => 'Can I bring my existing applications?', 'a' => 'You can add records manually or use the CSV import tools when included in your access. Download the template first so the columns match.'],
             ['q' => 'Does AI guarantee that my CV will pass screening?', 'a' => 'No. AI can help review and prepare your content, but it cannot guarantee a hiring result. Check every suggestion against your actual experience and the role.'],
