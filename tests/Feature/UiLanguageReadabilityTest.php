@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use App\Livewire\ExploreJobs;
 use App\Livewire\JobApplicationForm;
-use App\Models\JobPosting;
-use App\Models\ScraperSource;
 use App\Models\User;
 use DOMDocument;
 use DOMXPath;

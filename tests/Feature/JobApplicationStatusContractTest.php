@@ -10,8 +10,6 @@ use App\Livewire\JobApplicationForm;
 use App\Livewire\JobKanbanBoard;
 use App\Livewire\JobTableList;
 use App\Models\JobApplication;
-use App\Models\JobPosting;
-use App\Models\ScraperSource;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
