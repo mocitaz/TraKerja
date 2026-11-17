@@ -22,3 +22,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Local-only demo data (test accounts); never commit
+/database/seeders/DemoAdminSeeder.php
+/database/seeders/DemoPremiumShowcaseSeeder.php
