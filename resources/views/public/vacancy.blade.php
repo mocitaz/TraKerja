@@ -46,8 +46,8 @@
             </div>
             <h1 id="pj-title">{{ $vacancy->title }}</h1>
             <p class="pj-status">
-                @if($open)<span class="is-open">Still open</span>@if($checked)<span>Checked {{ $checked->locale('en')->diffForHumans() }}</span>@endif
-                @else<span class="is-closed">Closed</span>@endif
+                @if($open)<span class="is-open">Masih buka</span>@if($checked)<span>Dicek {{ $checked->locale('id')->diffForHumans() }}</span>@endif
+                @else<span class="is-closed">Sudah ditutup</span>@endif
                 <span>via {{ $vacancy->source_platform }}</span>
             </p>
             @if($chips)<div class="pj-banner-chips">@foreach($chips as $chip)<span>{{ $chip }}</span>@endforeach</div>@endif

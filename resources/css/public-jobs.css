@@ -239,3 +239,10 @@
   .pj-gate-body { padding: 28px 20px 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .pj-gate-card, .pj-gate-backdrop { animation: pj-gate-fade .15s ease both; } }
+
+/* Job that is gone (410/404): friendly page with similar open jobs */
+.pj-gone h1 { margin-top: 10px; }
+.pj-gone-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: rgba(255, 255, 255, .75); color: #5b4a68; font-size: 22px; }
+.pj-gone-job { margin: 10px 0 0 !important; font-size: 15px; color: #3d3346 !important; }
+.pj-gone-job strong { font-weight: 700; }
+.dark .pj-gone-icon { background: rgba(255, 255, 255, .08); color: #d6bee5; } .dark .pj-gone-job { color: #e6dcef !important; }

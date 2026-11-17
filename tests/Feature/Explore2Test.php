@@ -116,7 +116,7 @@ class Explore2Test extends TestCase
         $this->get($oldPath)->assertStatus(301)->assertRedirect($this->path($vacancy));
 
         $vacancy->update(['scam_flag' => 'suspected']);
-        $this->get($this->path($vacancy))->assertNotFound();
+        $this->get($this->path($vacancy))->assertStatus(410); // hidden scam: the "no longer available" page, without the posting
         $this->get('/loker/apa-saja-01m7ksfxkj8nvv2jhhd10m7cd7')->assertNotFound();
     }
 
@@ -152,5 +152,28 @@ class Explore2Test extends TestCase
         $this->assertSame('Rp4,5–5,2 jt/bulan', $range->salary_label);
         $this->assertSame('USD 3.000–4.000/bulan', $usd->salary_label);
         $this->assertSame('Rp150.000/hari', $daily->salary_label);
+    }
+
+    public function test_gone_jobs_get_a_helpful_page_instead_of_a_bare_404(): void
+    {
+        $gone = $this->vacancy('gone-1', 'Customer Success Manager (Greater China)', 'Xendit');
+        $open = $this->vacancy('open-1', 'Product Director', 'Xendit');
+        $gone->update(['status' => 'archived']);
+        $path = parse_url($gone->public_path, PHP_URL_PATH);
+
+        $this->get($path)->assertStatus(410)
+            ->assertSee('Lowongan ini sudah tidak tersedia')->assertSee('Customer Success Manager (Greater China)')
+            ->assertSee('value="Customer Success Manager"', false)->assertSee('Product Director')
+            ->assertSee('<meta name="robots" content="noindex">', false);
+        // Short links from social posts still land on that page.
+        $this->get("/l/{$gone->id}/t")->assertRedirect($path.'?utm_source=threads&utm_medium=social&utm_campaign=promo');
+
+        // A suspected scam reveals nothing about the posting.
+        $gone->update(['status' => 'active', 'scam_flag' => 'suspected']);
+        $this->get($path)->assertStatus(410)->assertDontSee('Customer Success Manager (Greater China)')->assertSee('Product Director');
+
+        $this->get('/loker/tidak-ada-01aaaaaaaaaaaaaaaaaaaaaaaa')->assertNotFound()->assertSee('Lowongan tidak ditemukan')->assertSee('Product Director');
+        $this->get('/l/999999/t')->assertNotFound()->assertSee('Lowongan tidak ditemukan');
+        $this->assertSame('active', $open->fresh()->status);
     }
 }

@@ -13,6 +13,6 @@
     </span>
     <span class="pj-card-foot">
         @foreach (array_filter([$modes[$item->work_mode] ?? null, $types[$item->employment_type] ?? null]) as $chip)<span class="pj-chip">{{ $chip }}</span>@endforeach
-        <span class="pj-card-open">Still open</span>
+        <span class="pj-card-open">Masih buka</span>
     </span>
 </a>
