@@ -17,35 +17,54 @@ class JobEngineDailyReport extends Command
     public function handle(EngineMonitor $monitor): int
     {
         $s = $monitor->summary();
-        $lines = [
-            '📊 *Mesin Data Loker · 24 jam terakhir*',
-            "Loker buka: {$s['open']} (+{$s['new']} baru, {$s['closed']} tutup)",
-            "Run scraper: {$s['runs']}".($s['failed_runs'] ? " ({$s['failed_runs']} gagal)" : ''),
-            'Biaya AI: $'.number_format($s['ai_usd'], 3),
-        ];
-        foreach ($s['problem_sources'] as $name => $health) {
-            $lines[] = "⚠️ {$name}: {$health}";
-        }
-        foreach ($s['anomalies'] as $a) {
-            $lines[] = "📉 {$a['source']}: {$a['today']} loker baru, biasanya ~{$a['average']}/hari. Cek apakah tata letak situs berubah.";
-        }
-        if ($s['failed_jobs']) {
-            $lines[] = "❌ {$s['failed_jobs']} job antrean gagal";
-        }
-        if ($s['pending_pairs'] || $s['reports']) {
-            $lines[] = "📝 Tinjauan: {$s['pending_pairs']} duplikat, {$s['reports']} laporan pengguna baru";
-        }
-        $text = implode("\n", $lines);
+        $text = self::format($s);
 
         if ($this->option('print') || ! config('job_sources.telegram_alerts')) {
-            $this->line($text);
+            $this->line(strip_tags($text));
             Log::info('Job engine daily report', $s);
 
             return self::SUCCESS;
         }
-        rescue(fn () => app(TelegramService::class)->sendMessage($text), null, true);
+        rescue(fn () => app(TelegramService::class)->sendMessage($text, [[['text' => 'Open Engine Monitor', 'url' => route('admin.job-engine')]]]), null, true);
         $this->info('Sent.');
 
         return self::SUCCESS;
+    }
+
+    /** HTML message in the same style as the other admin alerts. */
+    public static function format(array $s): string
+    {
+        $n = fn ($v) => number_format((int) $v, 0, ',', '.');
+        $healthy = ! $s['problem_sources'] && ! $s['anomalies'] && ! $s['failed_jobs'] && ! $s['failed_runs'];
+        $lines = [
+            ($healthy ? '🟢' : '🟠').' <b>JOB ENGINE · DAILY REPORT</b>',
+            '<i>'.now('Asia/Jakarta')->format('d M Y').' · last 24 hours</i>',
+            '',
+            '<b>Catalogue</b>',
+            "• Open jobs: <b>{$n($s['open'])}</b>",
+            "• New: +{$n($s['new'])} · Closed: {$n($s['closed'])}",
+            '',
+            '<b>Scrapers</b>',
+            "• Runs: {$n($s['runs'])}".($s['failed_runs'] ? " · <b>{$n($s['failed_runs'])} failed</b>" : ' · all succeeded'),
+        ];
+        foreach ($s['problem_sources'] as $name => $health) {
+            $lines[] = '• ⚠️ '.e($name).': '.e($health);
+        }
+        foreach ($s['anomalies'] as $a) {
+            $lines[] = '• 📉 '.e($a['source']).": {$a['today']} new (usually ~{$a['average']}/day)";
+        }
+        $lines[] = '';
+        $lines[] = '<b>Queue &amp; AI</b>';
+        $lines[] = '• Failed jobs: '.($s['failed_jobs'] ? "<b>{$n($s['failed_jobs'])}</b>" : '0');
+        $lines[] = '• AI cost: $'.number_format($s['ai_usd'], 3);
+        if ($s['pending_pairs'] || $s['reports']) {
+            $lines[] = '';
+            $lines[] = '<b>To review</b>';
+            $lines[] = "• Duplicate pairs: {$n($s['pending_pairs'])} · User reports: {$n($s['reports'])}";
+        }
+        $lines[] = '';
+        $lines[] = $healthy ? '✅ All sources healthy.' : 'Open Engine Monitor for details.';
+
+        return implode("\n", $lines);
     }
 }

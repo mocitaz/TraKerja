@@ -41,7 +41,8 @@
 .pj-status .is-open i { font-size: 8px; }
 .pj-status .is-closed { color: #b03a3a; font-weight: 700; }
 .dark .pj-status .is-open { color: #8fdcb6; } .dark .pj-status .is-closed { color: #f0a8a8; }
-.pj-closed-note { display: flex; gap: 10px; margin: 0; padding: 14px 16px; border-radius: 14px; background: #fbefef; color: #8f3434; font-size: 14px; }
+.pj-closed-note { display: flex; gap: 10px; margin: 0; padding: 14px 16px; border-radius: 14px; background: #fbefef; color: #8f3434; font-size: 14px; line-height: 1.5; }
+.pj-closed-note > i { flex: none; display: inline-flex; align-items: center; height: 21px; font-size: 17px; }
 .dark .pj-closed-note { background: #3d2224; color: #f0a8a8; }
 
 /* Facts */
@@ -72,6 +73,7 @@
 .pj-sources .platform-brand__mark img { width: 24px; height: 24px; border-radius: 6px; }
 .dark .pj-sources a { border-color: rgba(255, 255, 255, .08); color: #f2eef5; } .dark .pj-sources a:hover { background: #232227; }
 .pj-note { display: flex; gap: 8px; margin: 0; padding-top: 18px; border-top: 1px solid #f1eef3; font-size: 13px; line-height: 1.6; color: #8a8292; }
+.pj-note > i { flex: none; display: inline-flex; align-items: center; height: 20.8px; font-size: 16px; }
 .dark .pj-note { border-color: rgba(255, 255, 255, .07); }
 
 /* Apply card */
@@ -202,3 +204,38 @@
 @media (max-width: 1050px) { .pj-banner { min-height: 0; } }
 .pj-navigation .pj-topbar-cta { min-height: 40px; padding: 0 16px 0 18px; border-radius: 999px; font-size: 13px; font-weight: 650; gap: 6px; box-shadow: none; }
 .pj-navigation .pj-topbar-cta i { font-size: 14px; }
+
+/* Login popup for guests on the public job page: simple, white, no imagery */
+.pj-gate { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 16px; }
+.pj-gate-backdrop { position: absolute; inset: 0; background: rgba(24, 20, 30, .45); animation: pj-gate-fade .25s ease both; }
+.pj-gate-card { position: relative; width: min(100%, 380px); max-height: calc(100dvh - 32px); overflow: auto; border: 1px solid #ece8ef; border-radius: 20px; background: #fff; color: #1e1a24; box-shadow: 0 24px 60px -24px rgba(24, 20, 30, .4); animation: pj-gate-pop .3s cubic-bezier(.2, .8, .3, 1) both; }
+@keyframes pj-gate-pop { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes pj-gate-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pj-gate-rise { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+.pj-gate-close { position: absolute; top: 12px; right: 12px; display: grid; place-items: center; width: 32px; height: 32px; border: 0; border-radius: 999px; background: transparent; color: #8a8292; font-size: 18px; cursor: pointer; transition: background .15s, color .15s; }
+.pj-gate-close:hover, .pj-gate-close:focus-visible { background: #f4f1f7; color: #1e1a24; }
+.pj-gate-body { display: grid; gap: 12px; padding: 32px 28px 24px; text-align: center; }
+.pj-gate-logo { justify-self: center; width: 40px; height: 40px; margin-bottom: 4px; }
+.pj-gate-body h2 { margin: 0; font-size: 1.3rem; font-weight: 700; letter-spacing: -.02em; }
+.pj-gate-sub { margin: 0 0 8px; color: #6b6474; font-size: .9rem; line-height: 1.55; }
+.pj-gate-google { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 46px; border: 1px solid #dcd6e2; border-radius: 12px; background: #fff; color: #1e1a24; font-weight: 600; font-size: .92rem; text-decoration: none; transition: background .15s, border-color .15s; }
+.pj-gate-google:hover, .pj-gate-google:focus-visible { background: #faf8fb; border-color: #c9c1d2; }
+.pj-gate-divider { display: flex; align-items: center; gap: 10px; color: #a39cab; font-size: 12px; } .pj-gate-divider::before, .pj-gate-divider::after { content: ''; flex: 1; height: 1px; background: #ece8ef; }
+.pj-gate-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pj-gate-btn { display: grid; place-items: center; min-height: 44px; border: 1px solid #dcd6e2; border-radius: 12px; background: #fff; color: #1e1a24; font-weight: 600; font-size: .9rem; text-decoration: none; transition: background .15s, border-color .15s; }
+.pj-gate-btn:hover, .pj-gate-btn:focus-visible { background: #faf8fb; border-color: #c9c1d2; }
+.pj-gate-btn--dark { border-color: #2d204e; background: #2d204e; color: #fff; } .pj-gate-btn--dark:hover, .pj-gate-btn--dark:focus-visible { background: #483161; border-color: #483161; }
+.pj-gate-skip { justify-self: center; margin-top: 2px; border: 0; background: none; color: #8a8292; font: inherit; font-size: .84rem; cursor: pointer; }
+.pj-gate-skip:hover, .pj-gate-skip:focus-visible { color: #1e1a24; text-decoration: underline; text-underline-offset: 3px; }
+
+.dark .pj-gate-card { background: #1f1c24; border-color: #2f2a37; color: #f2eef5; }
+.dark .pj-gate-sub, .dark .pj-gate-skip { color: #a79fac; } .dark .pj-gate-close { color: #a79fac; } .dark .pj-gate-close:hover { background: #2a2530; color: #f2eef5; }
+.dark .pj-gate-google, .dark .pj-gate-btn { background: #26222d; border-color: #3a3442; color: #f2eef5; } .dark .pj-gate-divider::before, .dark .pj-gate-divider::after { background: #3a3442; }
+.dark .pj-gate-btn--dark { background: #d6bee5; border-color: #d6bee5; color: #1e1a24; }
+
+@media (max-width: 520px) {
+  .pj-gate { align-items: end; padding: 0; }
+  .pj-gate-card { width: 100%; border-radius: 20px 20px 0 0; border-bottom: 0; padding-bottom: env(safe-area-inset-bottom); animation-name: pj-gate-rise; }
+  .pj-gate-body { padding: 28px 20px 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .pj-gate-card, .pj-gate-backdrop { animation: pj-gate-fade .15s ease both; } }

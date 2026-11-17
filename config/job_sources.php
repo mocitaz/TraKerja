@@ -24,8 +24,9 @@ return [
     // so deploying the code never starts scraping (or AI spending) by itself.
     'schedule_enabled' => (bool) env('JOB_ENGINE_SCHEDULE_ENABLED', false),
 
-    // Source-health alerts to the admin Telegram channel. Off by default; otherwise only logged.
-    'telegram_alerts' => (bool) env('JOB_ENGINE_TELEGRAM_ALERTS', false),
+    // Job-engine alerts (watchdog, failed scraper jobs, source health, daily report) to the admin Telegram
+    // channel. On by default; nothing is sent unless Telegram itself is enabled (TELEGRAM_NOTIF_ENABLED + bot token).
+    'telegram_alerts' => (bool) env('JOB_ENGINE_TELEGRAM_ALERTS', true),
 
     // New vacancies flow straight into AI enrichment and embedding (queue "ai"). On with the schedule by default.
     'auto_pipeline' => (bool) env('JOB_ENGINE_AUTO_PIPELINE', env('JOB_ENGINE_SCHEDULE_ENABLED', false)),

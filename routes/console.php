@@ -58,6 +58,12 @@ if (config('job_sources.schedule_enabled')) {
         ->description('Merge duplicates the ingest-time matcher missed (no AI)');
 }
 
+// Job-engine watchdog: stuck queues, failed jobs, stale scrapers, verification and AI budget, alerted on
+// Telegram once per problem (and again when it is resolved). Runs even with the engine schedule off, because
+// the queue checks also cover the other workers.
+Schedule::command('jobs:watchdog')->everyTenMinutes()->withoutOverlapping()
+    ->description('Alert on stuck queues, failed jobs, stale scrapers and AI budget (Telegram)');
+
 // Telegram Admin Channel: Daily Morning Briefing (10:00 WIB)
 Schedule::command('report:telegram-daily morning')
     ->dailyAt('10:00')

@@ -9,7 +9,7 @@
     </span>
     <span class="pj-card-meta">
         <span><i class="ph ph-map-pin" aria-hidden="true"></i>{{ $item->location ?: ($item->work_mode === 'remote' ? 'Remote' : 'Lokasi belum disebut') }}</span>
-        @if ($item->salary_label)<span class="is-salary"><i class="ph ph-money" aria-hidden="true"></i>{{ $item->salary_label }}</span>@endif
+        @if ($item->salary_label)<span class="is-salary"><i class="ph ph-money" aria-hidden="true"></i>{{ $item->salaryLabel('id') }}</span>@endif
     </span>
     <span class="pj-card-foot">
         @foreach (array_filter([$modes[$item->work_mode] ?? null, $types[$item->employment_type] ?? null]) as $chip)<span class="pj-chip">{{ $chip }}</span>@endforeach

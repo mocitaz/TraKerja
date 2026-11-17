@@ -108,7 +108,7 @@ class Promotions extends Component
         $this->highlights = array_pad($copy['highlights'], 3, '');
         $this->captions = $copy['captions'];
         $this->aiUsed = $copy['ai'];
-        $this->flash = $copy['ai'] ? 'Caption untuk 5 platform dibuat AI. Periksa lagi sebelum diposting.' : 'AI tidak tersedia, caption dibuat dari data loker. Silakan rapikan.';
+        $this->flash = $copy['ai'] ? __('Captions for 5 platforms written by AI. Review before posting.') : __('AI is unavailable; captions were built from the job data. Please polish them.');
     }
 
     public function save(): void
@@ -131,7 +131,7 @@ class Promotions extends Component
         } else {
             $this->promotionId = DB::table('job_promotions')->insertGetId($row + ['status' => 'draft', 'created_by' => Auth::id(), 'created_at' => now()]);
         }
-        $this->flash = 'Draf disimpan.';
+        $this->flash = __('Draft saved.');
     }
 
     /** Mark the current platform as posted (or undo it). */
@@ -139,7 +139,7 @@ class Promotions extends Component
     {
         $platform ??= $this->platform;
         abort_unless(isset(PromoWriter::PLATFORMS[$platform]), 404);
-        $this->validate(["postUrls.{$platform}" => 'nullable|url|max:255'], [], ["postUrls.{$platform}" => 'tautan post']);
+        $this->validate(["postUrls.{$platform}" => 'nullable|url|max:255'], [], ["postUrls.{$platform}" => __('post link')]);
         $this->save();
         if (isset($this->postedOn[$platform])) {
             unset($this->postedOn[$platform]);
@@ -158,7 +158,7 @@ class Promotions extends Component
             'updated_at' => now(),
         ]);
         $label = PromoWriter::PLATFORMS[$platform][0];
-        $this->flash = isset($this->postedOn[$platform]) ? "Ditandai sudah diposting di {$label}." : "Tanda diposting di {$label} dibatalkan.";
+        $this->flash = isset($this->postedOn[$platform]) ? __('Marked as posted on :platform.', ['platform' => $label]) : __('Posted mark on :platform removed.', ['platform' => $label]);
     }
 
     public function render()
@@ -213,7 +213,7 @@ class Promotions extends Component
             'workMode' => $modes[$v->work_mode] ?? null,
             'employmentType' => $types[$v->employment_type] ?? null,
             'level' => $levels[$v->seniority] ?? null,
-            'deadline' => $v->valid_through?->locale('id')->translatedFormat('d M Y'),
+            'deadline' => $v->valid_through?->locale(app()->getLocale())->translatedFormat('d M Y'),
             'logo' => $v->company?->logo_url ? route('admin.promotions.logo', $v->id) : null,
             'brandIcon' => asset('images/icon.png'),
             'format' => $this->format,

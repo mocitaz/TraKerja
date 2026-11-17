@@ -14,11 +14,12 @@
         ['ph-briefcase', 'Sistem kerja', $modes[$vacancy->work_mode] ?? null],
         ['ph-clock', 'Tipe pekerjaan', $types[$vacancy->employment_type] ?? null],
         ['ph-stairs', 'Level', $levels[$vacancy->seniority] ?? null],
-        ['ph-money', 'Gaji', $vacancy->salary_label],
+        ['ph-money', 'Gaji', $vacancy->salaryLabel('id')],
         ['ph-graduation-cap', 'Pendidikan minimal', $education[$vacancy->education_min] ?? null],
         ['ph-calendar-plus', 'Diposting', $date($vacancy->date_posted ?? $vacancy->first_seen_at)],
         ['ph-calendar-x', 'Lamar sebelum', $date($vacancy->valid_through)],
     ], fn ($f) => filled($f[2]));
+    $guest = ! auth()->check();
     $sources = $vacancy->listings->filter(fn ($l) => preg_match('#^https?://#i', (string) $l->url))->unique('job_source_id')->values();
 @endphp
 @extends('public.layout', ['title' => $title, 'description' => $description, 'canonical' => url(parse_url($vacancy->public_path, PHP_URL_PATH)), 'noindex' => ! $open])
@@ -126,5 +127,27 @@
             <div class="pj-related-head"><h2>Lowongan lain yang masih buka</h2><a href="{{ route('loker.index') }}">Lihat semua <i class="ph ph-arrow-right" aria-hidden="true"></i></a></div>
             <div class="pj-cards">@foreach($related as $item)@include('public.partials.job-card')@endforeach</div>
         </section>
+    @endif
+    @if($guest)
+        @php session()->put('url.intended', url()->current()); @endphp
+        <div class="pj-gate" x-data="{ open: false, init() { let seen = false; try { seen = !! localStorage.getItem('tk-login-gate-seen') } catch (e) {} if (! seen) setTimeout(() => { this.open = true }, 1200) }, close() { this.open = false; try { localStorage.setItem('tk-login-gate-seen', '1') } catch (e) {} } }" x-on:keydown.escape.window="close()" x-show="open" x-cloak style="display:none" role="dialog" aria-modal="true" aria-labelledby="pj-gate-title">
+            <div class="pj-gate-backdrop" x-on:click="close()"></div>
+            <div class="pj-gate-card">
+                <button type="button" class="pj-gate-close" x-on:click="close()" aria-label="Tutup"><i class="ph ph-x" aria-hidden="true"></i></button>
+
+                <div class="pj-gate-body">
+                    <img class="pj-gate-logo" src="{{ asset('images/icon.png') }}" alt="" width="40" height="40">
+                    <h2 id="pj-gate-title">Masuk ke TraKerja</h2>
+                    <p class="pj-gate-sub">Simpan lowongan, lacak status lamaran, dan dapatkan rekomendasi yang sesuai dengan CV kamu. Gratis.</p>
+                    <a class="pj-gate-google" href="{{ route('auth.google') }}" x-on:click="close()"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 0 1 0-9.4l-7.9-6.1a24 24 0 0 0 0 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>Lanjutkan dengan Google</span></a>
+                    <div class="pj-gate-divider"><span>atau</span></div>
+                    <div class="pj-gate-row">
+                        <a class="pj-gate-btn pj-gate-btn--dark" href="{{ route('register') }}" x-on:click="close()">Daftar gratis</a>
+                        <a class="pj-gate-btn" href="{{ route('login') }}" x-on:click="close()">Login</a>
+                    </div>
+                    <button type="button" class="pj-gate-skip" x-on:click="close()">Nanti saja, lanjut lihat loker</button>
+                </div>
+            </div>
+        </div>
     @endif
 @endsection

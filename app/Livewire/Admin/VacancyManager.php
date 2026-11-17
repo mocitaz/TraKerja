@@ -27,20 +27,20 @@ class VacancyManager extends Component
     public const TABS = ['review', 'all', 'pairs', 'qa'];
 
     public const QA_VERDICTS = [
-        'correct' => 'Benar',
-        'wrong_status' => 'Status salah (sudah tutup / masih buka)',
-        'wrong_data' => 'Data salah (judul, lokasi, gaji, dll.)',
-        'duplicate' => 'Duplikat yang lolos',
+        'correct' => 'Correct',
+        'wrong_status' => 'Wrong status (already closed / still open)',
+        'wrong_data' => 'Wrong data (title, location, salary, etc.)',
+        'duplicate' => 'Duplicate that slipped through',
     ];
 
     public const REASONS = [
-        'reported' => ['Dilaporkan pengguna', 'flag'],
-        'scam' => ['Dicurigai penipuan', 'shield-warning'],
-        'salary' => ['Gaji tidak wajar', 'money'],
-        'caps' => ['Judul huruf kapital semua', 'text-aa'],
-        'region' => ['Wilayah kosong', 'map-pin'],
-        'stale' => ['Tayang > 60 hari tanpa batas lamar', 'hourglass'],
-        'raw' => ['Belum dirapikan AI', 'sparkle'],
+        'reported' => ['Reported by users', 'flag'],
+        'scam' => ['Suspected scams', 'shield-warning'],
+        'salary' => ['Unreasonable salary', 'money'],
+        'caps' => ['Title in all caps', 'text-aa'],
+        'region' => ['Region missing', 'map-pin'],
+        'stale' => ['Live > 60 days with no deadline', 'hourglass'],
+        'raw' => ['Not yet enriched by AI', 'sparkle'],
     ];
 
     #[Url]
@@ -108,13 +108,13 @@ class VacancyManager extends Component
     public function markChecked(int $id): void
     {
         $this->check([$id]);
-        $this->flash = 'Ditandai sudah dicek.';
+        $this->flash = __('Marked as checked.');
     }
 
     public function archive(int $id): void
     {
         $this->archiveIds([$id]);
-        $this->flash = 'Loker diarsipkan.';
+        $this->flash = __('Job archived.');
     }
 
     public function restore(int $id): void
@@ -122,20 +122,20 @@ class VacancyManager extends Component
         $vacancy = Vacancy::findOrFail($id);
         $vacancy->update(['status' => 'closed', 'closed_reason' => null]);
         VerificationService::syncVacancyStatus($vacancy->fresh());
-        $this->flash = "\"{$vacancy->title}\" dipulihkan sebagai ".$vacancy->fresh()->status.'.';
+        $this->flash = __('":title" restored as :status.', ['title' => $vacancy->title, 'status' => $vacancy->fresh()->status]);
     }
 
     public function recheck(int $id): void
     {
         $n = $this->recheckIds([$id]);
-        $this->flash = $n ? "{$n} listing masuk antrean cek berikutnya." : 'Tidak ada listing aktif untuk dicek.';
+        $this->flash = $n ? __(':count listings queued for the next check.', ['count' => $n]) : __('No active listings to check.');
     }
 
     public function toggleScam(int $id): void
     {
         $vacancy = Vacancy::findOrFail($id);
         $vacancy->update(['scam_flag' => $vacancy->scam_flag === 'suspected' ? 'none' : 'suspected']);
-        $this->flash = $vacancy->scam_flag === 'suspected' ? 'Ditandai dicurigai penipuan dan disembunyikan.' : 'Tanda penipuan dicabut.';
+        $this->flash = $vacancy->scam_flag === 'suspected' ? __('Marked as a suspected scam and hidden.') : __('Scam flag removed.');
     }
 
     /** Undo a merge from the detail panel (same as php artisan jobs:unmerge). */
@@ -143,13 +143,13 @@ class VacancyManager extends Component
     {
         $duplicate = Vacancy::whereNotNull('merged_into_id')->findOrFail($duplicateId);
         $n = app(VacancyMerger::class)->unmerge($duplicate);
-        $this->flash = "Gabungan dibatalkan: {$n} listing dikembalikan ke \"{$duplicate->title}\".";
+        $this->flash = __('Merge undone: :count listings returned to ":title".', ['count' => $n, 'title' => $duplicate->title]);
     }
 
     public function archiveOldClosed(): void
     {
         $n = Vacancy::where('status', 'closed')->where('closed_at', '<', now()->subDays(30))->update(['status' => 'archived', 'updated_at' => now()]);
-        $this->flash = "{$n} loker tutup lebih dari 30 hari diarsipkan.";
+        $this->flash = __(':count jobs closed for more than 30 days archived.', ['count' => $n]);
     }
 
     // ---------------------------------------------------------------- bulk actions
@@ -158,15 +158,15 @@ class VacancyManager extends Component
     {
         $ids = array_map('intval', $this->selected);
         if (! $ids) {
-            $this->flash = 'Pilih loker dulu.';
+            $this->flash = __('Select jobs first.');
 
             return;
         }
         $this->flash = match ($action) {
-            'checked' => $this->check($ids).' loker ditandai sudah dicek.',
-            'archive' => $this->archiveIds($ids).' loker diarsipkan.',
-            'recheck' => $this->recheckIds($ids).' listing masuk antrean cek.',
-            'scam' => Vacancy::whereIn('id', $ids)->update(['scam_flag' => 'suspected', 'updated_at' => now()]).' loker ditandai penipuan.',
+            'checked' => __(':count jobs marked as checked.', ['count' => $this->check($ids)]),
+            'archive' => __(':count jobs archived.', ['count' => $this->archiveIds($ids)]),
+            'recheck' => __(':count listings queued for checking.', ['count' => $this->recheckIds($ids)]),
+            'scam' => __(':count jobs marked as scams.', ['count' => Vacancy::whereIn('id', $ids)->update(['scam_flag' => 'suspected', 'updated_at' => now()])]),
             default => abort(422),
         };
         $this->selected = [];
@@ -211,7 +211,7 @@ class VacancyManager extends Component
         DB::table('dedup_reviews')->where('id', $reviewId)->update([
             'status' => $same ? 'merged_manual' : 'separate', 'reviewed_by' => Auth::id(), 'reviewed_at' => now(), 'updated_at' => now(),
         ]);
-        $this->flash = $same ? 'Digabung.' : 'Ditandai sebagai lowongan berbeda.';
+        $this->flash = $same ? __('Merged.') : __('Marked as different jobs.');
     }
 
     public function drawQaSample(): void
@@ -222,7 +222,7 @@ class VacancyManager extends Component
         foreach ($ids as $id) {
             DB::table('vacancy_qa_checks')->insertOrIgnore(['vacancy_id' => $id, 'sample' => $sample, 'created_at' => now(), 'updated_at' => now()]);
         }
-        $this->flash = "Sampel {$sample}: {$ids->count()} loker.";
+        $this->flash = __('Sample :sample: :count jobs.', ['sample' => $sample, 'count' => $ids->count()]);
     }
 
     public function judge(int $checkId, string $verdict): void

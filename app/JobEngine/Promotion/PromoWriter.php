@@ -36,20 +36,21 @@ class PromoWriter
     public function write(Vacancy $v): array
     {
         $v->loadMissing(['company', 'region', 'sector']);
-        // Copywriting needs more nuance than data clean-up: use the stronger fallback model (~$0.001 per run).
+        // AI only writes the role description in plain, professional Indonesian; the facts (location, salary,
+        // deadline) and the layout of each caption come from the data and fixed templates, so every post looks
+        // the same and nothing is invented. Uses the stronger fallback model (~$0.001 per run).
         $answer = $this->ai->structured('promo_copy_multi', self::INSTRUCTIONS, $this->brief($v), self::SCHEMA, [], true);
-        $ai = is_array($answer) && ! empty($answer['captions']['threads']);
+        $ai = is_array($answer) && trim((string) ($answer['intro'] ?? '')) !== '';
+        $copy = $ai ? $this->sanitize($answer) : $this->fallbackCopy($v);
 
         $captions = [];
-        foreach (self::PLATFORMS as $key => $meta) {
-            $text = $ai ? self::cleanCaption((string) ($answer['captions'][$key] ?? '')) : '';
-            $captions[$key] = self::finish($text !== '' ? $text : $this->fallbackCaption($v, $key), $v, $key);
+        foreach (array_keys(self::PLATFORMS) as $key) {
+            $captions[$key] = $this->compose($v, $key, $copy);
         }
-        $highlights = $ai ? array_values(array_filter(array_map(fn ($h) => Str::limit(trim((string) $h), 70, ''), (array) ($answer['highlights'] ?? [])))) : [];
 
         return [
-            'headline' => Str::limit(trim((string) ($ai ? ($answer['headline'] ?: $v->title) : $v->title)), 80, ''),
-            'highlights' => array_slice($highlights ?: $this->fallbackHighlights($v), 0, 5),
+            'headline' => Str::limit(trim((string) ($ai && ! empty($answer['headline']) ? $answer['headline'] : $v->title)), 80, ''),
+            'highlights' => array_slice(($ai ? $copy['qualifications'] : []) ?: $this->fallbackHighlights($v), 0, 5),
             'captions' => $captions,
             'caption' => $captions['threads'],
             'ai' => $ai,
@@ -111,7 +112,7 @@ class PromoWriter
             'sistem_kerja' => ['onsite' => 'Onsite', 'hybrid' => 'Hybrid', 'remote' => 'Remote'][$v->work_mode] ?? null,
             'tipe' => ['full_time' => 'Full-time', 'part_time' => 'Part-time', 'contract' => 'Kontrak', 'internship' => 'Magang', 'freelance' => 'Freelance'][$v->employment_type] ?? null,
             'level' => $v->seniority,
-            'gaji' => $v->salary_label,
+            'gaji' => $v->salaryLabel('id'),
             'pendidikan_min' => $education[$v->education_min] ?? null,
             'keterampilan' => $v->skills,
             'batas_lamar' => $v->valid_through?->locale('id')->translatedFormat('d M Y'),
@@ -135,92 +136,207 @@ class PromoWriter
 
         return array_slice(array_values(array_filter([
             $education[$v->education_min] ?? null,
-            ...array_map(fn ($s) => 'Menguasai '.$s, array_slice((array) $v->skills, 0, 3)),
+            ...array_map(fn ($s) => 'Keterampilan '.Str::lower($s), array_slice((array) $v->skills, 0, 3)),
             $v->seniority === 'entry' ? 'Terbuka untuk fresh graduate' : null,
         ])), 0, 5) ?: ['Lihat persyaratan lengkap di tautan'];
     }
 
-    private function fallbackCaption(Vacancy $v, string $platform = 'threads'): string
+    /**
+     * One caption in the house style: no slang, no emoji, facts as "•" bullets, link at the end.
+     * Optional parts (role description, duties, "cocok untuk") are dropped one by one until the caption fits.
+     *
+     * @param  array{intro: string, responsibilities: array<int, string>, qualifications: array<int, string>, audience: string, field_tag: string}  $copy
+     */
+    private function compose(Vacancy $v, string $platform, array $copy): string
     {
-        $company = \App\Livewire\Admin\Promotions::tidyTitle((string) ($v->company?->name ?? 'perusahaan ini'));
+        [, $limit, $mode, $urlCost] = self::PLATFORMS[$platform];
         $title = \App\Livewire\Admin\Promotions::tidyTitle($v->title);
-        $lines = array_filter([
-            "💼 {$title} di {$company}",
-            $v->location ? "📍 {$v->location}" : null,
-            $v->salary_label ? "💰 {$v->salary_label}" : null,
-            $v->valid_through ? '🗓️ Lamar sebelum '.$v->valid_through->locale('id')->translatedFormat('d M Y') : null,
-        ]);
+        $company = \App\Livewire\Admin\Promotions::tidyTitle((string) ($v->company?->name ?: 'Perusahaan'));
+        $facts = $this->facts($v);
+        $bullets = fn (array $items) => implode("\n", array_map(fn ($i) => '• '.$i, $items));
+        $city = $this->cityTag($v);
+        $field = $copy['field_tag'];
 
-        return match ($platform) {
-            'linkedin' => "{$company} sedang membuka posisi {$title}".($v->location ? " di {$v->location}" : '').".\n\n".implode("\n", $lines)."\n\nDetail dan cara melamar ada di tautan berikut.\n\n#lowongankerja #karier",
-            'x' => "Loker {$title} di {$company}".($v->location ? " ({$v->location})" : '').'. #lowongankerja',
-            'whatsapp' => "*Loker: {$title}*\n\n".implode("\n", $lines)."\n\nCek detail & lamar di sini:",
-            'instagram' => "Info loker buat kamu! 👀\n\n".implode("\n", $lines)."\n\nLink lamar ada di bio ya 👆\n\n#lowongankerja #lokerindonesia #infoloker",
-            default => "Info loker buat kamu 👀\n\n".implode("\n", $lines)."\n\nDetail & cara lamarnya ada di link bawah ya 👇\n\n#lowongankerja #lokerindonesia",
+        $drops = [[], ['responsibilities'], ['responsibilities', 'audience'], ['responsibilities', 'audience', 'intro'], ['responsibilities', 'audience', 'intro', 'qualifications']];
+        foreach ($drops as $drop) {
+            $c = array_merge($copy, array_fill_keys($drop, []));
+            $intro = is_string($c['intro']) ? $c['intro'] : '';
+            $audience = is_string($c['audience']) ? $c['audience'] : '';
+            $duties = (array) $c['responsibilities'];
+            $quals = (array) $c['qualifications'];
+
+            $parts = match ($platform) {
+                'linkedin' => [
+                    "{$company} sedang membuka posisi {$title}".($v->work_mode === 'remote' ? ' (remote)' : ($v->location ? " untuk penempatan {$v->location}" : '')).'.',
+                    $intro,
+                    $duties ? "Tanggung jawab utama:\n".$bullets($duties) : '',
+                    $quals ? "Kualifikasi:\n".$bullets($quals) : '',
+                    $facts ? "Detail posisi:\n".$bullets($facts) : '',
+                    $audience,
+                    "Informasi lengkap dan cara melamar:\n{{link}}",
+                    $this->tags(['#lowongankerja', '#karier', $city, $field]),
+                ],
+                'instagram' => [
+                    "Lowongan Kerja: {$title}\n{$company}",
+                    $intro,
+                    $facts ? $bullets($facts) : '',
+                    $quals ? "Kualifikasi:\n".$bullets($quals) : '',
+                    $audience,
+                    'Informasi lengkap dan cara melamar tersedia melalui tautan di bio.',
+                    $this->tags(['#lowongankerja', '#infoloker', '#lokerindonesia', $city, $field, '#karier']),
+                ],
+                'x' => [
+                    "Lowongan {$title} di {$company}".($v->location ? ", {$v->location}" : '').($v->salary_min ? '. Gaji '.$v->salaryLabel('id') : '').'.',
+                    $this->tags(['#lowongankerja', $city ?: $field]),
+                ],
+                'whatsapp' => [
+                    "*Lowongan Kerja: {$title}*\n{$company}",
+                    $intro,
+                    $facts ? $bullets($facts) : '',
+                    $quals ? "*Kualifikasi*\n".$bullets($quals) : '',
+                    "Informasi lengkap dan cara melamar:\n{{link}}",
+                ],
+                default => [ // Threads
+                    "Lowongan Kerja: {$title}\n{$company}",
+                    $intro,
+                    $facts ? $bullets($facts) : '',
+                    "Informasi lengkap dan cara melamar:\n{{link}}",
+                    $this->tags(['#lowongankerja', $city ?: $field]),
+                ],
+            };
+            $text = trim(implode("\n\n", array_filter($parts, fn ($p) => trim((string) $p) !== '')));
+
+            if ($mode === 'bio') {
+                $out = $text;
+                $length = mb_strlen($out);
+            } elseif (str_contains($text, '{{link}}')) {
+                $out = str_replace('{{link}}', self::link($v, $platform), $text);
+                $length = mb_strlen($text) - 8 + ($urlCost ?? mb_strlen(self::link($v, $platform)));
+            } else {
+                $out = self::finish($text, $v, $platform); // X: link last
+                $length = $urlCost ? mb_strlen($text) + 2 + $urlCost : mb_strlen($out);
+            }
+            if ($length <= $limit) {
+                return $out;
+            }
+        }
+
+        return self::finish(str_replace("Informasi lengkap dan cara melamar:\n{{link}}", '', $text), $v, $platform);
+    }
+
+    /** Fact bullets from the data only. @return array<int, string> */
+    private function facts(Vacancy $v): array
+    {
+        $mode = ['onsite' => 'Onsite', 'hybrid' => 'Hybrid', 'remote' => 'Remote'][$v->work_mode] ?? null;
+        $type = ['full_time' => 'Full-time', 'part_time' => 'Part-time', 'contract' => 'Kontrak', 'internship' => 'Magang', 'freelance' => 'Freelance'][$v->employment_type] ?? null;
+        $level = ['intern' => 'Magang', 'entry' => 'Entry level', 'mid' => 'Mid level', 'senior' => 'Senior level', 'lead' => 'Lead', 'manager' => 'Manager'][$v->seniority] ?? null;
+        $education = ['sd' => 'SD', 'smp' => 'SMP', 'sma_smk' => 'SMA/SMK', 'd3' => 'D3', 's1' => 'S1', 's2' => 'S2'][$v->education_min] ?? null;
+        $place = $v->location ?: ($v->work_mode === 'remote' ? 'Remote' : null);
+
+        return array_values(array_filter([
+            $place ? 'Lokasi: '.$place.($mode && $mode !== $place ? " ({$mode})" : '') : null,
+            ($type || $level) ? 'Tipe: '.implode(' · ', array_filter([$type, $level === 'Magang' && $type === 'Magang' ? null : $level])) : null,
+            $v->salary_min ? 'Gaji: '.$v->salaryLabel('id') : null,
+            $education ? 'Pendidikan: minimal '.$education : null,
+            $v->valid_through ? 'Batas lamaran: '.$v->valid_through->locale('id')->translatedFormat('d F Y') : null,
+        ]));
+    }
+
+    /** "#lokerbandung" from the region or location; remote jobs get "#lokerremote". */
+    private function cityTag(Vacancy $v): string
+    {
+        if ($v->work_mode === 'remote') {
+            return '#lokerremote';
+        }
+        $name = (string) ($v->region?->name ?: Str::before((string) $v->location, ','));
+        $name = trim(preg_replace('/^(Kota Administrasi|Kota|Kabupaten|Kab\.|Provinsi|DKI|Daerah Istimewa)\s+/iu', '', $name));
+        $name = ['surakarta' => 'solo', 'yogyakarta' => 'jogja', 'jakarta selatan' => 'jakarta', 'jakarta pusat' => 'jakarta', 'jakarta barat' => 'jakarta', 'jakarta timur' => 'jakarta', 'jakarta utara' => 'jakarta'][mb_strtolower($name)] ?? $name;
+        $slug = preg_replace('/[^a-z0-9]/', '', Str::lower(Str::ascii($name)));
+
+        return $slug !== '' && mb_strlen($slug) <= 20 ? '#loker'.$slug : '';
+    }
+
+    private function tags(array $tags): string
+    {
+        return implode(' ', array_unique(array_filter($tags)));
+    }
+
+    /** Clean the AI parts: no emoji, no exclamation marks, no slang; drop anything that breaks the house style. */
+    private function sanitize(array $a): array
+    {
+        $clean = function ($s, int $max) {
+            $s = preg_replace('/[\x{1F000}-\x{1FAFF}\x{2600}-\x{27BF}\x{FE0F}\x{200D}]/u', '', (string) $s);
+            $s = trim(preg_replace('/\s+/u', ' ', str_replace('!', '.', $s)), " \t\n-•*");
+            $s = preg_replace('/\.{2,}/', '.', $s);
+            if ($s === '' || preg_match('/\b(gas|gaskeun|spill|kuy|yuk|guys|bestie|cuy|sob|bro|sis|buruan|jangan sampai|kesempatan emas|wajib banget)\b/iu', $s)) {
+                return '';
+            }
+
+            return Str::limit($s, $max, '');
         };
+        $list = fn ($items, int $max, int $n) => array_values(array_slice(array_filter(array_map(fn ($i) => rtrim($clean($i, $max), '.'), (array) $items)), 0, $n));
+        $tag = Str::lower((string) ($a['field_tag'] ?? ''));
+
+        return [
+            'intro' => $clean($a['intro'] ?? '', 240),
+            'responsibilities' => $list($a['responsibilities'] ?? [], 80, 3),
+            'qualifications' => $list($a['qualifications'] ?? [], 70, 4),
+            'audience' => $clean($a['audience'] ?? '', 140),
+            'field_tag' => preg_match('/^#loker[a-z0-9]{2,20}$/', $tag) ? $tag : '',
+        ];
+    }
+
+    /** Without AI: use the summary's first sentence only when it reads as Indonesian and adds something new. */
+    private function fallbackCopy(Vacancy $v): array
+    {
+        $first = trim((string) Str::of((string) $v->summary)->before('. ')->limit(220, ''));
+        $english = preg_match_all('/\b(the|and|to|is|are|with|for|of|our|you|we)\b/i', $first) >= 2;
+        $skills = array_slice(array_filter(array_map('trim', (array) $v->skills)), 0, 4);
+
+        return [
+            'intro' => $first !== '' && ! $english && ! preg_match('/^(lowongan|loker|dicari)\b/iu', $first) ? rtrim($first, '.').'.' : '',
+            'responsibilities' => [],
+            'qualifications' => $skills ? ['Keterampilan: '.implode(', ', $skills)] : [],
+            'audience' => $v->seniority === 'entry' ? 'Posisi ini terbuka untuk lulusan baru.' : '',
+            'field_tag' => '',
+        ];
     }
 
     private const INSTRUCTIONS = <<<'TXT'
-Kamu social media copywriter TraKerja, akun info loker untuk anak muda Indonesia (fresh graduate dan pekerja muda 18–27 tahun).
-Tulis materi promosi SATU lowongan untuk beberapa platform, dari data yang diberikan. Jangan pernah mengarang fakta, benefit, atau janji diterima. Jangan tulis URL.
+Kamu editor konten rekrutmen untuk TraKerja, platform informasi lowongan kerja di Indonesia.
+Tugasmu menulis bagian deskriptif sebuah unggahan lowongan. Data fakta (lokasi, gaji, tipe kerja, batas lamaran) dan format unggahan sudah disusun sistem, jadi JANGAN menulis ulang fakta tersebut.
 
-Gaji: tulis persis seperti di data. Jangan tambah "gaji pokok", "komisi", atau "bonus" kalau tidak tertulis. Kalau sebuah data tidak ada, hapus barisnya (jangan tulis "-" atau "tidak disebutkan").
-Tagar kota: tanpa "Kota"/"Kabupaten" (Surakarta = #lokersolo, Kabupaten Tangerang = #lokertangerang, remote = #lokerremote).
+Semua teks WAJIB berbahasa Indonesia, termasuk jika data ringkasan berbahasa Inggris (terjemahkan maknanya, jangan disalin).
 
-Gaya Gen Z (Threads, Instagram, X): santai, hangat, relatable, kayak teman spill info loker, pakai "kamu". Boleh 1–2 kata gaul yang wajar (gas, spill, cocok banget), jangan cringe. Hindari bahasa kaku: "Kami membuka kesempatan", "Bergabunglah", "Ayo bergabung", "tantangan nyata".
+Gaya bahasa:
+- Bahasa Indonesia baku yang luwes dan profesional, seperti newsletter karier atau halaman karier perusahaan.
+- Kalimat jelas dan ringkas, sapaan netral (boleh "kamu" seperlunya, tidak wajib).
+- DILARANG: emoji, tanda seru, bahasa gaul (gas, spill, kuy, guys, bestie), kata hiperbola ("kesempatan emas", "jangan sampai ketinggalan", "buruan"), janji diterima, dan klaim yang tidak ada di data.
+- Hanya gunakan informasi dari data. Jika data tidak cukup untuk sebuah bagian, isi string kosong atau array kosong.
 
-captions.threads (maks 380 karakter):
-Hook 1 baris yang bikin berhenti scroll (boleh 1 emoji)
-[baris kosong]
-Info satu baris per poin dengan emoji: 💼 posisi di perusahaan · 📍 lokasi + sistem kerja · 💰 gaji · 🎓 pendidikan · 🗓️ batas lamar (hanya yang ada datanya)
-[baris kosong]
-CTA: "Detail & cara lamarnya ada di link bawah ya 👇"
-[baris kosong]
-2–3 tagar (umum, kota, bidang).
+Isi:
+- headline: nama posisi yang rapi (maks 60 karakter). Jika HURUF BESAR SEMUA, ubah ke huruf judul dan pertahankan singkatan (IT, HR, PT).
+- intro: 1–2 kalimat (maks 220 karakter) yang menjelaskan inti peran ini berdasarkan ringkasan, misalnya apa yang dikerjakan dan dengan siapa. Jangan dibuka dengan nama perusahaan atau "Kami".
+- responsibilities: 0–3 tanggung jawab utama, masing-masing maks 70 karakter, diawali kata kerja (Mengelola, Menyusun, Melayani), tanpa titik.
+- qualifications: 2–4 kualifikasi singkat dari data (pengalaman, keterampilan, sertifikasi, kemampuan bahasa), masing-masing maks 60 karakter, tanpa titik. Jangan tulis pendidikan minimal karena sudah tampil di detail posisi. Tulis sebagai frasa yang wajar, misalnya "Pengalaman minimal 2 tahun di bidang sales" atau "Terbiasa menggunakan Microsoft Excel".
+- audience: 1 kalimat (maks 120 karakter) diawali "Posisi ini cocok untuk", berdasarkan level, pendidikan, atau keterampilan. Kosongkan jika tidak ada dasar datanya.
+- field_tag: satu tagar bidang berformat #loker + bidang, huruf kecil tanpa spasi (contoh: #lokersales, #lokerit, #lokerakuntansi, #lokeradmin). Kosongkan jika ragu.
 
-captions.instagram (maks 900 karakter): struktur sama dengan Threads tapi hook boleh 2 baris dan ada 1 baris tambahan "Cocok buat kamu yang …" berdasarkan data. CTA: "Link lamar ada di bio ya 👆" (link tidak bisa diklik di caption Instagram). Akhiri dengan 5–8 tagar relevan.
-
-captions.linkedin (maks 900 karakter): profesional, ramah, tanpa bahasa gaul dan tanpa emoji berlebihan (boleh emoji penanda poin). Buka dengan kalimat yang menyebut perusahaan dan posisi, lalu poin info, lalu 1 kalimat tentang siapa yang cocok, lalu "Detail dan cara melamar ada di tautan berikut." Akhiri dengan 3 tagar (#lowongankerja #karier + bidang).
-
-captions.x (maks 200 karakter, karena link ditambahkan otomatis): 1–2 kalimat super ringkas berisi posisi, perusahaan, lokasi, gaji bila ada, plus 1–2 tagar. Gaya santai.
-
-captions.whatsapp (maks 600 karakter, untuk WhatsApp/Telegram): pakai *teks tebal* gaya WhatsApp untuk judul. Baris pertama "*Loker: posisi – perusahaan*", lalu poin info dengan emoji, lalu "Cek detail & lamar di sini:" (link ditambahkan otomatis). Tanpa tagar.
-
-headline: nama posisi yang ringkas dan rapi (maks 60 karakter). Kalau data HURUF BESAR SEMUA, ubah ke huruf judul biasa dan pertahankan singkatan.
-highlights: 3 poin kualifikasi singkat dari data (maks 60 karakter), tanpa titik di akhir.
-
-Contoh gaya Threads (jangan disalin isinya):
-Lagi cari kerja yang bisa langsung gas ketemu orang? 🚀
-
-💼 Sales Executive di Maju Jaya
-📍 Bandung · Onsite
-💰 Rp4–6 jt/bulan
-🗓️ Lamar sebelum 20 Des 2026
-
-Detail & cara lamarnya ada di link bawah ya 👇
-
-#lowongankerja #lokerbandung #lokersales
+Contoh intro yang baik: "Bertanggung jawab memperluas jaringan pelanggan layanan internet rumah dan menjaga hubungan dengan pelanggan yang sudah ada."
+Contoh yang buruk: "Siap gas jadi sales kece? 🚀 Ini kesempatan emas buat kamu!"
 TXT;
 
     private const SCHEMA = [
         'type' => 'object',
         'additionalProperties' => false,
-        'required' => ['headline', 'highlights', 'captions'],
+        'required' => ['headline', 'intro', 'responsibilities', 'qualifications', 'audience', 'field_tag'],
         'properties' => [
             'headline' => ['type' => 'string'],
-            'highlights' => ['type' => 'array', 'items' => ['type' => 'string']],
-            'captions' => [
-                'type' => 'object',
-                'additionalProperties' => false,
-                'required' => ['threads', 'instagram', 'linkedin', 'x', 'whatsapp'],
-                'properties' => [
-                    'threads' => ['type' => 'string'],
-                    'instagram' => ['type' => 'string'],
-                    'linkedin' => ['type' => 'string'],
-                    'x' => ['type' => 'string'],
-                    'whatsapp' => ['type' => 'string'],
-                ],
-            ],
+            'intro' => ['type' => 'string'],
+            'responsibilities' => ['type' => 'array', 'items' => ['type' => 'string']],
+            'qualifications' => ['type' => 'array', 'items' => ['type' => 'string']],
+            'audience' => ['type' => 'string'],
+            'field_tag' => ['type' => 'string'],
         ],
     ];
 }

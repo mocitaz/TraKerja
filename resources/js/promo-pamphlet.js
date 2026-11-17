@@ -76,6 +76,18 @@ function pill(ctx, x, y, text, bg, fg, font, padX = 20, h = 48) {
     return w;
 }
 
+/** The brand icon recoloured to solid white (for use on the dark hero). */
+function whiteIcon(img, size) {
+    const c = document.createElement('canvas');
+    c.width = c.height = size * 2;
+    const x = c.getContext('2d');
+    x.drawImage(img, 0, 0, c.width, c.height);
+    x.globalCompositeOperation = 'source-in';
+    x.fillStyle = '#ffffff';
+    x.fillRect(0, 0, c.width, c.height);
+    return c;
+}
+
 async function render(canvas, d) {
     const family = await loadFont();
     const [icon, logo] = await Promise.all([loadImage(d.brandIcon), loadImage(d.logo)]);
@@ -126,19 +138,20 @@ async function render(canvas, d) {
     }
     ctx.restore();
 
-    // Brand row.
+    // Brand row: "LOWONGAN KERJA" on the left, white TraKerja mark + wordmark on the right.
     let y = top + (story ? 80 : 64);
-    if (icon) ctx.drawImage(icon, px, y, 46, 46);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = f(34, 800);
-    track(-0.6);
-    ctx.fillText('TraKerja', icon ? px + 58 : px, y + 35);
     track(2);
     ctx.font = f(18, 700);
     ctx.fillStyle = 'rgba(255, 255, 255, 0.72)';
-    const eyebrow = 'LOWONGAN KERJA';
-    ctx.fillText(eyebrow, W - px - ctx.measureText(eyebrow).width, y + 31);
+    ctx.fillText('LOWONGAN KERJA', px, y + 31);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = f(34, 800);
+    track(-0.6);
+    const word = 'TraKerja';
+    const wordX = W - px - ctx.measureText(word).width;
+    ctx.fillText(word, wordX, y + 35);
     track(0);
+    if (icon) ctx.drawImage(whiteIcon(icon, 46), wordX - 58, y, 46, 46);
 
     // Company row.
     y += 46 + (story ? 96 : 72);

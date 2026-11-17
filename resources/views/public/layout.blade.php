@@ -36,5 +36,6 @@
             <x-workspace-footer />
         </main>
     </div>
+    @livewireScripts
 </body>
 </html>

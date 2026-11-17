@@ -4,7 +4,6 @@ namespace App\JobEngine\Ingest;
 
 use App\Models\CrawlRun;
 use App\Models\JobSource;
-use App\Services\TelegramService;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -20,7 +19,7 @@ class SourceHealth
         $lastThree = CrawlRun::where('job_source_id', $source->id)->where('run_type', 'discover')->latest('id')->limit(3)->pluck('status');
         $paused = $health === 'failing' && $lastThree->count() === 3 && $lastThree->every(fn ($s) => $s === 'failed');
         if ($paused) {
-            [$health, $reason] = ['paused', 'Dijeda otomatis 6 jam setelah 3 run gagal berturut-turut. '.$reason];
+            [$health, $reason] = ['paused', 'Paused for 6 hours after 3 failed runs in a row. '.$reason];
         }
         $interval = $this->nextInterval($source, $run, $health);
         $previous = $source->health;
@@ -34,7 +33,7 @@ class SourceHealth
         ]);
 
         if ($previous !== $health) {
-            $this->alert($source, $previous, $health, $reason);
+            $this->alert($source, $previous, $health, $reason, $run);
         }
     }
 
@@ -42,16 +41,16 @@ class SourceHealth
     private function evaluate(JobSource $source, CrawlRun $run): array
     {
         if ($run->status === 'failed') {
-            return ['failing', 'Run gagal: '.mb_substr((string) $run->error_summary, 0, 180)];
+            return ['failing', 'Run failed: '.mb_substr((string) $run->error_summary, 0, 180)];
         }
         if ($run->found > 0 && $run->failed_items / $run->found > 0.3) {
-            return ['degraded', sprintf('%d%% loker gagal diproses (kemungkinan tata letak situs berubah)', round($run->failed_items / $run->found * 100))];
+            return ['degraded', sprintf('%d%% of listings could not be processed (the site layout may have changed)', round($run->failed_items / $run->found * 100))];
         }
         if ($run->found === 0) {
             $before = CrawlRun::where('job_source_id', $source->id)->where('run_type', 'discover')
                 ->whereKeyNot($run->id)->where('status', '!=', 'failed')->latest('id')->value('found');
             if ($before > 0) {
-                return ['degraded', "0 loker ditemukan, run sebelumnya {$before}"];
+                return ['degraded', "0 listings found; the previous run found {$before}"];
             }
         }
 
@@ -75,19 +74,22 @@ class SourceHealth
         return max(180, min(2880, $interval));
     }
 
-    private function alert(JobSource $source, ?string $from, string $to, ?string $reason): void
+    private function alert(JobSource $source, ?string $from, string $to, ?string $reason, CrawlRun $run): void
     {
-        $text = $to === 'ok'
-            ? "✅ Sumber loker *{$source->name}* pulih (sebelumnya {$from})."
-            : "⚠️ Sumber loker *{$source->name}*: {$to}\n".($reason ?? '');
-
         Log::warning('Job source health changed', ['source' => $source->slug, 'from' => $from, 'to' => $to, 'reason' => $reason]);
-        if (config('job_sources.telegram_alerts')) {
-            try {
-                app(TelegramService::class)->sendMessage($text);
-            } catch (\Throwable $e) {
-                Log::warning('Job source alert not sent: '.$e->getMessage());
-            }
+        $alerts = app(EngineAlerts::class);
+        $key = 'source-health:'.$source->slug;
+        $runLine = "{$run->status} · {$run->found} read, {$run->new_listings} new, {$run->failed_items} failed";
+
+        if ($to === 'ok') {
+            $alerts->resolve($key, "{$source->name} is healthy again", ['Previous state' => $from, 'Last run' => $runLine]);
+
+            return;
         }
+        $alerts->raise($key, $to === 'degraded' ? EngineAlerts::WARNING : EngineAlerts::CRITICAL, "{$source->name}: ".(['failing' => 'scraper failing', 'degraded' => 'scraper degraded', 'paused' => 'scraper paused'][$to] ?? $to), [
+            'Reason' => $reason,
+            'Last run' => $runLine,
+            'Next attempt' => $source->next_discovery_at?->timezone('Asia/Jakarta')->format('d M, H:i').' WIB',
+        ]);
     }
 }

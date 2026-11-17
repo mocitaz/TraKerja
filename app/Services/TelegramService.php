@@ -360,9 +360,15 @@ class TelegramService
         $rawMessage = mb_substr($rawMessage, 0, 250);
         $message = htmlspecialchars($rawMessage, ENT_QUOTES, 'UTF-8');
 
-        $requestUrl = request()?->fullUrl() ?? 'CLI / Background Job';
-        $requestMethod = request()?->method() ?? 'JOB';
-        $requestInfo = htmlspecialchars(self::sanitize("{$requestMethod} {$requestUrl}"), ENT_QUOTES, 'UTF-8');
+        // Queue workers and scheduled commands have a fake request for the app URL ("GET https://trakerja.com").
+        if (app()->runningInConsole()) {
+            $argv = implode(' ', array_slice((array) ($_SERVER['argv'] ?? []), 1, 3));
+            $requestInfo = htmlspecialchars(self::sanitize(str_contains($argv, 'queue:') ? "Queue worker ({$argv})" : "CLI ({$argv})"), ENT_QUOTES, 'UTF-8');
+        } else {
+            $requestUrl = request()?->fullUrl() ?? 'CLI / Background Job';
+            $requestMethod = request()?->method() ?? 'JOB';
+            $requestInfo = htmlspecialchars(self::sanitize("{$requestMethod} {$requestUrl}"), ENT_QUOTES, 'UTF-8');
+        }
 
         $user = auth()->user();
         $userLabel = $user ? "#{$user->id} (" . htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8') . ")" : 'Guest / System';

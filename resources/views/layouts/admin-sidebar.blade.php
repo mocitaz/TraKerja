@@ -8,9 +8,9 @@
         ],
         __('Operations') => [
             ['admin.operations-center', __('Operations Center'), 'pulse', 'admin.operations-center'],
-            ['admin.job-engine', __('Pantau Mesin'), 'gauge', 'admin.job-engine'],
-            ['admin.vacancies', __('Kelola Loker'), 'briefcase', 'admin.vacancies'],
-            ['admin.promotions', __('Promosi Media Sosial'), 'megaphone', 'admin.promotions'],
+            ['admin.job-engine', __('Engine Monitor'), 'gauge', 'admin.job-engine'],
+            ['admin.vacancies', __('Manage Jobs'), 'briefcase', 'admin.vacancies'],
+            ['admin.promotions', __('Social Media Promotion'), 'megaphone', 'admin.promotions'],
             ['admin.golden-set', __('Golden Set Review'), 'check-square-offset', 'admin.golden-set'],
             ['admin.payments', __('Payments & plans'), 'credit-card', 'admin.payments*'],
             ['admin.email-blast', __('Email Blast'), 'envelope-simple', 'admin.email-blast*'],

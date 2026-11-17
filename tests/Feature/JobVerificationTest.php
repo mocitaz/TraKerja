@@ -153,7 +153,7 @@ class JobVerificationTest extends TestCase
         app(DiscoveryRunner::class)->run($source, 100);
         $source->refresh();
         $this->assertSame('degraded', $source->health);
-        $this->assertStringContainsString('0 loker', $source->health_reason);
+        $this->assertStringContainsString('0 listings found', $source->health_reason);
         Http::assertNotSent(fn ($r) => str_contains($r->url(), 'api.telegram.org'));
     }
 

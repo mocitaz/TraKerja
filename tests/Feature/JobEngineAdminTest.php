@@ -48,9 +48,9 @@ class JobEngineAdminTest extends TestCase
     public function test_only_admins_can_open_it(): void
     {
         $this->actingAs(User::factory()->create())->get(route('admin.job-engine'))->assertForbidden();
-        $this->actingAs($this->admin())->get(route('admin.job-engine'))->assertOk()->assertSee('Pantau Mesin');
-        $this->actingAs($this->admin())->get(route('admin.vacancies'))->assertOk()->assertSee('Kelola Loker');
-        $this->actingAs($this->admin())->get(route('admin.promotions'))->assertOk()->assertSee('Promosi Media Sosial');
+        $this->actingAs($this->admin())->get(route('admin.job-engine'))->assertOk()->assertSee('Engine Monitor');
+        $this->actingAs($this->admin())->get(route('admin.vacancies'))->assertOk()->assertSee('Manage Jobs');
+        $this->actingAs($this->admin())->get(route('admin.promotions'))->assertOk()->assertSee('Social Media Promotion');
         $this->actingAs(User::factory()->create())->get(route('admin.vacancies'))->assertForbidden();
     }
 
@@ -115,8 +115,8 @@ class JobEngineAdminTest extends TestCase
     {
         $this->storeVacancy('a', 'Staff Admin Gudang');
         Livewire::actingAs($this->admin())->test(JobEngine::class)
-            ->assertSee('Perlu perhatian')->assertSee('Kualitas data')->assertSee('Antrean worker')
-            ->call('selectTab', 'runs')->assertSee('Riwayat run');
+            ->assertSee('Needs attention')->assertSee('Data quality')->assertSee('Worker queues')
+            ->call('selectTab', 'runs')->assertSee('Run history');
 
         Livewire::actingAs($this->admin())->test(\App\Livewire\Admin\VacancyManager::class)
             ->call('selectTab', 'all')->assertSee('Staff Admin Gudang')
@@ -131,8 +131,8 @@ class JobEngineAdminTest extends TestCase
         DB::table('vacancy_reports')->insert(['vacancy_id' => $fine->id, 'user_id' => $this->admin()->id, 'reason' => 'closed', 'created_at' => now(), 'updated_at' => now()]);
 
         $component = Livewire::actingAs($this->admin())->test(\App\Livewire\Admin\VacancyManager::class)
-            ->assertSee('SALES INTERNET RAKYAT SURABAYA')->assertSee('Judul huruf kapital semua')
-            ->assertSee('Staff Admin Gudang')->assertSee('Dilaporkan pengguna');
+            ->assertSee('SALES INTERNET RAKYAT SURABAYA')->assertSee('Title in all caps')
+            ->assertSee('Staff Admin Gudang')->assertSee('Reported by users');
 
         $component->call('markChecked', $fine->id)->assertDontSee('Staff Admin Gudang');
         $this->assertNotNull(DB::table('vacancy_reports')->where('vacancy_id', $fine->id)->value('resolved_at'));
@@ -148,7 +148,7 @@ class JobEngineAdminTest extends TestCase
         $kept = Vacancy::where('status', 'active')->whereNull('merged_into_id')->first();
         $merged = Vacancy::whereNotNull('merged_into_id')->first();
 
-        $component->call('open', $kept->id)->assertSee('Listing (2)')->assertSee('Digabung ke loker ini')
+        $component->call('open', $kept->id)->assertSee('Listings (2)')->assertSee('Merged into this job')
             ->call('unmerge', $merged->id);
         $this->assertNull($merged->fresh()->merged_into_id);
     }
@@ -197,6 +197,7 @@ class JobEngineAdminTest extends TestCase
             ->call('generate')
             ->assertSet('headline', 'Staff Admin Gudang');
         $this->assertContains('Pendidikan minimal SMA/SMK', $component->get('highlights'));
+        $this->assertStringContainsString('• Pendidikan: minimal SMA/SMK', $component->get('captions')['threads']);
         $captions = $component->get('captions');
         $this->assertSame(['threads', 'instagram', 'linkedin', 'x', 'whatsapp'], array_keys($captions));
         foreach (PromoWriterAlias::PLATFORMS as $key => [, $limit]) {
@@ -226,7 +227,40 @@ class JobEngineAdminTest extends TestCase
         $again->call('setPlatform', 'linkedin')->call('togglePosted');
         $this->assertSame('draft', DB::table('job_promotions')->value('status'));
 
-        Livewire::actingAs($this->admin())->test(\App\Livewire\Admin\Promotions::class)->assertSee('Riwayat promosi')->assertSee('Staff Admin Gudang');
+        Livewire::actingAs($this->admin())->test(\App\Livewire\Admin\Promotions::class)->assertSee('Promotion history')->assertSee('Staff Admin Gudang');
+    }
+
+    public function test_ai_promotion_copy_is_professional_and_built_from_the_data(): void
+    {
+        config(['services.openai.jobs.key' => 'test-key', 'services.openai.jobs.daily_budget_usd' => 5]);
+        Http::swap(new \Illuminate\Http\Client\Factory); // replace the catch-all fake from setUp
+        Http::fake(['api.openai.com/*' => \Illuminate\Support\Facades\Http::response([
+            'choices' => [['message' => ['content' => json_encode([
+                'headline' => 'Staff Admin Gudang',
+                'intro' => 'Mencatat keluar masuk barang dan menyusun laporan stok harian gudang! 🚀',
+                'responsibilities' => ['Mencatat keluar masuk barang', 'Gas terus capai target bareng tim'],
+                'qualifications' => ['Terbiasa menggunakan Microsoft Excel', 'Teliti dalam pencatatan stok'],
+                'audience' => 'Posisi ini cocok untuk lulusan SMA/SMK yang teliti.',
+                'field_tag' => '#lokeradmin',
+            ])], 'finish_reason' => 'stop']],
+            'usage' => ['prompt_tokens' => 10, 'completion_tokens' => 10],
+        ])]);
+        $vacancy = $this->storeVacancy('promo-ai', 'Staff Admin Gudang');
+        $vacancy->update(['salary_min' => 4_000_000, 'salary_max' => 5_000_000, 'salary_period' => 'month', 'education_min' => 'sma_smk']);
+
+        $copy = app(PromoWriterAlias::class)->write($vacancy->fresh());
+
+        $this->assertTrue($copy['ai']);
+        $linkedin = $copy['captions']['linkedin'];
+        $this->assertStringContainsString('Tanggung jawab utama:', $linkedin);
+        $this->assertStringContainsString('• Gaji: Rp4–5 jt/bulan', $linkedin, 'facts come from the data');
+        $this->assertStringContainsString('#lokeradmin', $linkedin);
+        $this->assertStringNotContainsString('Gas terus', $linkedin, 'slang is dropped');
+        foreach ($copy['captions'] as $platform => $caption) {
+            $this->assertDoesNotMatchRegularExpression('/[\x{1F000}-\x{1FAFF}\x{2600}-\x{27BF}]/u', $caption, "{$platform}: no emoji");
+            $this->assertStringNotContainsString('!', $caption, $platform);
+        }
+        $this->assertSame(['Terbiasa menggunakan Microsoft Excel', 'Teliti dalam pencatatan stok'], $copy['highlights']);
     }
 
     public function test_caption_keeps_link_within_threads_limit(): void

@@ -51,13 +51,14 @@ class Fase6PersonalizationTest extends TestCase
         $this->post('/login', ['email' => $user->email, 'password' => 'password'])->assertRedirect(route('dashboard', absolute: false));
     }
 
-    public function test_landing_shows_live_jobs_and_guests_can_search_public_jobs(): void
+    public function test_landing_hides_jobs_board_and_guests_can_search_public_jobs(): void
     {
         $this->makeVacancy(['title' => 'Staff Admin Gudang', 'company' => 'Sumber Rejeki', 'region' => 'Jakarta Selatan']);
         $this->makeVacancy(['title' => 'Barista', 'company' => 'Kopi Kita', 'region' => 'Kota Surabaya']);
         $this->makeVacancy(['title' => 'Kasir Lama', 'status' => 'closed']);
 
-        $this->get('/')->assertOk()->assertSee('lp-jobs-stats', false)->assertSee('Staff Admin Gudang')->assertDontSee('Kasir Lama');
+        // The "Jobs today" board on the landing page is hidden for now (welcome.blade.php).
+        $this->get('/')->assertOk()->assertDontSee('lp-jobs-stats', false)->assertDontSee('Kasir Lama');
 
         $this->get('/loker')->assertOk()->assertSee('Staff Admin Gudang')->assertSee('Barista')->assertDontSee('Kasir Lama')
             ->assertDontSee('noindex', false);

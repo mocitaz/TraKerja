@@ -39,7 +39,7 @@ class SendJobAlerts extends Command
                         'name' => $search->name, 'total' => $total, 'search_id' => $search->id,
                         'jobs' => $query->orderByDesc('first_seen_at')->limit(5)->get()->map(fn (Vacancy $v) => [
                             'title' => $v->title, 'company' => $v->company?->name, 'location' => $v->location,
-                            'salary' => $v->salary_label, 'url' => $v->public_path,
+                            'salary' => $v->salaryLabel($user->preferredLocale()), 'url' => $v->public_path,
                         ])->all(),
                     ];
                     $matched += $total;

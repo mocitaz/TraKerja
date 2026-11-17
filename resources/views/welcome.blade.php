@@ -29,7 +29,7 @@
     @include('landing.navigation')
     <main id="main">
         @include('landing.hero')
-        @include('landing.jobs')
+        {{-- Jobs-today board hidden for now; restore with @include('landing.jobs') --}}
         @include('landing.demo')
         @include('landing.story')
         @include('landing.ai')

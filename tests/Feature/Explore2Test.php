@@ -53,7 +53,7 @@ class Explore2Test extends TestCase
 
         Livewire::actingAs(User::factory()->create())->test(ExploreJobs::class)
             ->assertSee('Staff Admin Gudang')
-            ->assertSee('Rp4,5–5,2 jt/bulan')
+            ->assertSee('Rp4.5–5.2M/month')
             ->assertDontSee('Kasir Toko')
             ->assertDontSee('Sopir Pengiriman');
     }
@@ -133,5 +133,24 @@ class Explore2Test extends TestCase
             ->assertSee($this->path($open), false)
             ->assertDontSee($this->path($closed), false)
             ->assertSee('/perusahaan/'.$open->company->slug, false);
+    }
+
+    public function test_salary_label_follows_the_ui_language(): void
+    {
+        $range = new \App\Models\Vacancy(['salary_min' => 4_500_000, 'salary_max' => 5_200_000, 'salary_period' => 'month', 'salary_currency' => 'IDR']);
+        $usd = new \App\Models\Vacancy(['salary_min' => 3000, 'salary_max' => 4000, 'salary_period' => 'month', 'salary_currency' => 'USD']);
+        $daily = new \App\Models\Vacancy(['salary_min' => 150_000, 'salary_period' => 'day']);
+
+        app()->setLocale('en');
+        $this->assertSame('Rp4.5–5.2M/month', $range->salary_label);
+        $this->assertSame('USD 3,000–4,000/month', $usd->salary_label);
+        $this->assertSame('Rp150,000/day', $daily->salary_label);
+        // Public SEO pages and social posts always ask for Indonesian.
+        $this->assertSame('Rp4,5–5,2 jt/bulan', $range->salaryLabel('id'));
+
+        app()->setLocale('id');
+        $this->assertSame('Rp4,5–5,2 jt/bulan', $range->salary_label);
+        $this->assertSame('USD 3.000–4.000/bulan', $usd->salary_label);
+        $this->assertSame('Rp150.000/hari', $daily->salary_label);
     }
 }

@@ -134,20 +134,34 @@ class Vacancy extends Model
         return $this->last_verified_at ?? $this->last_seen_open_at;
     }
 
-    /** "Rp4,5–5,2 jt/bulan", "USD 3.000–4.000/bulan", or null. */
+    /** Salary in the current UI language: "Rp4,5–5,2 jt/bulan" (id) or "Rp4.5–5.2M/month" (en); null without a salary. */
     public function getSalaryLabelAttribute(): ?string
+    {
+        return $this->salaryLabel();
+    }
+
+    /**
+     * "Rp4,5–5,2 jt/bulan", "USD 3.000–4.000/bulan" in Indonesian; "Rp4.5–5.2M/month", "USD 3,000–4,000/month" in English.
+     * Public SEO pages and social posts pass 'id' so they stay Indonesian whatever the visitor's UI language is.
+     */
+    public function salaryLabel(?string $locale = null): ?string
     {
         if (! $this->salary_min) {
             return null;
         }
-        $period = ['hour' => 'jam', 'day' => 'hari', 'week' => 'minggu', 'month' => 'bulan', 'year' => 'tahun'][$this->salary_period] ?? null;
+        $en = str_starts_with($locale ?? app()->getLocale(), 'en');
+        $periods = $en
+            ? ['hour' => 'hour', 'day' => 'day', 'week' => 'week', 'month' => 'month', 'year' => 'year']
+            : ['hour' => 'jam', 'day' => 'hari', 'week' => 'minggu', 'month' => 'bulan', 'year' => 'tahun'];
+        $period = $periods[$this->salary_period] ?? null;
+        [$dec, $thou] = $en ? ['.', ','] : [',', '.'];
         $idr = ($this->salary_currency ?? 'IDR') === 'IDR';
-        // Rupiah from 1 juta up is written in "jt", with the unit once: "Rp4,5–5,2 jt".
+        // Rupiah from 1 million up is written short, with the unit once: "Rp4,5–5,2 jt" / "Rp4.5–5.2M".
         $juta = $idr && $this->salary_min >= 1_000_000;
         $fmt = fn (int $v) => $juta
-            ? rtrim(rtrim(number_format($v / 1_000_000, 1, ',', '.'), '0'), ',')
-            : number_format($v, 0, ',', '.');
-        $range = $fmt($this->salary_min).($this->salary_max && $this->salary_max !== $this->salary_min ? '–'.$fmt($this->salary_max) : '').($juta ? ' jt' : '');
+            ? rtrim(rtrim(number_format($v / 1_000_000, 1, $dec, $thou), '0'), $dec)
+            : number_format($v, 0, $dec, $thou);
+        $range = $fmt($this->salary_min).($this->salary_max && $this->salary_max !== $this->salary_min ? '–'.$fmt($this->salary_max) : '').($juta ? ($en ? 'M' : ' jt') : '');
 
         return ($idr ? 'Rp' : $this->salary_currency.' ').$range.($period ? '/'.$period : '');
     }

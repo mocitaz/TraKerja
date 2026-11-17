@@ -40,4 +40,14 @@ class EnrichVacancyJob implements ShouldBeUnique, ShouldQueue
             rescue(fn () => app(\App\JobEngine\Personalization\Embeddings::class)->embedIds([$vacancy->id]), null, false);
         }
     }
+
+    /** Enrichment failures come in batches (same cause); one alert per hour is enough. */
+    public function failed(?\Throwable $e): void
+    {
+        app(\App\JobEngine\Ingest\EngineAlerts::class)->notify(\App\JobEngine\Ingest\EngineAlerts::WARNING, 'AI enrichment job failed', [
+            'Vacancy' => "#{$this->vacancyId}",
+            'Error' => $e ? class_basename($e).': '.\Illuminate\Support\Str::limit($e->getMessage(), 160) : null,
+            'Note' => 'further enrichment failures in the next hour are not sent separately',
+        ], 'enrich-failed', 60);
+    }
 }
