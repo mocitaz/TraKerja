@@ -22,8 +22,11 @@ class JobEngineWatchdog extends Command
 
     protected $description = 'Check queue workers, scraper runs, verification and AI budget; alert on Telegram';
 
-    /** Queues served by the trakerja-worker Supervisor program. */
-    private const QUEUES = ['discovery', 'ingest', 'ai', 'default'];
+    /** Queue => Supervisor program that serves it (see docs/operations/workers.md). */
+    private const WORKERS = [
+        'discovery' => 'trakerja-worker:*', 'ingest' => 'trakerja-worker:*', 'ai' => 'trakerja-worker:*', 'default' => 'trakerja-worker:*',
+        'ai-photo' => 'trakerja-ai-photo', 'ai-studio' => 'trakerja-ai-studio', 'exports' => 'trakerja-exports',
+    ];
 
     public function handle(EngineAlerts $alerts, EngineMonitor $monitor, AiGateway $ai): int
     {
@@ -68,8 +71,8 @@ class JobEngineWatchdog extends Command
             $out["queue:{$q->queue}"] = [$minutes >= 30 ? EngineAlerts::CRITICAL : EngineAlerts::WARNING, "Queue \"{$q->queue}\" is not being processed", [
                 'Waiting jobs' => number_format($q->n),
                 'Oldest job waiting' => "{$minutes} min",
-                'Likely cause' => in_array($q->queue, self::QUEUES, true) ? 'trakerja-worker is down or stuck' : 'no worker listens to this queue',
-                'Check' => 'sudo supervisorctl status trakerja-worker:*',
+                'Likely cause' => isset(self::WORKERS[$q->queue]) ? self::WORKERS[$q->queue].' is down or stuck' : 'no worker listens to this queue',
+                'Check' => 'sudo supervisorctl status '.(self::WORKERS[$q->queue] ?? ''),
             ]];
         }
 
