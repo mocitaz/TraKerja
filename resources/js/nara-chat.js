@@ -90,12 +90,16 @@ export function formatNaraText(raw, routes = {}, assistant = true, state = {}) {
     // Job cards: the server expands [job:ID] into [job:ID|title|company|meta|url|saved] from the catalogue;
     // bare tags (still streaming) are hidden. Buttons are handled by naraChat.onMessageClick.
     const savedJobs = state.savedJobs instanceof Set ? state.savedJobs : new Set();
-    text = text.replace(/\[job:(\d+)(?:\|([^|\]]*)\|([^|\]]*)\|([^|\]]*)\|([^|\]]*)(?:\|([01]))?)?\]/g, (_, id, title, company, meta, url, saved) => {
+    text = text.replace(/\[job:(\d+)(?:\|([^|\]]*)\|([^|\]]*)\|([^|\]]*)\|([^|\]]*)(?:\|([01]))?(?:\|([^|\]]*))?)?\]/g, (_, id, title, company, meta, url, saved, logo) => {
         if (!title) return '';
         const href = typeof url === 'string' && /^\/(?!\/)/.test(url) ? url : null;
         const isSaved = saved === '1' || savedJobs.has(id);
         const text = `<span class="nara-job-text"><strong>${escape(title.trim())}</strong>${company ? `<small>${escape(company.trim())}</small>` : ''}${meta ? `<em>${escape(meta.trim())}</em>` : ''}</span>`;
-        const main = href ? `<a class="nara-job-main" href="${escape(href)}" wire:navigate><span class="nara-job-icon" aria-hidden="true"><i class="ph ph-briefcase"></i></span>${text}</a>` : `<span class="nara-job-main"><span class="nara-job-icon" aria-hidden="true"><i class="ph ph-briefcase"></i></span>${text}</span>`;
+        // Company logo when the catalogue has one (https only); the initial stays underneath if the image fails.
+        const initial = (company ?? '').trim().charAt(0).toUpperCase();
+        const logoUrl = typeof logo === 'string' && /^https:\/\/[^\s"'<>]+$/.test(logo.trim()) ? logo.trim() : null;
+        const icon = `<span class="nara-job-icon${logoUrl ? ' has-logo' : ''}" aria-hidden="true">${initial ? `<b>${escape(initial)}</b>` : '<i class="ph ph-briefcase"></i>'}${logoUrl ? `<img src="${escape(logoUrl)}" alt="" width="36" height="36" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="this.parentNode.classList.add('is-loaded')" onerror="this.parentNode.classList.remove('has-logo');this.remove()">` : ''}</span>`;
+        const main = href ? `<a class="nara-job-main" href="${escape(href)}" wire:navigate>${icon}${text}</a>` : `<span class="nara-job-main">${icon}${text}</span>`;
         const save = isSaved
             ? `<span class="nara-job-btn is-done"><i class="ph-fill ph-bookmark-simple" aria-hidden="true"></i>${escape(t("Saved"))}</span>`
             : `<button type="button" class="nara-job-btn" data-nara-save-job="${escape(id)}"><i class="ph ph-bookmark-simple" aria-hidden="true"></i>${escape(t("Save"))}</button>`;

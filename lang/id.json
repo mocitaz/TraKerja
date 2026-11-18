@@ -6267,5 +6267,18 @@
     "Nara Admin is not available right now (the AI key is not configured).": "Nara Admin sedang tidak tersedia (kunci AI belum dikonfigurasi).",
     "Nara Admin could not answer right now. Please try again.": "Nara Admin belum bisa menjawab sekarang. Silakan coba lagi.",
     "This proposal was already handled.": "Usulan ini sudah ditangani.",
-    "This proposal expired. Ask Nara again.": "Usulan ini sudah kedaluwarsa. Minta Nara lagi."
+    "This proposal expired. Ask Nara again.": "Usulan ini sudah kedaluwarsa. Minta Nara lagi.",
+    "Open Nara Admin": "Buka Nara Admin",
+    "Ask Nara Admin": "Tanya Nara Admin",
+    "Your operations analyst, on live data.": "Analis operasionalmu, dari data langsung.",
+    "What do you want to know about TraKerja today?": "Apa yang ingin kamu ketahui tentang TraKerja hari ini?",
+    "I read live payments, tickets, job sources, users and AI usage, and I can prepare changes for you to approve.": "Saya membaca data langsung pembayaran, tiket, sumber loker, pengguna, dan pemakaian AI, lalu bisa menyiapkan perubahan untuk kamu setujui.",
+    "Looking at: :page": "Sedang dilihat: :page",
+    "Read-only by default. Changes run only after you approve them.": "Hanya membaca secara bawaan. Perubahan baru dijalankan setelah kamu setujui.",
+    "Conversation with Nara Admin": "Percakapan dengan Nara Admin",
+    "Needs your approval": "Perlu persetujuanmu",
+    "Reading the data…": "Membaca datanya…",
+    "Message Nara Admin": "Pesan untuk Nara Admin",
+    "Ask about payments, tickets, sources, users…": "Tanya soal pembayaran, tiket, sumber loker, pengguna…",
+    "Numbers come from live data. Check before acting.": "Angka diambil dari data langsung. Periksa sebelum bertindak."
 }

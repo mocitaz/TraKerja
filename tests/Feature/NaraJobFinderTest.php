@@ -84,7 +84,7 @@ class NaraJobFinderTest extends TestCase
         $reply = $this->finder()->expand("Cocok untuk skill SQL kamu.\n[job:{$job->id}]\n[job:{$other->id}]\n[job:99999]", [$job->id]);
 
         $this->assertStringContainsString("[job:{$job->id}|Data / Analyst|Maju Jaya|", $reply, 'pipes in a title cannot break the tag');
-        $this->assertStringContainsString('/explore?job='.$job->id.'|0]', $reply);
+        $this->assertStringContainsString('/explore?job='.$job->id.'|0|]', $reply, 'no logo: the last field stays empty');
         $this->assertStringNotContainsString('Not offered', $reply);
         $this->assertStringNotContainsString('99999', $reply);
     }
@@ -166,13 +166,13 @@ class NaraJobFinderTest extends TestCase
         $result = (new KawanKerjaService)->jobSearch($user, 'carikan loker data analyst di bandung');
         $this->assertTrue($result['can_save_search']);
         $reply = (new KawanKerjaService)->withJobCards("[job:{$job->id}]", $result, $user);
-        $this->assertStringEndsWith('|0]'."\n\n".'[savesearch:data analyst · Bandung]', $reply);
+        $this->assertStringEndsWith('|0|]'."\n\n".'[savesearch:data analyst · Bandung]', $reply);
 
         $this->actingAs($user)->postJson(route('kawankerja.save-job'), ['vacancy_id' => $job->id])->assertOk()->assertJson(['saved' => true]);
         $this->actingAs($user)->postJson(route('kawankerja.save-job'), ['vacancy_id' => $job->id])->assertOk(); // idempotent
         $this->assertSame(1, \App\Models\JobBookmark::where('user_id', $user->id)->where('vacancy_id', $job->id)->count());
         $this->actingAs($user)->postJson(route('kawankerja.save-job'), ['vacancy_id' => $closed->id])->assertNotFound();
-        $this->assertStringEndsWith('|1]', (new KawanKerjaService)->withJobCards("[job:{$job->id}]", ['jobs' => [['id' => $job->id]]], $user), 'saved jobs render as saved');
+        $this->assertStringEndsWith('|1|]', (new KawanKerjaService)->withJobCards("[job:{$job->id}]", ['jobs' => [['id' => $job->id]]], $user), 'saved jobs render as saved');
 
         $this->actingAs($user)->postJson(route('kawankerja.save-search'))->assertOk();
         $search = \App\Models\SavedJobSearch::where('user_id', $user->id)->sole();

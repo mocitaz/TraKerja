@@ -1,84 +1,85 @@
-/* Nara Admin: floating button + side panel on every admin page. Uses the admin console theme variables. */
-.admin-nara { --an-blue: var(--ac-blue, #386c98); position: relative; z-index: 70; }
-.admin-nara [hidden] { display: none !important; }
+/* Nara Admin: the member Nara drawer (kawankerja.css) plus what the admin version adds —
+   an Admin badge, a glowing welcome orb, page context, data tables and approval cards. */
 
-.admin-nara__fab { position: fixed; right: 20px; bottom: 20px; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1px solid var(--ac-line); border-radius: 999px; background: var(--ac-bg); color: var(--ac-ink); font: 600 13px/1 inherit; box-shadow: 0 6px 22px rgba(20, 27, 41, .14); cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
-.admin-nara__fab:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(20, 27, 41, .18); }
-.admin-nara__fab:focus-visible, .admin-nara button:focus-visible, .admin-nara textarea:focus-visible { outline: 2px solid var(--an-blue); outline-offset: 2px; }
-.admin-nara__fab i { color: var(--an-blue); font-size: 18px; }
+/* Launcher: the Nara avatar with a small "Admin" tag; sits above the mobile admin dock. */
+.nara-widget--admin .nara-launcher { width: 56px; height: 56px; border-radius: 50%; background: var(--nara-surface); box-shadow: 0 8px 26px rgba(17, 17, 19, .16), 0 0 0 1px var(--nara-line); transition: transform .18s ease, box-shadow .18s ease; }
+.nara-widget--admin .nara-launcher:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(91, 74, 122, .26), 0 0 0 1px #d9d0e6; }
+.nara-widget--admin .nara-launcher::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(from 210deg, #8f75bd, #5b4a7a, #c9b6e6, #8f75bd); z-index: -1; opacity: .9; }
+.nara-admin-launcher-badge { position: absolute; right: -6px; bottom: -4px; padding: 2px 6px; border: 2px solid var(--nara-surface); border-radius: 999px; background: var(--nara-ink); color: var(--nara-surface); font-size: 9px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; line-height: 1.3; }
+@media (max-width: 1099px) { .nara-widget--admin { bottom: calc(82px + env(safe-area-inset-bottom)); right: 16px; } }
 
-.admin-nara__backdrop { position: fixed; inset: 0; background: rgba(15, 18, 28, .32); }
-@media (min-width: 1100px) { .admin-nara__backdrop { display: none !important; } }
+/* Header badge */
+.nara-admin-badge { display: inline-flex; align-items: center; margin-left: 6px !important; padding: 2px 8px; border-radius: 999px; background: var(--nara-ink); color: var(--nara-surface) !important; font-size: 10px !important; font-weight: 700 !important; letter-spacing: .05em !important; text-transform: uppercase; vertical-align: 2px; }
 
-.admin-nara__panel { position: fixed; inset: 0 0 0 auto; width: min(440px, 100vw); display: flex; flex-direction: column; background: var(--ac-bg); color: var(--ac-ink); border-left: 1px solid var(--ac-line); box-shadow: -12px 0 40px rgba(20, 27, 41, .14); transform: translateX(104%); visibility: hidden; transition: transform .22s cubic-bezier(.4, 0, .2, 1), visibility 0s .22s; }
-.admin-nara__panel.is-open { transform: none; visibility: visible; transition: transform .22s cubic-bezier(.4, 0, .2, 1), visibility 0s; }
-@media (prefers-reduced-motion: reduce) { .admin-nara__panel, .admin-nara__panel.is-open, .admin-nara__fab { transition: none; } }
+/* Welcome: avatar inside a soft glowing ring, page context pill */
+.nara-admin-welcome { padding-top: clamp(20px, 7vh, 64px); }
+.nara-admin-orb { position: relative; display: grid; place-items: center; width: 76px; height: 76px; margin: 0 auto 16px; border-radius: 50%; }
+.nara-admin-orb::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, #c9b6e6, #8f75bd, #5b4a7a, #b8a4d8, #c9b6e6); animation: nara-admin-spin 9s linear infinite; }
+.nara-admin-orb::after { content: ''; position: absolute; inset: -14px; border-radius: 50%; background: radial-gradient(circle, rgba(143, 117, 189, .28), transparent 68%); z-index: -1; }
+.nara-admin-orb img { position: relative; width: 64px; height: 64px; border: 3px solid var(--nara-surface); border-radius: 50%; background: var(--nara-surface); }
+@keyframes nara-admin-spin { to { transform: rotate(360deg); } }
+.nara-admin-context { display: inline-flex; align-items: center; gap: 6px; margin: -8px auto 20px; padding: 5px 12px; border: 1px solid var(--nara-line); border-radius: 999px; background: var(--nara-soft); color: var(--nara-muted); font-size: 12px; font-weight: 550; }
+.nara-admin-context i { color: var(--nara-accent); font-size: 14px; }
+.nara-admin-welcome .nara-starters button { position: relative; overflow: hidden; }
+.nara-admin-welcome .nara-starter-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--nara-tint); font-size: 17px; }
+.nara-admin-welcome .nara-starters button:hover { border-color: #cfc3df; box-shadow: 0 6px 18px rgba(91, 74, 122, .10); transform: translateY(-1px); }
+.nara-context-note { display: inline-flex; align-items: center; gap: 6px; }
+.nara-context-note i { color: var(--nara-accent); font-size: 14px; }
 
-.admin-nara__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--ac-line); }
-.admin-nara__head strong { display: block; font-size: 14px; }
-.admin-nara__head small { color: var(--ac-muted); font-size: 12px; }
-.admin-nara__head-actions { display: flex; gap: 4px; }
-.admin-nara__head-actions button { width: 34px; height: 34px; display: grid; place-items: center; border: 0; border-radius: 8px; background: transparent; color: var(--ac-muted); font-size: 17px; cursor: pointer; }
-.admin-nara__head-actions button:hover:not(:disabled) { background: var(--ac-soft); color: var(--ac-ink); }
-.admin-nara__head-actions button:disabled { opacity: .4; cursor: default; }
+/* Message body extras */
+.nara-drawer--admin .nara-message-body a { color: var(--nara-accent); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.nara-drawer--admin .nara-message-body a:hover { color: var(--nara-text); }
+.nara-admin-segment > div > :last-child { margin-bottom: 0; }
+.nara-admin-segment + .nara-admin-segment { margin-top: 12px; }
+.nara-message--user .nara-message-body p { margin: 0; white-space: pre-wrap; }
 
-.admin-nara__scroll { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; overscroll-behavior: contain; }
-.admin-nara__empty p { margin: 0 0 12px; color: var(--ac-muted); font-size: 13px; line-height: 1.55; }
+/* Data tables: framed, sticky header row, scroll sideways in a narrow panel */
+.nara-table { margin: 12px 0 14px; border: 1px solid var(--nara-line); border-radius: 14px; overflow-x: auto; background: var(--nara-surface); scrollbar-width: thin; }
+.nara-table table { width: 100%; border-collapse: collapse; font-size: 12.5px; line-height: 1.45; }
+.nara-table th, .nara-table td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--nara-line); white-space: nowrap; }
+.nara-table thead th { background: var(--nara-soft); color: var(--nara-muted); font-size: 11px; font-weight: 650; letter-spacing: .03em; text-transform: uppercase; }
+.nara-table tbody tr:last-child td { border-bottom: 0; }
+.nara-table tbody tr:hover td { background: color-mix(in srgb, var(--nara-soft) 60%, transparent); }
+.nara-table td:first-child { font-weight: 600; }
 
-.admin-nara__chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-.admin-nara__chips[hidden] { display: none; }
-.admin-nara__chips button { padding: 7px 11px; border: 1px solid var(--ac-line); border-radius: 999px; background: var(--ac-bg); color: var(--ac-ink); font: 500 12px/1.3 inherit; text-align: left; cursor: pointer; }
-.admin-nara__chips button:hover { background: var(--ac-soft); border-color: var(--an-blue); }
+/* Approval card */
+.nara-approval { margin: 4px 0; border: 1px solid #d9d0e6; border-radius: 16px; background: linear-gradient(180deg, var(--nara-tint), var(--nara-surface) 70px); overflow: hidden; box-shadow: 0 6px 20px rgba(91, 74, 122, .08); }
+.nara-approval > header { display: flex; align-items: flex-start; gap: 11px; padding: 14px 14px 10px; }
+.nara-approval-icon { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 11px; background: var(--nara-ink); color: var(--nara-surface); font-size: 18px; }
+.nara-approval-title { display: grid; gap: 2px; min-width: 0; }
+.nara-approval-title small { font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--nara-accent); }
+.nara-approval-title strong { font-size: 13.5px; line-height: 1.4; }
+.nara-approval-details { display: grid; gap: 0; margin: 0 14px 12px; padding: 4px 12px; border: 1px solid var(--nara-line); border-radius: 12px; background: var(--nara-surface); }
+.nara-approval-details > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--nara-line); font-size: 12px; line-height: 1.5; }
+.nara-approval-details > div:last-child { border-bottom: 0; }
+.nara-approval-details dt { color: var(--nara-muted); }
+.nara-approval-details dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.nara-approval-result { margin: 0 14px 12px !important; padding: 9px 12px; border-radius: 10px; background: var(--nara-soft); font-size: 12.5px; }
+.nara-approval > footer { display: flex; justify-content: flex-end; gap: 8px; padding: 10px 14px 14px; }
+.nara-approval > footer button { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 16px; border-radius: 999px; font-size: 12.5px; font-weight: 650; transition: background .15s, border-color .15s, transform .15s; }
+.nara-approval-reject { border: 1px solid var(--nara-line); background: var(--nara-surface); color: var(--nara-text); }
+.nara-approval-reject:hover:not(:disabled) { background: var(--nara-soft); }
+.nara-approval-approve { border: 0; background: var(--nara-ink); color: var(--nara-surface); }
+.nara-approval-approve:hover:not(:disabled) { transform: translateY(-1px); background: #2b2b30; }
+.nara-approval.is-executed { border-color: #bfe0cc; background: linear-gradient(180deg, #eaf6ef, var(--nara-surface) 70px); box-shadow: none; }
+.nara-approval.is-executed .nara-approval-icon { background: #2f8f5b; color: #fff; }
+.nara-approval.is-executed .nara-approval-title small { color: #2f8f5b; }
+.nara-approval.is-failed { border-color: #efc3bd; background: linear-gradient(180deg, #fbeceb, var(--nara-surface) 70px); box-shadow: none; }
+.nara-approval.is-failed .nara-approval-icon { background: #c0392b; color: #fff; }
+.nara-approval.is-failed .nara-approval-title small { color: #c0392b; }
+.nara-approval:is(.is-rejected, .is-expired) { border-color: var(--nara-line); background: var(--nara-surface); box-shadow: none; opacity: .78; }
+.nara-approval:is(.is-rejected, .is-expired) .nara-approval-icon { background: var(--nara-soft); color: var(--nara-muted); }
+.nara-approval:is(.is-rejected, .is-expired) .nara-approval-title small { color: var(--nara-muted); }
 
-.admin-nara__message.is-user { align-self: flex-end; max-width: 88%; padding: 9px 13px; border-radius: 14px 14px 4px 14px; background: var(--ac-soft); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
-.admin-nara__message.is-user p { margin: 0; white-space: pre-wrap; }
-.admin-nara__body { font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
-.admin-nara__body p { margin: 0 0 9px; }
-.admin-nara__body ul, .admin-nara__body ol { margin: 0 0 9px; padding-left: 20px; }
-.admin-nara__body li { margin: 2px 0; }
-.admin-nara__body a { color: var(--an-blue); text-decoration: underline; text-underline-offset: 2px; }
-.admin-nara__body code { padding: 1px 5px; border-radius: 5px; background: var(--ac-soft); font-size: 12px; }
-.admin-nara__body pre { margin: 0 0 9px; padding: 10px 12px; overflow-x: auto; border-radius: 8px; background: var(--ac-soft); }
-.admin-nara__body pre code { padding: 0; background: none; }
-.admin-nara__heading { font-weight: 700; }
-.admin-nara__table { margin: 0 0 10px; overflow-x: auto; border: 1px solid var(--ac-line); border-radius: 8px; }
-.admin-nara__table table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.admin-nara__table th, .admin-nara__table td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--ac-line); white-space: nowrap; }
-.admin-nara__table th { background: var(--ac-soft); color: var(--ac-muted); font-weight: 600; }
-.admin-nara__table tr:last-child td { border-bottom: 0; }
+/* Dark */
+.dark .nara-widget--admin .nara-launcher { box-shadow: 0 8px 26px rgba(0, 0, 0, .45), 0 0 0 1px var(--nara-line); }
+.dark .nara-approval { border-color: #3d3450; box-shadow: none; }
+.dark .nara-approval-approve:hover:not(:disabled) { background: #ffffff; }
+.dark .nara-approval.is-executed { border-color: #24533a; background: linear-gradient(180deg, #16291e, var(--nara-surface) 70px); }
+.dark .nara-approval.is-failed { border-color: #5a2a24; background: linear-gradient(180deg, #2c1715, var(--nara-surface) 70px); }
+.dark .nara-admin-welcome .nara-starters button:hover { border-color: #463c57; box-shadow: none; }
 
-.admin-nara__action { margin: 4px 0 10px; padding: 12px 14px; border: 1px solid var(--ac-line); border-left: 3px solid var(--an-blue); border-radius: 10px; background: var(--ac-bg); }
-.admin-nara__action strong { display: block; font-size: 13px; }
-.admin-nara__action ul { margin: 8px 0 0; padding: 0; list-style: none; color: var(--ac-muted); font-size: 12px; line-height: 1.5; }
-.admin-nara__action li { white-space: pre-wrap; }
-.admin-nara__action-buttons { display: flex; gap: 8px; margin-top: 12px; }
-.admin-nara__action-buttons button { min-height: 34px; padding: 0 14px; border: 1px solid var(--ac-line); border-radius: 8px; background: var(--ac-bg); color: var(--ac-ink); font: 600 12px/1 inherit; cursor: pointer; }
-.admin-nara__action-buttons .is-approve { border-color: var(--an-blue); background: var(--an-blue); color: #fff; }
-.dark .admin-nara__action-buttons .is-approve { color: #11202c; }
-.admin-nara__action-buttons button:disabled { opacity: .5; cursor: wait; }
-.admin-nara__action-state { margin: 10px 0 0 !important; font-size: 12px; color: var(--ac-muted); }
-.admin-nara__action-state > span:first-child { margin-right: 6px; font-weight: 700; color: var(--ac-ink); }
-.admin-nara__action.is-executed { border-left-color: #2f8f5b; }
-.admin-nara__action.is-failed { border-left-color: #c0392b; }
-.admin-nara__action.is-rejected, .admin-nara__action.is-expired { border-left-color: var(--ac-line); opacity: .75; }
-
-.admin-nara__thinking { margin: 0; color: var(--ac-muted); font-size: 12px; }
-.admin-nara__thinking:not([hidden])::after { content: ''; display: inline-block; width: 4px; height: 4px; margin-left: 6px; border-radius: 50%; background: currentColor; animation: admin-nara-pulse 1s infinite ease-in-out; }
-@keyframes admin-nara-pulse { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .admin-nara__thinking::after { animation: none !important; } }
-.admin-nara__error { margin: 0; padding: 8px 10px; border-radius: 8px; background: #fbeceb; color: #9c2b20; font-size: 12px; }
-.dark .admin-nara__error { background: #3a1f1c; color: #f0b3ac; }
-
-.admin-nara__form { display: flex; align-items: flex-end; gap: 8px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); border-top: 1px solid var(--ac-line); }
-.admin-nara__form textarea { flex: 1; min-height: 40px; max-height: 120px; padding: 10px 12px; border: 1px solid var(--ac-line); border-radius: 12px; background: var(--ac-bg); color: var(--ac-ink); font: 13px/1.4 inherit; resize: none; field-sizing: content; }
-.admin-nara__form button { width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 50%; background: var(--an-blue); color: #fff; font-size: 16px; cursor: pointer; }
-.dark .admin-nara__form button { color: #11202c; }
-.admin-nara__form button:disabled { opacity: .35; cursor: default; }
-.admin-nara__form .is-stop { background: var(--ac-ink); color: var(--ac-bg); }
-
-@media (max-width: 1099px) {
-    .admin-nara__fab { bottom: calc(76px + env(safe-area-inset-bottom)); right: 14px; }
-    .admin-nara__fab span { display: none; }
-    .admin-nara__fab { width: 48px; height: 48px; padding: 0; justify-content: center; }
-    .admin-nara__panel { width: 100vw; border-left: 0; }
+@media (prefers-reduced-motion: reduce) {
+    .nara-admin-orb::before { animation: none; }
+    .nara-widget--admin .nara-launcher, .nara-admin-welcome .nara-starters button { transition: none; }
 }

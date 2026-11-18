@@ -195,7 +195,7 @@ class AdminNaraTest extends TestCase
         $admin = $this->admin();
         $this->gemini($this->text('Halo, ada yang bisa dibantu?'));
         $this->ask($admin, 'Apa kabar sistem?')->assertOk();
-        $this->actingAs($admin)->getJson(route('admin.nara.history', ['page' => 'payments']))->assertOk()->assertJsonCount(2, 'history')->assertJsonPath('starters.0', 'Ada pembayaran yang menggantung?');
+        $this->actingAs($admin)->getJson(route('admin.nara.history', ['page' => 'payments']))->assertOk()->assertJsonCount(2, 'history')->assertJsonPath('starters.0.text', 'Ada pembayaran yang menggantung?');
         $this->actingAs($this->admin())->getJson(route('admin.nara.history'))->assertJsonCount(0, 'history');
 
         $this->actingAs($admin)->postJson(route('admin.nara.clear'))->assertOk();

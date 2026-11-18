@@ -192,12 +192,23 @@ class NaraJobFinder
             }
             $meta = implode(' · ', array_filter([$vacancy->location ?: ($vacancy->work_mode === 'remote' ? 'Remote' : null), $vacancy->salary_label]));
 
-            // [job:id|title|company|meta|url|saved]: everything the card shows, from the database.
+            // [job:id|title|company|meta|url|saved|logo]: everything the card shows, from the database.
             return '[job:'.$vacancy->id.'|'.$clean($vacancy->title).'|'.$clean($vacancy->company?->name).'|'.$clean($meta).'|'
-                .route('jobs.explore', ['job' => $vacancy->id], false).'|'.(isset($saved[$vacancy->id]) ? '1' : '0').']';
+                .route('jobs.explore', ['job' => $vacancy->id], false).'|'.(isset($saved[$vacancy->id]) ? '1' : '0').'|'.self::logoForTag($vacancy->company?->logo_url).']';
         }, $reply);
 
         return trim(preg_replace("/\n{3,}/", "\n\n", $reply));
+    }
+
+    /** The company logo for a job card: https only, with the characters of the tag grammar escaped. */
+    public static function logoForTag(?string $url): string
+    {
+        $url = trim((string) $url);
+        if ($url === '' || ! str_starts_with($url, 'https://') || filter_var($url, FILTER_VALIDATE_URL) === false || strlen($url) > 500) {
+            return '';
+        }
+
+        return str_replace(['|', '[', ']', ' ', '"', "'", '<', '>'], ['%7C', '%5B', '%5D', '%20', '%22', '%27', '%3C', '%3E'], $url);
     }
 
     private function matching($query, array $terms, bool $all)

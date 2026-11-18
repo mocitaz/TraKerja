@@ -139,17 +139,19 @@ class AdminNaraController extends Controller
         return response()->json(['success' => true, 'action' => $proposal->refresh()->card()]);
     }
 
-    /** Starter chips for the page the admin is on. @return array<int, string> */
+    /** Starter cards for the page the admin is on. @return array<int, array{icon: string, text: string, hint: string}> */
     public static function starters(?string $page): array
     {
+        $card = fn (string $icon, string $text, string $hint) => ['icon' => $icon, 'text' => $text, 'hint' => $hint];
+
         return match ($page) {
-            'operations' => ['Ringkas kondisi sistem sekarang', 'Ada insiden yang masih terbuka?', 'Service mana yang bermasalah?'],
-            'job-engine', 'vacancies' => ['Sumber loker mana yang bermasalah?', 'Berapa loker baru 24 jam terakhir?', 'Ada loker yang dicurigai scam?'],
-            'payments' => ['Ada pembayaran yang menggantung?', 'Ringkas pendapatan 7 hari terakhir', 'Kenapa pendapatan naik/turun?'],
-            'users', 'user-activities' => ['Berapa pendaftar baru minggu ini?', 'Dari yang daftar, berapa yang aktif membuat lamaran?'],
-            'feedbacks', 'survey' => ['Tiket apa yang belum dibalas?', 'Apa keluhan terbanyak di survei?'],
-            'analytics' => ['Apa yang berubah minggu ini?', 'Kenapa pendaftar naik/turun?'],
-            default => ['Apa yang perlu diperhatikan hari ini?', 'Ringkas kondisi sistem sekarang', 'Tiket apa yang belum dibalas?'],
+            'operations' => [$card('ph-pulse', 'Ringkas kondisi sistem sekarang', 'Layanan, insiden, antrean'), $card('ph-siren', 'Ada insiden yang masih terbuka?', 'Urut dari yang paling genting'), $card('ph-plugs', 'Service mana yang bermasalah?', 'Hasil cek layanan terakhir'), $card('ph-queue', 'Ada job antrean yang gagal?', 'Failed jobs 24 jam')],
+            'job-engine', 'vacancies' => [$card('ph-plugs-connected', 'Sumber loker mana yang bermasalah?', 'Gagal atau dijeda'), $card('ph-briefcase', 'Berapa loker baru 24 jam terakhir?', 'Plus sumber teratas'), $card('ph-warning-diamond', 'Ada loker yang dicurigai scam?', 'Flag dan kualitas'), $card('ph-trend-down', 'Kenapa loker baru naik atau turun?', 'Bandingkan minggu lalu')],
+            'payments' => [$card('ph-hourglass-medium', 'Ada pembayaran yang menggantung?', 'Menunggu lebih dari 1 jam'), $card('ph-currency-circle-dollar', 'Ringkas pendapatan 7 hari terakhir', 'Per status dan channel'), $card('ph-chart-line-up', 'Kenapa pendapatan naik atau turun?', 'Bandingkan periode lalu'), $card('ph-crown', 'Berapa user premium sekarang?', 'Dan yang baru minggu ini')],
+            'users', 'user-activities' => [$card('ph-user-plus', 'Berapa pendaftar baru minggu ini?', 'Plus yang terverifikasi'), $card('ph-funnel', 'Berapa yang aktif membuat lamaran?', 'Corong pendaftaran'), $card('ph-magnifying-glass', 'Cari user berdasarkan email', 'Ringkasan akun lengkap'), $card('ph-pulse', 'Berapa user aktif 7 hari terakhir?', 'Aktivitas terbaru')],
+            'feedbacks', 'survey' => [$card('ph-lifebuoy', 'Tiket apa yang belum dibalas?', 'Yang paling lama dulu'), $card('ph-chat-centered-text', 'Apa keluhan terbanyak di survei?', 'Rata-rata dan komentar'), $card('ph-pencil-line', 'Bantu balas tiket tertua', 'Draf untuk kamu setujui'), $card('ph-smiley', 'Seberapa puas user bulan ini?', 'Skor survei 30 hari')],
+            'analytics' => [$card('ph-chart-bar', 'Apa yang berubah minggu ini?', 'Metrik utama vs minggu lalu'), $card('ph-user-plus', 'Kenapa pendaftar naik atau turun?', 'Dengan penyebab yang mungkin'), $card('ph-robot', 'Berapa biaya AI minggu ini?', 'Per fitur dan model'), $card('ph-currency-circle-dollar', 'Ringkas pendapatan bulan ini', 'Per status dan channel')],
+            default => [$card('ph-list-checks', 'Apa yang perlu diperhatikan hari ini?', 'Ringkasan seluruh platform'), $card('ph-pulse', 'Ringkas kondisi sistem sekarang', 'Layanan, insiden, antrean'), $card('ph-lifebuoy', 'Tiket apa yang belum dibalas?', 'Yang paling lama dulu'), $card('ph-currency-circle-dollar', 'Ringkas pendapatan 7 hari terakhir', 'Per status dan channel')],
         };
     }
 }

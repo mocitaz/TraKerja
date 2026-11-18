@@ -150,7 +150,7 @@ class NaraToolsTest extends TestCase
         $this->assertSame('Data Bandung', $alert->name);
         $this->assertSame('email', $alert->alert_channel);
         $this->assertSame(['search' => 'data analyst', 'selectedLocation' => 'Kota Bandung'], $alert->filters);
-        $this->assertStringEndsWith('|1]', $result['reply'], 'the card shows the job as saved');
+        $this->assertStringEndsWith('|1|]', $result['reply'], 'the card shows the job as saved');
         $this->assertStringNotContainsString('[savesearch:', $result['reply'], 'already saved: no second offer');
     }
 
@@ -304,5 +304,20 @@ class NaraToolsTest extends TestCase
         $this->gemini($this->text('Kamu mencari frontend remote.'));
         (new KawanKerjaService)->chat('Apa yang kamu ingat tentang aku?', $user);
         $this->assertSame('NONE', Http::recorded()[0][0]->data()['toolConfig']['functionCallingConfig']['mode']);
+    }
+
+    public function test_job_cards_carry_the_company_logo_when_it_is_safe(): void
+    {
+        $user = User::factory()->create();
+        $finder = app(NaraJobFinder::class);
+        $job = $this->makeVacancy(['title' => 'Data Analyst', 'company' => 'Maju Jaya']);
+        $job->company->update(['logo_url' => 'https://cdn.example.com/logo|x.png']);
+        $plain = $this->makeVacancy(['title' => 'Data Engineer', 'company' => 'Tanpa Logo']);
+        $plain->company->update(['logo_url' => 'http://insecure.example.com/logo.png']);
+
+        $reply = $finder->expand("[job:{$job->id}] [job:{$plain->id}]", [$job->id, $plain->id], $user->id);
+
+        $this->assertStringContainsString('|0|https://cdn.example.com/logo%7Cx.png]', $reply, 'a | in the URL cannot break the tag');
+        $this->assertMatchesRegularExpression('/\\[job:'.$plain->id.'\\|Data Engineer\\|Tanpa Logo\\|[^\\]]*\\|0\\|\\]/', $reply, 'no http logo');
     }
 }

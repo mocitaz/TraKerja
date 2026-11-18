@@ -53,7 +53,7 @@ function blocks(text) {
             i += 2;
             const body = [];
             while (i < lines.length && isRow(lines[i])) body.push(cells(lines[i++]));
-            out.push('<div class="admin-nara__table"><table><thead><tr>' + head.map(c => `<th>${inline(escapeHtml(c))}</th>`).join('') + '</tr></thead><tbody>'
+            out.push('<div class="nara-table"><table><thead><tr>' + head.map(c => `<th>${inline(escapeHtml(c))}</th>`).join('') + '</tr></thead><tbody>'
                 + body.map(row => '<tr>' + row.map(c => `<td>${inline(escapeHtml(c))}</td>`).join('') + '</tr>').join('') + '</tbody></table></div>');
         } else if (/^\s*([-*•]|\d+[.)])\s+/.test(line)) {
             const ordered = /^\s*\d+[.)]/.test(line);
@@ -62,7 +62,7 @@ function blocks(text) {
             const tag = ordered ? 'ol' : 'ul';
             out.push(`<${tag}>` + items.map(item => `<li>${inline(escapeHtml(item))}</li>`).join('') + `</${tag}>`);
         } else if (/^#{1,4}\s+/.test(line)) {
-            out.push(`<p class="admin-nara__heading">${inline(escapeHtml(line.replace(/^#{1,4}\s+/, '')))}</p>`);
+            out.push(`<h4>${inline(escapeHtml(line.replace(/^#{1,4}\s+/, '')))}</h4>`);
             i++;
         } else if (line.trim() === '') {
             i++;
@@ -79,6 +79,9 @@ function blocks(text) {
 export function adminNara(config, environment = globalThis) {
     return {
         open: false,
+        expanded: false,
+        confirmClear: false,
+        copied: null,
         busy: false,
         waiting: false,
         status: '',
@@ -91,12 +94,38 @@ export function adminNara(config, environment = globalThis) {
         stopped: false,
 
         init() {
+            this.$watch?.('open', isOpen => {
+                const drawer = this.$refs.drawer;
+                if (isOpen) {
+                    if (drawer && !drawer.open) drawer.showModal();
+                    if (this.messages.length) this.scrollDown();
+                    else if (this.$refs.scroller) this.$refs.scroller.scrollTop = 0;
+                    this.$nextTick?.(() => this.$refs.input?.focus());
+                } else {
+                    if (drawer?.open) drawer.close();
+                    this.confirmClear = false;
+                    this.$nextTick?.(() => this.$refs.launcher?.focus());
+                }
+            });
             this.load();
         },
 
         toggle() {
             this.open = !this.open;
-            if (this.open) this.$nextTick?.(() => { this.scrollDown(); this.$refs.input?.focus(); });
+        },
+
+        resize() {
+            const box = this.$refs.input;
+            if (!box) return;
+            box.style.height = 'auto';
+            box.style.height = Math.min(box.scrollHeight, 160) + 'px';
+        },
+
+        async copy(message, index) {
+            const text = String(message.content ?? '').replace(/\[(?:adminaction|suggest):[^\]]*\]/g, '').trim();
+            try { await environment.navigator?.clipboard?.writeText(text); } catch { return; }
+            this.copied = index;
+            environment.setTimeout?.(() => { if (this.copied === index) this.copied = null; }, 1600);
         },
 
         csrf() {
@@ -147,6 +176,7 @@ export function adminNara(config, environment = globalThis) {
             const message = String(text ?? this.input).trim();
             if (!message || this.busy) return;
             this.input = '';
+            this.$nextTick?.(() => this.resize());
             this.error = '';
             this.busy = true;
             this.waiting = true;
@@ -221,6 +251,7 @@ export function adminNara(config, environment = globalThis) {
             try { await this.request(config.clearUrl, {}); } catch { return; }
             this.messages = [];
             this.actions = {};
+            this.confirmClear = false;
             this.load();
         },
 

@@ -31,3 +31,18 @@ test('a draft card and the chips render, and a half-written tag stays hidden whi
     const partial = formatNaraText('Ini drafnya:\n[draft:email]\nSubject: Halo\n\nIsi em');
     assert.doesNotMatch(partial, /\[draft:/);
 });
+
+test('a job card shows the company logo over its initial, and only https logos', () => {
+    const html = formatNaraText('Ini dia:\n[job:7|Data Analyst|Maju Jaya|Bandung|/explore?job=7|0|https://cdn.example.com/logo.png?a=1&b=2]');
+    assert.match(html, /class="nara-job-icon has-logo"/);
+    assert.match(html, /<b>M<\/b>/, 'the initial stays underneath for a broken image');
+    assert.match(html, /<img src="https:\/\/cdn\.example\.com\/logo\.png\?a=1&amp;b=2"[^>]*referrerpolicy="no-referrer"/);
+
+    const unsafe = formatNaraText('[job:7|Data Analyst|Maju Jaya|Bandung|/explore?job=7|0|javascript:alert(1)]');
+    assert.doesNotMatch(unsafe, /<img/);
+    assert.match(unsafe, /<b>M<\/b>/);
+
+    const older = formatNaraText('[job:7|Data Analyst|Maju Jaya|Bandung|/explore?job=7|1]');
+    assert.match(older, /nara-job-main/, 'cards saved before logos existed still render');
+    assert.doesNotMatch(older, /<img/);
+});

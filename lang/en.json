@@ -6267,5 +6267,18 @@
     "Nara Admin is not available right now (the AI key is not configured).": "Nara Admin is not available right now (the AI key is not configured).",
     "Nara Admin could not answer right now. Please try again.": "Nara Admin could not answer right now. Please try again.",
     "This proposal was already handled.": "This proposal was already handled.",
-    "This proposal expired. Ask Nara again.": "This proposal expired. Ask Nara again."
+    "This proposal expired. Ask Nara again.": "This proposal expired. Ask Nara again.",
+    "Open Nara Admin": "Open Nara Admin",
+    "Ask Nara Admin": "Ask Nara Admin",
+    "Your operations analyst, on live data.": "Your operations analyst, on live data.",
+    "What do you want to know about TraKerja today?": "What do you want to know about TraKerja today?",
+    "I read live payments, tickets, job sources, users and AI usage, and I can prepare changes for you to approve.": "I read live payments, tickets, job sources, users and AI usage, and I can prepare changes for you to approve.",
+    "Looking at: :page": "Looking at: :page",
+    "Read-only by default. Changes run only after you approve them.": "Read-only by default. Changes run only after you approve them.",
+    "Conversation with Nara Admin": "Conversation with Nara Admin",
+    "Needs your approval": "Needs your approval",
+    "Reading the data…": "Reading the data…",
+    "Message Nara Admin": "Message Nara Admin",
+    "Ask about payments, tickets, sources, users…": "Ask about payments, tickets, sources, users…",
+    "Numbers come from live data. Check before acting.": "Numbers come from live data. Check before acting."
 }
