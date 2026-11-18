@@ -58,6 +58,7 @@
 @import './admin-operations-center.css';
 @import './admin-job-engine.css';
 @import './admin-golden-set.css';
+@import './admin-nara.css';
 @import './profile-settings.css';
 
 @tailwind base;

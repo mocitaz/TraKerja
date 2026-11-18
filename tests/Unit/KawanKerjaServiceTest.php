@@ -159,6 +159,9 @@ class KawanKerjaServiceTest extends TestCase
         $result = $service->chat('Bagaimana cara menyiapkan interview?', $user); // "Halo" alone is answered locally as a greeting
 
         $this->assertFalse($result['success']);
-        $this->assertStringContainsString('sedang tidak tersedia', $result['reply']);
+        $this->assertStringContainsString('Nara is unavailable', $result['reply']);
+
+        app()->setLocale('id'); // the message follows the UI language
+        $this->assertStringContainsString('sedang tidak tersedia', (new KawanKerjaService())->chat('Bagaimana cara menyiapkan interview?', $user)['reply']);
     }
 }

@@ -81,3 +81,9 @@ Schedule::command('report:server-health')
     ->dailyAt('08:00')
     ->timezone('Asia/Jakarta')
     ->description('Monitor server disk health and alert to Telegram channel');
+
+// Nara Admin digest: what needs attention, to the Telegram admin channel (only when something does).
+Schedule::command('admin:nara-digest')
+    ->dailyAt('08:30')
+    ->timezone('Asia/Jakarta')
+    ->description('Telegram digest of what needs the admin\'s attention');

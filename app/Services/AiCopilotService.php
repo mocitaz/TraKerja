@@ -172,7 +172,7 @@ class AiCopilotService
                       . "Anda HANYA boleh menjawab pertanyaan yang berkaitan dengan TraKerja, karir, pencarian kerja, rekrutmen, teknologi HR, operasional platform, data pengguna, strategi bisnis, atau fitur TraKerja. Jika user menanyakan topik yang sama sekali tidak berhubungan (misal: resep masakan, ramalan zodiak, fisika kuantum), tolak dengan sopan: 'Maaf, sebagai AI Copilot TraKerja, saya hanya melayani pertanyaan seputar platform, data operasional, dan karir TraKerja.'\n\n"
                       . "DATA REAL-TIME PLATFORM SAAT INI:\n" . json_encode($context, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key={$this->geminiKey}";
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent"; // the key goes in a header: a cURL error quotes the URL
 
         $payload = [
             'system_instruction' => [
@@ -190,10 +190,10 @@ class AiCopilotService
             ],
         ];
 
-        $res = Http::timeout(8)->post($url, $payload);
+        $res = Http::withHeaders(['x-goog-api-key' => $this->geminiKey])->timeout(8)->post($url, $payload);
         if (! $res->successful()) {
-            $fallbackUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key={$this->geminiKey}";
-            $res = Http::timeout(8)->post($fallbackUrl, $payload);
+            $fallbackUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent";
+            $res = Http::withHeaders(['x-goog-api-key' => $this->geminiKey])->timeout(8)->post($fallbackUrl, $payload);
         }
 
         if ($res->successful()) {

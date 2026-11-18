@@ -36,6 +36,7 @@ import './admin-payments-workspace';
 import './job-detail-tabs';
 
 import "./nara-chat";
+import "./admin-nara";
 import './summary-report';
 import './admin-growth';
 

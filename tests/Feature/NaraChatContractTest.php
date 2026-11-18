@@ -36,13 +36,15 @@ class NaraChatContractTest extends TestCase
         $service = new class extends KawanKerjaService {
             public function buildUserContext(User $user): array { return ['user_name' => $user->name, 'pipeline_available' => false]; }
         };
-        $user = new User(['name' => 'Fixture User']);
+        $this->artisan('migrate', ['--force' => true]); // conversations are stored per user (nara_messages)
+        $user = User::factory()->create(['name' => 'Fixture User']);
         Auth::setUser($user);
         $request = Request::create('/kawankerja/chat', 'POST', ['message' => 'Bantu latihan', 'mode' => 'interview']);
         $request->setLaravelSession(app('session')->driver());
         $result = (new KawanKerjaChatController($service))->chat($request)->getData(true);
         $this->assertTrue($result['success']);
-        $this->assertCount(2, $request->session()->get('kawankerja_history'));
+        $this->assertSame(['user', 'model'], \App\Models\NaraMessage::where('user_id', $user->id)->orderBy('id')->pluck('role')->all());
+        $this->assertNotNull($result['message_id']);
         Http::assertSent(function ($request) {
             $prompt = $request['system_instruction']['parts'][0]['text'];
             return str_contains($prompt, 'Anda adalah Nara') && str_contains($prompt, 'Interview practice:')
@@ -50,19 +52,21 @@ class NaraChatContractTest extends TestCase
         });
     }
 
-    public function test_legacy_requests_default_to_career_focus_and_failures_do_not_save_history(): void
+    public function test_requests_without_a_mode_use_the_all_in_one_focus_and_failures_do_not_save_history(): void
     {
         Http::fake(['generativelanguage.googleapis.com/*' => Http::response(['error' => 'fixture'], 503)]);
         $service = new class extends KawanKerjaService {
             public function buildUserContext(User $user): array { return []; }
         };
-        Auth::setUser(new User(['name' => 'Fixture']));
+        $this->artisan('migrate', ['--force' => true]);
+        Auth::setUser($user = User::factory()->create(['name' => 'Fixture']));
         $request = Request::create('/kawankerja/chat', 'POST', ['message' => 'Help me plan my next application']);
         $request->setLaravelSession(app('session')->driver());
         $result = (new KawanKerjaChatController($service))->chat($request)->getData(true);
         $this->assertFalse($result['success']);
-        $this->assertEmpty($request->session()->get('kawankerja_history', []));
-        Http::assertSent(fn ($request) => str_contains($request['system_instruction']['parts'][0]['text'], 'Career plan:'));
+        $this->assertSame(0, \App\Models\NaraMessage::where('user_id', $user->id)->count());
+        // One chat for everything: Nara reads the intent itself (the mode tabs were removed).
+        Http::assertSent(fn ($request) => str_contains($request['system_instruction']['parts'][0]['text'], 'Asisten serba bisa:'));
     }
 
     public function test_pure_greetings_skip_context_queries_and_provider_for_both_chat_paths(): void

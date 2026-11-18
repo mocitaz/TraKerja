@@ -313,6 +313,12 @@ class TelegramService
             ->where('paid_at', '>=', $since)
             ->count();
 
+        // Nara: replies sent and how people rated them (👍 / 👎 under each reply).
+        $naraReplies = \App\Models\NaraMessage::where('role', 'model')->where('created_at', '>=', $since)->count();
+        $naraUp = \App\Models\NaraMessage::where('rating', 1)->where('rated_at', '>=', $since)->count();
+        $naraDown = \App\Models\NaraMessage::where('rating', -1)->where('rated_at', '>=', $since)->count();
+        $naraLine = "{$naraReplies} replies · 👍 {$naraUp} · 👎 {$naraDown}".($naraUp + $naraDown ? ' ('.round($naraUp / ($naraUp + $naraDown) * 100).'% helpful)' : '');
+
         $revenueFormatted = 'Rp ' . number_format((int) $revenue, 0, ',', '.');
         $title = $isMorning ? 'MORNING BRIEFING' : 'DAILY RECAP';
         $timeLabel = $now->format('H:i') . ' WIB';
@@ -323,6 +329,7 @@ class TelegramService
               . "• <b>Applications Tracked:</b> {$newApplications}\n"
               . "• <b>Top Companies:</b> {$topCompaniesStr}\n"
               . "• <b>AI Tools Generations:</b> {$aiUsage}\n"
+              . "• <b>Nara:</b> {$naraLine}\n"
               . "• <b>Support:</b> {$pendingTickets} pending ({$resolvedTickets} resolved)\n"
               . "• <b>Revenue:</b> {$revenueFormatted} ({$paidCount} upgrade)\n"
               . "• <b>Total Community:</b> " . number_format($totalUsers, 0, ',', '.') . " users\n"

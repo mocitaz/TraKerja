@@ -1,6 +1,11 @@
 @if(auth()->check() && !auth()->user()->isAdmin())
 <div class="nara-widget" x-data="naraChat({
     chatUrl: @js(route('kawankerja.chat')),
+    streamUrl: @js(route('kawankerja.stream')),
+    saveJobUrl: @js(route('kawankerja.save-job')),
+    saveSearchUrl: @js(route('kawankerja.save-search')),
+    feedbackUrl: @js(route('kawankerja.feedback')),
+    undoUrl: @js(route('kawankerja.undo-last')),
     historyUrl: @js(route('kawankerja.history')),
     clearUrl: @js(route('kawankerja.clear')),
     csrfToken: @js(csrf_token()),
@@ -40,14 +45,6 @@
                 </button>
             </div>
         </header>
-
-        <div class="nara-focus" role="group" aria-label="{{ __('Conversation focus') }}">
-            <template x-for="item in modes" :key="item.key">
-                <button type="button" @click="selectMode(item.key)" :aria-pressed="(mode === item.key).toString()" :disabled="busy"
-                        :class="{ 'is-active': mode === item.key }"><span x-text="item.label"></span></button>
-            </template>
-        </div>
-
         <div class="nara-confirm" x-show="confirmClear" x-cloak role="group" aria-label="{{ __('Confirm new conversation') }}">
             <div class="nara-confirm-copy"><strong>{{ __('Start a new chat?') }}</strong><p>{{ __('The current conversation will be cleared.') }}</p></div>
             <div class="nara-confirm-actions"><button type="button" @click="confirmClear = false" :disabled="clearing">{{ __('Cancel') }}</button>
@@ -63,6 +60,7 @@
                 <div class="nara-starters">
                     <template x-for="(idea, index) in currentMode.starters" :key="mode + index">
                         <button type="button" @click="usePrompt(idea.prompt)">
+                            <i class="ph nara-starter-icon" :class="idea.icon" aria-hidden="true"></i>
                             <span><strong x-text="idea.title"></strong><small x-text="idea.description"></small></span>
                         </button>
                     </template>
@@ -72,21 +70,34 @@
 
             <div class="nara-history-error" x-show="historyError" role="alert"><p x-text="historyError"></p><button type="button" @click="loadHistory()">{{ __('Reload conversation') }}</button></div>
 
-            <div class="nara-transcript" role="log" aria-label="{{ __('Conversation with Nara') }}" aria-live="polite" aria-relevant="additions">
+            <div class="nara-transcript" @click="onMessageClick($event)" role="log" aria-label="{{ __('Conversation with Nara') }}" aria-live="polite" aria-relevant="additions">
                 <template x-for="(msg, index) in messages" :key="index">
                     <article class="nara-message" :class="msg.role === 'user' ? 'nara-message--user' : 'nara-message--assistant'">
                         <div class="nara-message-byline" x-show="msg.role !== 'user'"><img src="{{ asset('images/brand/nara-avatar.svg') }}" width="24" height="24" alt=""><strong>{{ __('Nara') }}</strong><span>{{ __('Career partner') }}</span></div>
+                        <button type="button" class="nara-edit" x-show="msg.role === 'user' && index === lastUserIndex && !busy" @click="editLast()" aria-label="{{ __('Edit message') }}" title="{{ __('Edit message') }}"><i class="ph ph-pencil-simple" aria-hidden="true"></i></button>
                         <div class="nara-message-body" x-html="formatText(msg.content, msg.role !== 'user')"></div>
-                        <div class="nara-message-tools" x-show="msg.role !== 'user'">
+                        <div class="nara-message-tools" x-show="msg.role !== 'user' && !msg.streaming">
+                            <template x-if="msg.id"><span class="nara-rate" role="group" aria-label="{{ __('Was this helpful?') }}">
+                                <button type="button" @click="rate(msg, 1)" :aria-pressed="(msg.rating === 1).toString()" :class="{ 'is-on': msg.rating === 1 }" aria-label="{{ __('Helpful') }}" title="{{ __('Helpful') }}"><i class="ph" :class="msg.rating === 1 ? 'ph-fill ph-thumbs-up' : 'ph-thumbs-up'" aria-hidden="true"></i></button>
+                                <button type="button" @click="rate(msg, -1)" :aria-pressed="(msg.rating === -1).toString()" :class="{ 'is-on': msg.rating === -1 }" aria-label="{{ __('Not helpful') }}" title="{{ __('Not helpful') }}"><i class="ph" :class="msg.rating === -1 ? 'ph-fill ph-thumbs-down' : 'ph-thumbs-down'" aria-hidden="true"></i></button>
+                            </span></template>
+                            <button type="button" x-show="index === messages.length - 1 && !busy && !historyError" @click="regenerate()" aria-label="{{ __('Regenerate') }}" title="{{ __('Regenerate') }}"><i class="ph ph-arrow-clockwise" aria-hidden="true"></i></button>
                             <button type="button" @click="copyMessage(msg.content, index)" :aria-label="copied === index ? @js(__('Copied')) : @js(__('Copy response'))"><svg class="nara-svg" aria-hidden="true"><use href="#nara-icon-ph-copy"/></svg><span x-text="copied === index ? @js(__('Copied')) : @js(__('Copy response'))"></span></button>
                         </div>
                     </article>
                 </template>
             </div>
-            <div class="nara-thinking" x-show="loading" role="status"><span class="nara-spinner"></span><span x-text="currentMode.thinking"></span></div>
+            {{-- At the bottom, where the drawer opens (the latest message), not above a long history. --}}
+            <section class="nara-nudges" x-show="!historyLoading && !historyError && visibleNudges.length > 0" x-cloak aria-label="{{ __('Worth a look') }}">
+                <header><span>{{ __('Worth a look') }}</span><button type="button" @click="dismissNudges()" aria-label="{{ __('Hide these suggestions') }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg></button></header>
+                <template x-for="(nudge, index) in visibleNudges" :key="index">
+                    <button type="button" class="nara-nudge" @click="useNudge(nudge)" :disabled="busy"><i class="ph" :class="nudge.icon" aria-hidden="true"></i><span x-text="nudge.text"></span><i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+                </template>
+            </section>
+            <div class="nara-thinking" :hidden="!waiting" role="status"><img src="{{ asset('images/brand/nara-avatar.svg') }}" width="28" height="28" alt=""><span class="nara-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nara-thinking-text" x-text="status || currentMode.thinking"></span></div>
             <div class="nara-followups" x-show="!busy && !failedText && messages.length > 0 && !historyError">
                 <span>{{ __('Keep going') }}</span>
-                <template x-for="idea in currentMode.followups" :key="idea"><button type="button" @click="usePrompt(idea)" x-text="idea"></button></template>
+                <template x-for="idea in followupChips" :key="idea"><button type="button" @click="suggestions.length ? useSuggestion(idea) : usePrompt(idea)" x-text="idea"></button></template>
             </div>
         </div>
 
@@ -98,9 +109,10 @@
                 <textarea x-ref="composer" x-model="input" @input="resizeComposer()" rows="1" aria-label="{{ __('Message Nara') }}"
                           :placeholder="currentMode.placeholder" :disabled="historyLoading || clearing || !!historyError"
                           @keydown.enter="if (!$event.shiftKey && !$event.isComposing && $event.keyCode !== 229) { $event.preventDefault(); send(); }"></textarea>
-                    <button type="button" class="nara-send" @click="send()" :disabled="busy || !input.trim() || length > 1000 || !!historyError || !!failedText" aria-label="{{ __('Send message') }}">
+                    <button type="button" class="nara-send" x-show="!loading" @click="send()" :disabled="busy || !input.trim() || length > 1000 || !!historyError || !!failedText" aria-label="{{ __('Send message') }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg>
                     </button>
+                    <button type="button" class="nara-send nara-stop" x-show="loading" x-cloak @click="stop()" aria-label="{{ __('Stop') }}" title="{{ __('Stop') }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg></button>
             </div>
             <div class="nara-composer-hint">
                 <span class="nara-keyboard-hint">{{ __('Enter to send · Shift+Enter for new line') }}</span>

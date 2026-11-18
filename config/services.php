@@ -74,6 +74,10 @@ return [
     'gemini' => [
         'key' => env('GEMINI_API_KEY'),
         'model' => env('GEMINI_MODEL', 'gemini-flash-lite-latest'),
+        // Nara: tools (search the job catalogue, save, alerts, memory) and a stronger model for heavy tasks
+        // (evaluating interview answers, drafts, strategy). Set GEMINI_NARA_STRONG_MODEL= (empty) to use one model.
+        'nara_tools' => env('GEMINI_NARA_TOOLS', true),
+        'nara_strong_model' => env('GEMINI_NARA_STRONG_MODEL', 'gemini-3-flash-preview'),
         'email_model' => env('GEMINI_EMAIL_MODEL', env('GEMINI_MODEL', 'gemini-flash-lite-latest')),
         'studio_models' => [
             'analyzer' => env('GEMINI_STUDIO_ANALYZER_MODEL', env('GEMINI_MODEL', 'gemini-flash-lite-latest')),

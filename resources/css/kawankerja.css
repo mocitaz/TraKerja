@@ -159,3 +159,248 @@
     .nara-composer-hint { justify-content: flex-end; }
 }
 @media (prefers-reduced-motion: reduce) { .nara-drawer, .nara-drawer::backdrop, .nara-composer, .nara-launcher, .nara-launcher-hint { transition: none; } .nara-launcher:hover { transform: none; } .nara-spinner { animation: none; } }
+
+/* Job cards from the TraKerja catalogue ([job:ID] in Nara's replies) */
+.nara-job { margin: 6px 0 10px; border: 1px solid var(--nara-line); border-radius: 12px; background: var(--nara-surface); overflow: hidden; transition: border-color .15s; }
+.nara-job:hover, .nara-job:focus-within { border-color: var(--nara-accent); }
+.nara-job-main { display: flex; align-items: center; gap: 10px; padding: 11px 12px 9px; color: inherit; text-decoration: none; }
+.nara-job-icon { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 9px; background: var(--nara-soft); color: var(--nara-accent); font-size: 16px; }
+.nara-job-text { display: grid; gap: 2px; min-width: 0; flex: 1; }
+.nara-job-text strong { font-size: 12.5px; line-height: 1.35; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.nara-job-text small, .nara-job-text em { font-size: 11px; font-style: normal; color: var(--nara-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nara-job-actions { display: flex; gap: 6px; padding: 0 12px 10px 56px; }
+.nara-job-btn { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border: 1px solid var(--nara-line); border-radius: 999px; background: var(--nara-surface); color: var(--nara-text); font: inherit; font-size: 10.5px; font-weight: 600; text-decoration: none; cursor: pointer; transition: background .15s, border-color .15s; }
+.nara-job-btn:hover, .nara-job-btn:focus-visible { background: var(--nara-soft); border-color: var(--nara-accent); }
+.nara-job-btn:disabled { opacity: .6; cursor: progress; }
+.nara-job-btn.is-done { border-color: transparent; background: var(--nara-soft); color: var(--nara-accent); cursor: default; }
+.nara-save-search { display: flex; align-items: center; gap: 10px; width: 100%; margin: 8px 0 4px; padding: 11px 12px; border: 1px dashed var(--nara-accent); border-radius: 12px; background: transparent; color: var(--nara-text); font: inherit; text-align: left; cursor: pointer; transition: background .15s; }
+.nara-save-search:hover, .nara-save-search:focus-visible { background: var(--nara-soft); }
+.nara-save-search > i { flex: none; font-size: 18px; color: var(--nara-accent); }
+.nara-save-search strong { display: block; font-size: 12px; }
+.nara-save-search small { display: block; margin-top: 2px; font-size: 10.5px; color: var(--nara-muted); }
+.nara-save-search.is-done { border-style: solid; border-color: transparent; background: var(--nara-soft); color: var(--nara-accent); font-size: 11.5px; font-weight: 600; cursor: default; }
+.nara-save-search:disabled { opacity: .6; cursor: progress; }
+
+/* What Nara brings up when the chat opens */
+.nara-nudges { display: grid; gap: 6px; margin: 4px 0 14px; padding: 10px; border: 1px solid var(--nara-line); border-radius: 14px; background: var(--nara-soft); }
+.nara-nudges header { display: flex; align-items: center; justify-content: space-between; padding: 0 2px 2px; font-size: 10.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--nara-muted); }
+.nara-nudges header button { display: grid; place-items: center; width: 22px; height: 22px; border: 0; border-radius: 999px; background: transparent; color: var(--nara-muted); cursor: pointer; }
+.nara-nudges header button svg { width: 14px; height: 14px; }
+.nara-nudges header button:hover { background: var(--nara-surface); color: var(--nara-text); }
+.nara-nudge { display: flex; align-items: center; gap: 9px; width: 100%; padding: 9px 10px; border: 1px solid var(--nara-line); border-radius: 10px; background: var(--nara-surface); color: var(--nara-text); font: inherit; font-size: 12px; line-height: 1.4; text-align: left; cursor: pointer; transition: border-color .15s; }
+.nara-nudge:hover, .nara-nudge:focus-visible { border-color: var(--nara-accent); }
+.nara-nudge:disabled { opacity: .6; cursor: progress; }
+.nara-nudge > i:first-child { flex: none; font-size: 16px; color: var(--nara-accent); }
+.nara-nudge > span { flex: 1; min-width: 0; }
+.nara-nudge > i:last-child { flex: none; font-size: 13px; color: var(--nara-muted); }
+/* 👍 / 👎 under replies */
+.nara-rate { display: inline-flex; gap: 2px; margin-right: 10px; }
+.nara-rate button { display: grid; place-items: center; width: 24px; height: 24px; padding: 0 !important; border: 0; border-radius: 999px; background: transparent; color: var(--nara-muted); cursor: pointer; font-size: 13px; }
+.nara-rate button:hover, .nara-rate button.is-on { color: var(--nara-accent); background: var(--nara-soft); }
+
+/* ==========================================================================
+   Chat room look (Nov 2026): white, monochrome, ChatGPT-like. Overrides the
+   rules above; the lilac accent stays only for small details.
+   ========================================================================== */
+.nara-widget, .nara-drawer {
+    --nara-surface: #ffffff;
+    --nara-soft: #f4f4f5;
+    --nara-bubble: #f1f1f3;
+    --nara-text: #111113;
+    --nara-muted: #6e6e76;
+    --nara-line: #e7e7ea;
+    --nara-ink: #111113;
+    --nara-accent: #5b4a7a;
+    --nara-tint: #f1eef6;
+    font-size: 14px;
+}
+.nara-drawer { box-shadow: -24px 0 60px rgba(17, 17, 19, .10); border-left-color: var(--nara-line); }
+.nara-drawer::backdrop { background: rgba(17, 17, 19, .18); backdrop-filter: blur(2px); }
+
+/* Header: compact */
+.nara-header { padding: max(14px, env(safe-area-inset-top)) 16px 10px 20px; }
+.nara-identity { gap: 10px; }
+.nara-identity img { width: 32px; height: 32px; }
+.nara-identity h2 { font-size: 16px; font-weight: 700; letter-spacing: -.02em; line-height: 1.3; }
+.nara-identity h2 span { font-size: 11px; margin-left: 5px; }
+.nara-identity p { font-size: 11.5px; margin-top: 0; }
+.nara-icon-btn { width: 34px; height: 34px; border-radius: 10px; color: var(--nara-muted); }
+.nara-icon-btn svg { width: 18px; height: 18px; }
+.nara-icon-btn:hover:not(:disabled) { background: var(--nara-soft); color: var(--nara-text); }
+
+/* Modes: segmented pill */
+.nara-focus { justify-content: center; gap: 2px; width: fit-content; max-width: calc(100% - 32px); margin: 2px auto 6px; padding: 3px; border: 0; border-radius: 999px; background: var(--nara-soft); }
+.nara-focus button { min-height: 30px; padding: 5px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 550; color: var(--nara-muted); transition: background .15s, color .15s, box-shadow .15s; }
+.nara-focus button.is-active { background: var(--nara-surface); color: var(--nara-text); box-shadow: 0 1px 3px rgba(17, 17, 19, .12); }
+.nara-focus button.is-active::after { display: none; }
+
+/* Conversation column */
+.nara-messages { padding: 18px 20px 20px; scrollbar-color: #d6d6da transparent; }
+.nara-transcript, .nara-welcome, .nara-nudges, .nara-followups, .nara-thinking { width: 100%; max-width: 680px; margin-left: auto; margin-right: auto; }
+.nara-transcript { gap: 22px; }
+.nara-message--user { max-width: 82%; padding: 10px 16px; background: var(--nara-bubble); border-radius: 22px; font-size: 14px; line-height: 1.6; }
+.nara-message--user .nara-message-body { font-size: 14px; line-height: 1.6; }
+.nara-message--assistant { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 12px; }
+.nara-message--assistant .nara-message-byline { grid-row: 1 / span 2; margin: 0; align-items: flex-start; }
+.nara-message--assistant .nara-message-byline img { width: 28px; height: 28px; border: 1px solid var(--nara-line); }
+.nara-message--assistant .nara-message-byline strong, .nara-message--assistant .nara-message-byline span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.nara-message--assistant .nara-message-body, .nara-message--assistant .nara-message-tools { grid-column: 2; }
+.nara-message-body { font-size: 14px; line-height: 1.7; padding-top: 3px; }
+.nara-message-body p { margin: 0 0 12px; }
+.nara-message-body h4 { font-size: 14.5px; font-weight: 650; margin: 18px 0 8px; }
+.nara-message-body li::marker { color: var(--nara-muted); }
+.nara-message-body blockquote { border-left-color: var(--nara-ink); background: var(--nara-soft); border-radius: 0 10px 10px 0; }
+.nara-message-body code { background: var(--nara-soft); border-radius: 5px; padding: 1px 5px; }
+
+/* Message tools: quiet icons, clearer on hover */
+.nara-message-tools { gap: 2px; margin-top: 6px; opacity: .55; transition: opacity .15s; }
+.nara-message--assistant:hover .nara-message-tools, .nara-message-tools:focus-within { opacity: 1; }
+@media (hover: none) { .nara-message-tools { opacity: 1; } }
+.nara-message-tools button { width: 28px; height: 28px; justify-content: center; padding: 0 !important; border-radius: 8px; color: var(--nara-muted); }
+.nara-message-tools button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.nara-message-tools button:hover { background: var(--nara-soft); color: var(--nara-text); }
+.nara-message-tools .nara-svg { width: 15px; height: 15px; }
+.nara-rate { margin-right: 0; gap: 2px; }
+.nara-rate button { width: 28px; height: 28px; border-radius: 8px; font-size: 15px; }
+.nara-rate button:hover, .nara-rate button.is-on { background: var(--nara-soft); color: var(--nara-text); }
+
+/* Welcome: centred, starter cards */
+.nara-welcome { max-width: 560px; padding-top: clamp(24px, 9vh, 80px); text-align: center; }
+.nara-welcome-greeting { font-size: 13px; margin-bottom: 6px; }
+.nara-welcome h3 { font-size: 24px; font-weight: 650; letter-spacing: -.03em; margin-bottom: 8px; }
+.nara-welcome-description { max-width: 420px; margin: 0 auto 22px; font-size: 13.5px; line-height: 1.6; }
+.nara-starters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; text-align: left; }
+.nara-starters button { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; min-height: 0; padding: 14px; border: 1px solid var(--nara-line); border-radius: 16px; background: var(--nara-surface); transition: background .15s, border-color .15s, transform .15s; }
+.nara-starters button:hover { border-color: #d4d4d8; border-bottom-color: #d4d4d8; background: var(--nara-soft); }
+.nara-starters button:hover strong { color: var(--nara-text); }
+.nara-starter-icon { font-size: 19px; color: var(--nara-accent); }
+.nara-starters strong { font-size: 13px; font-weight: 600; }
+.nara-starters small { font-size: 12px; line-height: 1.5; margin-top: 2px; }
+.nara-context-note { margin-top: 18px; font-size: 11.5px; }
+
+/* Thinking: avatar + three dots */
+.nara-thinking { gap: 12px; padding: 4px 0; margin-top: 20px; }
+.nara-thinking img { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--nara-line); }
+.nara-dots { display: inline-flex; gap: 4px; }
+.nara-dots i { width: 7px; height: 7px; border-radius: 50%; background: #b9b9bf; animation: nara-dot 1.2s infinite ease-in-out; }
+.nara-dots i:nth-child(2) { animation-delay: .15s; } .nara-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes nara-dot { 0%, 80%, 100% { transform: translateY(0); opacity: .45; } 40% { transform: translateY(-3px); opacity: 1; } }
+.nara-thinking-text { font-size: 12.5px; }
+
+/* Follow-up chips */
+.nara-followups { gap: 8px; margin-top: 22px; }
+.nara-followups > span { font-size: 11.5px; }
+.nara-followups button { padding: 7px 14px; border-radius: 999px; font-size: 12.5px; color: var(--nara-text); background: var(--nara-surface); }
+.nara-followups button:hover { background: var(--nara-soft); }
+
+/* Jump to latest: small floating pill */
+.nara-jump { border-radius: 999px; padding: 6px 12px; font-size: 12px; color: var(--nara-text); box-shadow: 0 4px 14px rgba(17, 17, 19, .10); margin-bottom: 6px; }
+
+/* Composer: white pill with a black round send button */
+.nara-footer { border-top: 0; padding: 6px 16px max(14px, env(safe-area-inset-bottom)); }
+.nara-footer > * { max-width: 720px; margin-left: auto; margin-right: auto; }
+.nara-composer { align-items: flex-end; gap: 10px; padding: 8px 8px 8px 18px; border: 1px solid #dedee2; border-radius: 26px; background: var(--nara-surface); box-shadow: 0 2px 12px rgba(17, 17, 19, .06); }
+.nara-composer:focus-within { border-color: #c9c9cf; box-shadow: 0 2px 16px rgba(17, 17, 19, .09); }
+.nara-composer textarea, .nara-composer textarea:focus { font-size: 14.5px; line-height: 22px; padding: 7px 0; }
+.nara-send { width: 36px; height: 36px; border-radius: 50%; background: var(--nara-ink); color: #fff; }
+.nara-send:hover:not(:disabled) { background: #2b2b30; }
+.nara-send:disabled { background: #d4d4d8; color: #fff; opacity: 1 !important; }
+.nara-send svg { width: 18px; height: 18px; }
+.nara-composer-hint { justify-content: center; gap: 4px 14px; margin-top: 8px; font-size: 11px; }
+.nara-error, .nara-history-error { border-radius: 14px; }
+
+/* Cards in replies: softer */
+.nara-job { border-radius: 16px; }
+.nara-job:hover, .nara-job:focus-within { border-color: #cfcfd5; }
+.nara-job-icon { border-radius: 10px; }
+.nara-job-btn { height: 28px; padding: 0 12px; font-size: 11.5px; }
+.nara-job-btn:hover, .nara-job-btn:focus-visible { border-color: #cfcfd5; }
+.nara-action { border-radius: 14px; color: var(--nara-text); }
+.nara-action:hover { border-color: #cfcfd5; background: var(--nara-soft); }
+.nara-save-search { border-color: #cfcfd5; border-radius: 14px; }
+.nara-nudges { border-radius: 16px; background: var(--nara-surface); }
+.nara-nudge { border-radius: 12px; font-size: 13px; }
+.nara-nudge:hover, .nara-nudge:focus-visible { border-color: #cfcfd5; background: var(--nara-soft); }
+.nara-scorecard { border-radius: 16px; }
+
+/* Dark */
+.dark .nara-widget, .dark .nara-drawer { --nara-surface: #17171a; --nara-soft: #232327; --nara-bubble: #2a2a2f; --nara-text: #ededf0; --nara-muted: #a1a1aa; --nara-line: #2f2f35; --nara-ink: #ededf0; --nara-accent: #c4b2e0; --nara-tint: #2d2738; }
+.dark .nara-composer { border-color: #34343a; box-shadow: none; }
+.dark .nara-send { background: #ededf0; color: #17171a; }
+.dark .nara-send:hover:not(:disabled) { background: #ffffff; }
+.dark .nara-send:disabled { background: #3a3a40; color: #77777f; }
+.dark .nara-focus button.is-active { background: #34343a; box-shadow: none; }
+.dark .nara-dots i { background: #6b6b73; }
+
+@media (max-width: 640px) {
+    .nara-header { padding: max(12px, env(safe-area-inset-top)) 10px 8px 16px; }
+    .nara-focus { max-width: calc(100% - 24px); }
+    .nara-focus button { padding: 5px 10px; font-size: 11.5px; white-space: nowrap; }
+    .nara-messages { padding: 14px 14px 16px; }
+    .nara-message--user { max-width: 88%; }
+    .nara-message--assistant { grid-template-columns: 24px minmax(0, 1fr); column-gap: 10px; }
+    .nara-message--assistant .nara-message-byline img { width: 24px; height: 24px; }
+    .nara-welcome h3 { font-size: 21px; }
+    .nara-starters { grid-template-columns: 1fr; }
+    .nara-starters button { flex-direction: row; align-items: center; gap: 12px; padding: 12px 14px; }
+    .nara-footer { padding: 4px 12px max(10px, env(safe-area-inset-bottom)); }
+    .nara-composer textarea { font-size: 16px; }
+}
+.nara-composer textarea::placeholder { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (prefers-reduced-motion: reduce) { .nara-dots i { animation: none; } }
+
+/* The thinking dots are toggled with the hidden attribute (instant), not x-show, so they cannot get stuck on. */
+.nara-thinking[hidden] { display: none !important; }
+
+/* ---- Stop, edit, regenerate ---- */
+.nara-send.nara-stop { background: var(--nara-ink); color: #fff; opacity: 1 !important; }
+.nara-send.nara-stop:hover { background: #2b2b30; }
+.nara-send.nara-stop svg { width: 14px; height: 14px; }
+.dark .nara-send.nara-stop { background: #ededf0; color: #17171a; }
+.nara-message--user { position: relative; }
+.nara-edit { position: absolute; right: calc(100% + 6px); top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--nara-muted); font-size: 15px; opacity: 0; transition: opacity .15s, background .15s; }
+.nara-message--user:hover .nara-edit, .nara-edit:focus-visible { opacity: 1; }
+@media (hover: none) { .nara-edit { opacity: .7; } }
+.nara-edit:hover { background: var(--nara-soft); color: var(--nara-text); }
+
+/* ---- Draft cards (email, letter, message) ---- */
+.nara-draft { margin: 12px 0; border: 1px solid var(--nara-line); border-radius: 16px; background: var(--nara-surface); overflow: hidden; }
+.nara-draft > header { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 10px 9px 14px; border-bottom: 1px solid var(--nara-line); background: var(--nara-soft); font-size: 12px; font-weight: 650; }
+.nara-draft > header > span:first-child { display: inline-flex; align-items: center; gap: 7px; min-width: 0; }
+.nara-draft > header > span:first-child i { color: var(--nara-accent); font-size: 15px; }
+.nara-draft-actions { display: inline-flex; gap: 6px; flex: none; }
+.nara-draft-btn { display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 11px; border: 1px solid var(--nara-line); border-radius: 999px; background: var(--nara-surface); color: var(--nara-text); font: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer; transition: background .15s, border-color .15s; }
+.nara-draft-btn:hover { background: var(--nara-soft); border-color: #cfcfd5; }
+.nara-draft-btn.is-copied { background: var(--nara-ink); border-color: var(--nara-ink); color: #fff; }
+.dark .nara-draft-btn.is-copied { color: #17171a; }
+.nara-draft-subject { display: grid; gap: 2px; padding: 10px 14px; border-bottom: 1px solid var(--nara-line); }
+.nara-draft-subject small { font-size: 10.5px; color: var(--nara-muted); text-transform: uppercase; letter-spacing: .04em; }
+.nara-draft-subject strong { font-size: 13px; font-weight: 650; line-height: 1.4; }
+.nara-draft-body { padding: 12px 14px 4px; font-size: 13.5px; line-height: 1.65; }
+.nara-draft-body p { margin: 0 0 10px; }
+
+/* ---- Job comparison table: scrolls sideways inside the panel, labels stay put ---- */
+.nara-compare { margin: 12px 0; border: 1px solid var(--nara-line); border-radius: 16px; overflow-x: auto; background: var(--nara-surface); scrollbar-width: thin; }
+.nara-compare table { width: 100%; min-width: 360px; border-collapse: collapse; font-size: 12px; line-height: 1.45; }
+.nara-compare th, .nara-compare td { padding: 9px 11px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--nara-line); }
+.nara-compare tbody tr:last-child th, .nara-compare tbody tr:last-child td { border-bottom: 0; }
+.nara-compare thead th { background: var(--nara-soft); min-width: 150px; }
+.nara-compare thead a { display: grid; gap: 2px; color: inherit; text-decoration: none; }
+.nara-compare thead strong { font-size: 12.5px; line-height: 1.35; }
+.nara-compare thead small { font-size: 11px; font-weight: 500; color: var(--nara-muted); }
+.nara-compare tbody th { position: sticky; left: 0; z-index: 1; width: 92px; min-width: 92px; background: var(--nara-surface); font-size: 11px; font-weight: 600; color: var(--nara-muted); }
+.nara-compare thead th:first-child { position: sticky; left: 0; z-index: 2; min-width: 92px; }
+.nara-compare-empty { color: var(--nara-muted); }
+
+/* ---- Interview practice progress ---- */
+.nara-interview { display: grid; gap: 8px; margin: 12px 0; padding: 12px 14px; border: 1px solid var(--nara-line); border-radius: 16px; background: var(--nara-soft); }
+.nara-interview-head { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
+.nara-interview-head i { color: var(--nara-accent); font-size: 16px; }
+.nara-interview-head span { color: var(--nara-muted); }
+.nara-interview-dots { display: flex; gap: 5px; }
+.nara-interview-dots i { flex: 1; height: 5px; border-radius: 999px; background: #dcdce0; }
+.nara-interview-dots i.is-done { background: var(--nara-ink); }
+.nara-interview-dots i.is-current { background: var(--nara-accent); opacity: .55; }
+.dark .nara-interview-dots i { background: #3a3a40; }
+.nara-interview-meta { display: flex; justify-content: space-between; gap: 10px; font-size: 11.5px; color: var(--nara-muted); }
+.nara-interview.is-done { background: var(--nara-surface); }

@@ -189,6 +189,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/stream', [\App\Http\Controllers\KawanKerjaChatController::class, 'stream'])->middleware(\App\Http\Middleware\LimitKawanKerja::class)->name('stream');
         Route::get('/history', [\App\Http\Controllers\KawanKerjaChatController::class, 'history'])->name('history');
         Route::post('/clear', [\App\Http\Controllers\KawanKerjaChatController::class, 'clear'])->name('clear');
+        Route::post('/undo-last', [\App\Http\Controllers\KawanKerjaChatController::class, 'undoLast'])->middleware('throttle:30,1')->name('undo-last');
+        Route::post('/feedback', [\App\Http\Controllers\KawanKerjaChatController::class, 'feedback'])->middleware('throttle:60,1')->name('feedback');
+        Route::post('/save-job', [\App\Http\Controllers\KawanKerjaChatController::class, 'saveJob'])->middleware('throttle:30,1')->name('save-job');
+        Route::post('/save-search', [\App\Http\Controllers\KawanKerjaChatController::class, 'saveSearch'])->middleware('throttle:10,1')->name('save-search');
     });
 
     // CV Builder routes (Only for regular users)
@@ -446,6 +450,17 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         return view('admin.index');
     })->name('index');
 
+
+    // Nara Admin: the operations assistant in the admin panel
+    Route::prefix('nara')->name('nara.')->group(function () {
+        $c = \App\Http\Controllers\Admin\AdminNaraController::class;
+        Route::get('/history', [$c, 'history'])->name('history');
+        Route::post('/chat', [$c, 'chat'])->middleware('throttle:20,1')->name('chat');
+        Route::post('/stream', [$c, 'stream'])->middleware('throttle:20,1')->name('stream');
+        Route::post('/clear', [$c, 'clear'])->name('clear');
+        Route::post('/actions/{action}/approve', [$c, 'approve'])->middleware('throttle:30,1')->whereNumber('action')->name('approve');
+        Route::post('/actions/{action}/reject', [$c, 'reject'])->whereNumber('action')->name('reject');
+    });
 
     Route::view('/operations-center', 'admin.operations-center')->name('operations-center');
     Route::view('/golden-set', 'admin.golden-set')->name('golden-set');

@@ -120,6 +120,7 @@
         function openLogoutModal() { confirmLogout('admin-logout-form'); }
         function closeLogoutModal() { closeConfirmModal(); }
     </script>
+    @include('admin.partials.nara-panel')
     @include('components.toast-notification')
     @livewireScripts
 </body>

@@ -211,6 +211,12 @@ class JobApplication extends Model
         return $this->belongsTo(User::class);
     }
 
+    /** The catalogue vacancy this application was saved from (Explore), if any. */
+    public function vacancy(): BelongsTo
+    {
+        return $this->belongsTo(Vacancy::class);
+    }
+
     /**
      * Send interview reminder email (premium restriction)
      */

@@ -80,6 +80,10 @@ class ExploreJobs extends Component
         if (!$hasQuery && $this->workspaceReady()) {
             $this->fill($this->normalizeFilters(ExplorePreference::where('user_id', auth()->id())->value('filters') ?? []));
         }
+        // ?job=ID (job cards in Nara, links shared with the user) opens that vacancy's details right away.
+        if ($jobId = (int) request()->query('job')) {
+            $this->previewJobId = Vacancy::visible()->whereKey($jobId)->value('id');
+        }
     }
 
     public function workspaceReady(): bool
