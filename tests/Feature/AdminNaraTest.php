@@ -15,20 +15,21 @@ use Database\Seeders\JobEngineReferenceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Tests\Concerns\FakesOpenAi;
 use Tests\Concerns\MakesVacancies;
 use Tests\TestCase;
 
 /** Nara Admin: admin-only, data from tools, audited, and changes only after the admin approves them. */
 class AdminNaraTest extends TestCase
 {
-    use MakesVacancies, RefreshDatabase;
+    use FakesOpenAi, MakesVacancies, RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
         Cache::flush();
         $this->seed(JobEngineReferenceSeeder::class);
-        config(['services.gemini.key' => 'fake-test-key', 'services.gemini.nara_strong_model' => null]);
+        config(['services.openai.key' => 'fake-test-key', 'services.openai.strong_model' => null]);
     }
 
     private function admin(): User
@@ -38,22 +39,17 @@ class AdminNaraTest extends TestCase
 
     private function toolCall(string $name, array $args): array
     {
-        return ['candidates' => [['content' => ['role' => 'model', 'parts' => [['functionCall' => ['name' => $name, 'args' => $args, 'id' => 'c'], 'thoughtSignature' => 's']]]]]];
+        return $this->openAiToolCall($name, $args, 'call_'.$name);
     }
 
     private function text(string $text): array
     {
-        return ['candidates' => [['content' => ['role' => 'model', 'parts' => [['text' => $text]]]]]];
+        return $this->openAiText($text);
     }
 
-    private function gemini(array ...$replies): void
+    private function script(array ...$replies): void
     {
-        Http::swap(new \Illuminate\Http\Client\Factory);
-        $sequence = Http::sequence();
-        foreach ($replies as $reply) {
-            $sequence->push($reply);
-        }
-        Http::fake(['https://generativelanguage.googleapis.com/*' => $sequence]);
+        $this->openAi(...$replies);
     }
 
     private function ask(User $admin, string $message, string $page = 'dashboard')
@@ -75,13 +71,13 @@ class AdminNaraTest extends TestCase
         $admin = $this->admin();
         $member = User::factory()->create();
         Payment::unguarded(fn () => Payment::create(['user_id' => $member->id, 'order_id' => 'INV-1', 'customer_name' => 'Sari', 'customer_email' => 's@example.com', 'customer_phone' => '0800', 'amount' => 49000, 'status' => 'SUCCESS', 'paid_at' => now(), 'payment_channel_name' => 'QRIS', 'payment_category' => 'qris', 'payment_channel_code' => 'QRIS']));
-        $this->gemini($this->toolCall('payments_overview', ['days' => 7]), $this->text("Pendapatan 7 hari: Rp 49.000.\n[suggest:Ada yang menggantung?|Ringkas hari ini]"));
+        $this->script($this->toolCall('payments_overview', ['days' => 7]), $this->text("Pendapatan 7 hari: Rp 49.000.\n[suggest:Ada yang menggantung?|Ringkas hari ini]"));
 
         $reply = $this->ask($admin, 'Berapa pendapatan minggu ini?')->assertOk()->json('reply');
 
         $this->assertStringContainsString('Rp 49.000', $reply);
         $this->assertStringContainsString('[suggest:Ada yang menggantung?|Ringkas hari ini]', $reply);
-        $this->assertSame(49000, collect(Http::recorded())->last()[0]['contents'][2]['parts'][0]['functionResponse']['response']['result']['revenue_idr']);
+        $this->assertSame(49000, self::toolResults(collect(Http::recorded())->last()[0])[0]['revenue_idr']);
         $audit = AdminNaraAudit::where('user_id', $admin->id)->first();
         $this->assertSame('payments_overview', $audit->tool);
         $this->assertTrue($audit->ok);
@@ -91,11 +87,11 @@ class AdminNaraTest extends TestCase
     public function test_the_prompt_knows_the_page_the_language_and_forbids_inventing_numbers(): void
     {
         $admin = $this->admin();
-        $this->gemini($this->text('Ok'));
+        $this->script($this->text('Ok'));
         $this->ask($admin, 'Which payments are stuck right now?', 'payments')->assertOk();
 
         Http::assertSent(function ($r) {
-            $prompt = $r['system_instruction']['parts'][0]['text'];
+            $prompt = self::systemPrompt($r);
 
             return str_contains($prompt, 'REPLY LANGUAGE: English') && str_contains($prompt, 'Halaman yang sedang dibuka admin: Payments')
                 && str_contains($prompt, 'HARUS berasal dari hasil alat') && str_contains($prompt, '/admin/payments');
@@ -118,7 +114,7 @@ class AdminNaraTest extends TestCase
     {
         $admin = $this->admin();
         $ticket = SupportTicket::create(['user_id' => User::factory()->create()->id, 'category' => 'bug', 'subject' => 'Tidak bisa login', 'message' => 'Halo', 'status' => 'pending']);
-        $this->gemini($this->toolCall('propose_action', ['type' => 'reply_ticket', 'summary' => 'Balas tiket login', 'ticket_id' => $ticket->id, 'reply' => 'Silakan reset password lewat halaman login.', 'status' => 'replied']), $this->text('Saya siapkan balasan. Belum terkirim sampai Anda setujui.'));
+        $this->script($this->toolCall('propose_action', ['type' => 'reply_ticket', 'summary' => 'Balas tiket login', 'ticket_id' => $ticket->id, 'reply' => 'Silakan reset password lewat halaman login.', 'status' => 'replied']), $this->text('Saya siapkan balasan. Belum terkirim sampai Anda setujui.'));
 
         $json = $this->ask($admin, 'balas tiket login itu')->assertOk()->json();
 
@@ -170,7 +166,7 @@ class AdminNaraTest extends TestCase
         $admin = $this->admin();
         $member = User::factory()->create(['ai_credits' => 1]);
         $vacancy = $this->makeVacancy(['title' => 'Staff']);
-        $incident = OperationIncident::create(['title' => 'Gemini slow', 'description' => 'Timeouts seen', 'severity' => 'high', 'service' => 'gemini', 'status' => 'open']);
+        $incident = OperationIncident::create(['title' => 'AI slow', 'description' => 'Timeouts seen', 'severity' => 'high', 'service' => 'ai', 'status' => 'open']);
         $run = function (string $type, array $params) use ($admin) {
             $action = AdminNaraAction::create(['user_id' => $admin->id, 'type' => $type, 'params' => $params, 'summary' => $type]);
 
@@ -193,7 +189,7 @@ class AdminNaraTest extends TestCase
     public function test_the_conversation_is_private_and_can_be_cleared(): void
     {
         $admin = $this->admin();
-        $this->gemini($this->text('Halo, ada yang bisa dibantu?'));
+        $this->script($this->text('Halo, ada yang bisa dibantu?'));
         $this->ask($admin, 'Apa kabar sistem?')->assertOk();
         $this->actingAs($admin)->getJson(route('admin.nara.history', ['page' => 'payments']))->assertOk()->assertJsonCount(2, 'history')->assertJsonPath('starters.0.text', 'Ada pembayaran yang menggantung?');
         $this->actingAs($this->admin())->getJson(route('admin.nara.history'))->assertJsonCount(0, 'history');
@@ -205,10 +201,7 @@ class AdminNaraTest extends TestCase
     public function test_the_stream_sends_status_then_a_final_reply_with_the_cards(): void
     {
         $admin = $this->admin();
-        $sse = fn (array $part) => 'data: '.json_encode(['candidates' => [['content' => ['parts' => [$part]]]]])."\n\n";
-        Http::fake(['https://generativelanguage.googleapis.com/*' => Http::sequence()
-            ->push($sse(['functionCall' => ['name' => 'system_status', 'args' => []]]), 200, ['Content-Type' => 'text/event-stream'])
-            ->push($sse(['text' => 'Semua layanan normal.']), 200, ['Content-Type' => 'text/event-stream'])]);
+        $this->openAi($this->openAiStream(['tool' => 'system_status']), $this->openAiStream('Semua layanan normal.'));
         $body = $this->actingAs($admin)->post(route('admin.nara.stream'), ['message' => 'kondisi sistem?', 'page' => 'operations'], ['Accept' => 'text/event-stream'])->streamedContent();
 
         $this->assertStringContainsString('"status"', $body);
@@ -240,13 +233,16 @@ class AdminNaraTest extends TestCase
         $this->actingAs(User::factory()->create())->get(route('dashboard'))->assertDontSee('adminNara', false);
     }
 
-    public function test_a_tool_call_without_arguments_is_echoed_back_as_an_object(): void
+    public function test_a_tool_without_parameters_has_an_object_schema_and_empty_arguments_go_back_as_an_object(): void
     {
         $admin = $this->admin();
-        $this->gemini(['candidates' => [['content' => ['role' => 'model', 'parts' => [['functionCall' => ['name' => 'daily_digest', 'args' => []], 'thoughtSignature' => 's']]]]]], $this->text('Ringkasan.'));
+        $this->script($this->toolCall('daily_digest', []), $this->text('Ringkasan.'));
         $this->ask($admin, 'ringkas hari ini')->assertOk();
 
+        $first = Http::recorded()[0][0];
+        $digest = collect($first['tools'])->firstWhere('function.name', 'daily_digest');
+        $this->assertStringContainsString('"parameters":{"type":"object","properties":{}}', json_encode($digest));
         $second = collect(Http::recorded())->last()[0];
-        $this->assertStringContainsString('"args":{}', $second->body());
+        $this->assertStringContainsString('"arguments":"{}"', $second->body());
     }
 }

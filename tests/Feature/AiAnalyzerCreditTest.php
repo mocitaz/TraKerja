@@ -30,7 +30,7 @@ class AiAnalyzerCreditTest extends TestCase
         parent::setUp();
         Queue::fake(); Storage::fake('local'); Http::preventStrayRequests();
         Setting::set('monetization_enabled', true);
-        config(['services.gemini.key' => 'test-not-a-real-key', 'services.gemini.model' => 'gemini-test', 'services.gemini.studio_models' => []]);
+        config(['services.openai.key' => 'test-not-a-real-key', 'services.openai.model' => 'gpt-5-mini', 'services.openai.studio_models' => []]);
     }
 
     private function input(string $task = 'analyzer', ?string $key = null): array
@@ -41,16 +41,28 @@ class AiAnalyzerCreditTest extends TestCase
         return $data;
     }
 
-    public static function reply(array $data, string $finish = 'STOP'): array
+    public static function reply(array $data, string $finish = 'stop'): array
     {
-        return ['candidates' => [['finishReason' => $finish, 'content' => ['parts' => [['text' => json_encode($data)]]]]]];
+        return ['choices' => [['index' => 0, 'message' => ['role' => 'assistant', 'content' => json_encode($data)], 'finish_reason' => $finish]]];
     }
 
+    /** A recruiter-style review as the model returns it (schema v3). */
     public static function analysis(): array
     {
-        return ['readable' => true, 'score' => 60, 'summary' => 'Relevant API experience, deployment evidence missing.',
-            'findings' => [['requirement' => 'API development', 'evidence' => 'Maintained APIs at Actual company', 'status' => 'supported', 'recommendation' => 'Clarify the API scope.']],
-            'actions' => ['Explain the API scope without inventing metrics.'], 'limitations' => ['Deployment experience is not mentioned.']];
+        return ['readable' => true, 'jd_quality' => 'full', 'verdict' => 'polish', 'verdict_reason' => 'You have relevant API work. Show deployment before applying.',
+            'first_impression' => ['reads_as' => 'Backend engineer, mid level', 'standout' => 'Maintained APIs at Actual company', 'mismatch' => ''],
+            'score_breakdown' => [
+                ['dimension' => 'skills', 'score' => 70, 'note' => 'APIs match.'], ['dimension' => 'seniority', 'score' => 60, 'note' => 'Mid level.'],
+                ['dimension' => 'impact', 'score' => 40, 'note' => 'No numbers.'], ['dimension' => 'leadership', 'score' => 50, 'note' => 'Some ownership.'],
+                ['dimension' => 'clarity', 'score' => 80, 'note' => 'Clean layout.'],
+            ],
+            'strengths' => [['point' => 'Real API maintenance', 'evidence' => 'Maintained APIs at Actual company']],
+            'findings' => [['requirement' => 'API development', 'source' => 'job_description', 'priority' => 'must', 'status' => 'supported', 'evidence' => 'Maintained APIs at Actual company', 'recommendation' => 'Clarify the API scope.']],
+            'rewrites' => [['before' => 'Maintained APIs', 'after' => 'Maintained [number] APIs serving [number of users]', 'why' => 'Shows scale.']],
+            'keywords' => ['present' => ['API'], 'missing' => ['Deployment']],
+            'red_flags' => [], 'interview_questions' => [['question' => 'How did you deploy?', 'why' => 'Not in CV', 'how_to_answer' => 'Use a real release.']],
+            'actions' => [['priority' => 'now', 'action' => 'Explain the API scope without inventing metrics.']],
+            'limitations' => [], 'summary' => 'Relevant API experience, deployment evidence missing.'];
     }
 
     public function test_duplicate_request_reserves_one_credit_and_never_calls_old_provider(): void
@@ -63,8 +75,10 @@ class AiAnalyzerCreditTest extends TestCase
         $this->assertSame(0, $user->fresh()->ai_credits);
         $this->assertSame(1, AiStudioRun::count()); Queue::assertPushed(ProcessAiStudio::class, 1); Http::assertNothingSent();
         Http::fake(function ($request) {
-            $this->assertStringStartsWith('https://generativelanguage.googleapis.com/', $request->url());
-            $this->assertArrayHasKey('inlineData', $request['contents'][0]['parts'][1]);
+            $this->assertSame('https://api.openai.com/v1/chat/completions', $request->url());
+            $this->assertSame('file', $request['messages'][1]['content'][1]['type'], 'the CV PDF travels as a file');
+            $this->assertStringStartsWith('data:application/pdf;base64,', $request['messages'][1]['content'][1]['file']['file_data']);
+            $this->assertTrue($request['response_format']['json_schema']['strict']);
             return Http::response(self::reply(self::analysis()));
         });
         app(AiStudioProcessingService::class)->process(1);
@@ -93,10 +107,11 @@ class AiAnalyzerCreditTest extends TestCase
     {
         return [
             'empty' => [[], 'STOP'], 'error' => [['error' => 'bad'], 'STOP'],
-            'empty analysis' => [['readable' => true, 'score' => 90, 'summary' => 'No evidence', 'findings' => [], 'actions' => [], 'limitations' => []], 'STOP'],
-            'truncated' => [self::analysis(), 'MAX_TOKENS'],
+            'empty analysis' => [array_replace(self::analysis(), ['findings' => [], 'actions' => []]), 'STOP'],
+            'truncated' => [self::analysis(), 'length'],
             'unreadable' => [array_replace(self::analysis(), ['readable' => false]), 'STOP'],
-            'invalid score' => [array_replace(self::analysis(), ['score' => 101]), 'STOP'],
+            'no score breakdown' => [array_replace(self::analysis(), ['score_breakdown' => []]), 'STOP'],
+            'unknown verdict' => [array_replace(self::analysis(), ['verdict' => 'maybe']), 'STOP'],
         ];
     }
 
@@ -136,10 +151,10 @@ class AiAnalyzerCreditTest extends TestCase
     {
         $user = User::factory()->create(['cl_credits' => 1]);
         $this->actingAs($user)->postJson(route('cover-letters.generate'), $this->input('cover-letter'))->assertAccepted();
-        config(['services.gemini.key' => null]); app(AiStudioProcessingService::class)->process(1);
+        config(['services.openai.key' => null]); app(AiStudioProcessingService::class)->process(1);
         Http::assertNothingSent(); $this->assertSame(0, CoverLetter::count());
         $this->assertSame(1, $user->fresh()->cl_credits);
-        config(['services.gemini.key' => 'test']);
+        config(['services.openai.key' => 'test']);
         $this->postJson(route('cover-letters.generate'), $this->input('cover-letter'))->assertAccepted();
         Http::fake(['*' => Http::response([], 429)]); app(AiStudioProcessingService::class)->process(2);
         Http::assertSentCount(1); $this->assertSame(1, $user->fresh()->cl_credits);
@@ -231,4 +246,98 @@ class AiAnalyzerCreditTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function test_a_review_with_more_items_than_shown_is_trimmed_not_failed(): void
+    {
+        $user = User::factory()->create(['ai_credits' => 1]);
+        $this->actingAs($user)->postJson(route('ai-analyzer.analyze'), $this->input())->assertAccepted();
+        $long = self::analysis();
+        $long['actions'] = array_map(fn ($i) => ['priority' => 'now', 'action' => "Step {$i}: tighten one bullet."], range(1, 14));
+        $long['findings'] = array_fill(0, 34, $long['findings'][0]);
+        Http::fake(['*' => Http::response(self::reply($long))]);
+
+        app(AiStudioProcessingService::class)->process(1);
+
+        $this->assertSame('completed', AiStudioRun::first()->status);
+        $saved = AiAnalyzerResult::first()->analysis_result;
+        $this->assertCount(8, $saved['actions']);
+        $this->assertCount(8, $saved['rencana_aksi'], 'older readers still get the steps as text');
+        $this->assertCount(12, $saved['findings']);
+        $this->assertSame('consumed', AiStudioRun::first()->credit_state);
+    }
+
+    public function test_the_review_is_recruiter_style_with_a_weighted_score_in_the_members_language(): void
+    {
+        $user = User::factory()->create(['ai_credits' => 1, 'locale' => 'id']);
+        $this->actingAs($user)->postJson(route('ai-analyzer.analyze'), $this->input())->assertAccepted();
+        $sent = null;
+        Http::fake(function ($request) use (&$sent) {
+            $sent = $request;
+
+            return Http::response(self::reply(array_replace(self::analysis(), ['jd_quality' => 'thin'])));
+        });
+
+        app(AiStudioProcessingService::class)->process(1);
+
+        $prompt = $sent['messages'][0]['content'];
+        $this->assertStringContainsString('senior recruiter', $prompt);
+        $this->assertStringContainsString('Bahasa Indonesia', $prompt, 'the member\'s language setting decides');
+        $this->assertSame('medium', $sent['reasoning_effort'], 'the background review thinks longer');
+        $saved = AiAnalyzerResult::first()->analysis_result;
+        $this->assertSame(3, $saved['schema_version']);
+        $this->assertSame('id', $saved['language']);
+        // 70*30 + 60*20 + 40*20 + 50*15 + 80*15 = 6050 / 100
+        $this->assertSame(61, $saved['skor_kecocokan'], 'the total is computed from the breakdown, not taken from the model');
+        $this->assertSame('thin', $saved['jd_quality']);
+
+        $page = $this->get(route('ai-analyzer.show', AiAnalyzerResult::first()))->assertOk();
+        $page->assertSee('Perlu dipoles sebelum melamar')->assertSee('Rincian skor')->assertSee('Contoh tulis ulang')->assertSee('Maintained [number] APIs serving [number of users]')
+            ->assertSee('How did you deploy?')->assertSee('Deployment')->assertSee('Berdasarkan deskripsi lowongan yang singkat.')->assertSee('Unduh PDF')->assertSee('Laporan Review CV');
+    }
+
+    public function test_the_review_language_follows_the_setting_even_when_the_request_asks_otherwise(): void
+    {
+        $user = User::factory()->create(['ai_credits' => 1, 'locale' => 'en']);
+        $this->actingAs($user)->postJson(route('ai-analyzer.analyze'), $this->input() + ['language' => 'id'])->assertAccepted();
+        $this->assertSame('en', AiStudioRun::first()->payload['language']);
+    }
+
+    public function test_a_review_written_in_another_language_is_translated_once_and_never_shown_mixed(): void
+    {
+        $user = User::factory()->create(['ai_credits' => 0, 'locale' => 'en']);
+        $this->actingAs($user)->postJson(route('ai-analyzer.analyze'), $this->input())->assertStatus(422); // no credit: checked elsewhere
+        $review = app(\App\Services\StudioAiService::class);
+        $stored = (fn () => $this->review(\Tests\Feature\AiAnalyzerCreditTest::analysis(), 'en'))->call($review);
+        $result = AiAnalyzerResult::create(['user_id' => $user->id, 'job_description' => 'Lead frontend', 'resume_file_name' => 'cv.pdf', 'analysis_result' => $stored]);
+
+        $user->forceFill(['locale' => 'id'])->save(); // the member switches their language setting
+        // Before the translation exists, the labels follow the review's language (English), with the translator waiting.
+        $this->actingAs($user->fresh())->get(route('ai-analyzer.show', $result))->assertOk()
+            ->assertSee('Polish before applying')->assertDontSee('Perlu dipoles sebelum melamar')->assertSee('Menerjemahkan review ini ke Bahasa Indonesia');
+
+        $translated = array_replace(self::analysis(), []);
+        Http::fake(['*' => Http::response(['choices' => [['message' => ['role' => 'assistant', 'content' => json_encode([
+            'target_role' => 'Backend Engineer', 'verdict_reason' => 'Pengalaman API-mu relevan.', 'summary' => 'Ringkasan.',
+            'first_impression' => ['reads_as' => 'Backend engineer', 'standout' => 'API', 'mismatch' => ''],
+            'score_breakdown' => array_fill(0, 5, ['note' => 'Catatan.']), 'strengths' => [['point' => 'Pemeliharaan API', 'evidence' => 'Bukti']],
+            'findings' => [['requirement' => 'Pengembangan API', 'evidence' => 'Bukti', 'recommendation' => 'Perjelas cakupan API.']],
+            'rewrites' => [['why' => 'Menunjukkan skala.']], 'red_flags' => [],
+            'interview_questions' => [['question' => 'Bagaimana kamu deploy?', 'why' => 'Tidak ada di CV', 'how_to_answer' => 'Pakai rilis nyata.']],
+            'actions' => [['action' => 'Jelaskan cakupan API.']], 'limitations' => [],
+        ])], 'finish_reason' => 'stop']]])]);
+
+        $this->postJson(route('ai-analyzer.translate', $result))->assertOk()->assertJson(['ok' => true]);
+        $this->postJson(route('ai-analyzer.translate', $result))->assertOk();
+        Http::assertSentCount(1); // kept, not translated twice
+
+        $id = $result->fresh()->analysis_result['translations']['id'];
+        $this->assertSame('id', $id['language']);
+        $this->assertSame('Maintained [number] APIs serving [number of users]', $id['rewrites'][0]['after'], 'the rewrite stays in the CV language');
+        $this->assertSame('Menunjukkan skala.', $id['rewrites'][0]['why']);
+        $this->assertSame(['API'], $id['keywords']['present']);
+        $this->assertSame(61, $id['skor_kecocokan'], 'scores are not touched');
+
+        $this->get(route('ai-analyzer.show', $result))->assertOk()->assertSee('Perlu dipoles sebelum melamar')->assertSee('Pengalaman API-mu relevan.')
+            ->assertDontSee('Menerjemahkan review ini');
+        $this->actingAs(User::factory()->create())->postJson(route('ai-analyzer.translate', $result))->assertForbidden();
+    }
 }

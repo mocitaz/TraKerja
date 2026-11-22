@@ -25,20 +25,10 @@ class KawanKerjaChatTest extends TestCase
 
     public function test_authenticated_user_can_chat_and_receive_reply(): void
     {
-        config(['services.gemini.key' => 'fake-test-key']);
+        config(['services.openai.key' => 'fake-test-key']);
 
         Http::fake([
-            'https://generativelanguage.googleapis.com/v1beta/models/*' => Http::response([
-                'candidates' => [
-                    [
-                        'content' => [
-                            'parts' => [
-                                ['text' => 'Halo! Saya KawanKerja. Ada yang bisa dibantu?']
-                            ]
-                        ]
-                    ]
-                ]
-            ], 200),
+            'https://api.openai.com/*' => Http::response(['choices' => [['message' => ['role' => 'assistant', 'content' => 'Halo! Saya KawanKerja. Ada yang bisa dibantu?'], 'finish_reason' => 'stop']]], 200),
         ]);
 
         $user = User::factory()->create();

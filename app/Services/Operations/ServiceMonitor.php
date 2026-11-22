@@ -12,7 +12,7 @@ use Symfony\Component\Mailer\Transport\Smtp\SmtpTransport;
 
 class ServiceMonitor
 {
-    public const SERVICES = ['gemini' => 'Gemini', 'email' => 'Email', 'payment' => 'Pakasir', 'storage' => 'Storage'];
+    public const SERVICES = ['ai' => 'OpenAI', 'email' => 'Email', 'payment' => 'Pakasir', 'storage' => 'Storage'];
 
     public function check(string $service, ?int $actor): OperationServiceCheck
     {
@@ -20,7 +20,7 @@ class ServiceMonitor
         $start = hrtime(true);
         try {
             [$status, $summary] = match ($service) {
-                'gemini' => $this->gemini(),
+                'ai' => $this->openAi(),
                 'email' => $this->email(),
                 'payment' => $this->payment(),
                 'storage' => $this->storage(),
@@ -36,16 +36,17 @@ class ServiceMonitor
         ]);
     }
 
-    private function gemini(): array
+    private function openAi(): array
     {
-        if (! config('services.gemini.key')) {
-            return ['unconfigured', 'Gemini API key is not configured.'];
+        $key = \App\Services\Ai\OpenAiChat::key();
+        if (! $key) {
+            return ['unconfigured', 'OpenAI API key is not configured.'];
         }
-        $response = Http::acceptJson()->withHeaders(['x-goog-api-key' => config('services.gemini.key')])
-            ->connectTimeout(4)->timeout(8)->withoutRedirecting()
-            ->get('https://generativelanguage.googleapis.com/v1beta/models/'.rawurlencode(config('services.gemini.model')));
+        $model = \App\Services\Ai\OpenAiChat::model();
+        $response = Http::acceptJson()->withToken($key)->connectTimeout(4)->timeout(8)->withoutRedirecting()
+            ->get('https://api.openai.com/v1/models/'.rawurlencode($model));
 
-        return $response->successful() && is_string($response->json('name'))
+        return $response->successful() && $response->json('id') === $model
             ? ['healthy', 'Model metadata is reachable with the configured key. Generation was not tested.']
             : ['degraded', __('Model metadata check failed (HTTP :status).', ['status' => $response->status()])];
     }

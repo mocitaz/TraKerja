@@ -22,8 +22,8 @@ class KawanKerjaStreamTest extends TestCase
         $user = User::factory()->create();
 
         Http::fake([
-            'generativelanguage.googleapis.com/*' => Http::response(
-                "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"Halo! Saya siap membantu.\"}]}}]}\n\n",
+            'api.openai.com/*' => Http::response(
+                "data: {\"choices\": [{\"index\": 0, \"delta\": {\"content\": \"Halo! Saya siap membantu.\"}, \"finish_reason\": null}]}\n\ndata: [DONE]\n\n",
                 200,
                 ['Content-Type' => 'text/event-stream']
             ),

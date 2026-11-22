@@ -44,7 +44,7 @@ final class AiStudioProcessingService
                     'user_id' => $user->id, 'task' => $task, 'request_key' => $request->input('request_key'),
                     'title' => Str::limit($context['payload']['company_name'] ?: ($sourceName ?: 'CV review'), 250, ''),
                     'payload' => $context['payload'], 'source_path' => $path, 'source_name' => $sourceName,
-                    'credit_state' => $metered ? 'reserved' : 'none', 'model' => app(GeminiStudioService::class)->model($task),
+                    'credit_state' => $metered ? 'reserved' : 'none', 'model' => app(StudioAiService::class)->model($task),
                 ]);
             });
         } catch (\Throwable $exception) {
@@ -74,7 +74,7 @@ final class AiStudioProcessingService
         try {
             $pdf = $run->source_path ? Storage::disk('local')->get($run->source_path) : null;
             if ($run->source_path && !$pdf) throw new StudioProviderException('source');
-            $result = app(GeminiStudioService::class)->generate($run->task, $run->payload, $pdf, $run->model);
+            $result = app(StudioAiService::class)->generate($run->task, $run->payload, $pdf, $run->model);
             DB::transaction(function () use ($run, $result) {
                 $user = User::whereKey($run->user_id)->lockForUpdate()->first();
                 $locked = AiStudioRun::whereKey($run->id)->lockForUpdate()->first();

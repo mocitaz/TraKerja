@@ -26,13 +26,13 @@ class NaraChatContractTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        config(['app.key' => str_repeat('k', 32), 'session.driver' => 'array', 'cache.default' => 'array', 'logging.default' => 'null', 'services.gemini.key' => 'fixture', 'services.gemini.model' => 'fixture-model', 'database.default' => 'sqlite', 'database.connections.sqlite.database' => ':memory:']);
+        config(['app.key' => str_repeat('k', 32), 'session.driver' => 'array', 'cache.default' => 'array', 'logging.default' => 'null', 'services.openai.key' => 'fixture', 'services.openai.model' => 'fixture-model', 'database.default' => 'sqlite', 'database.connections.sqlite.database' => ':memory:']);
         Http::preventStrayRequests();
     }
 
     public function test_chat_passes_validated_focus_to_provider_and_saves_only_successful_exchanges(): void
     {
-        Http::fake(['generativelanguage.googleapis.com/*' => Http::response(['candidates' => [['content' => ['parts' => [['text' => 'Siapkan satu contoh pengalaman nyata.']]]]]])]);
+        Http::fake(['api.openai.com/*' => Http::response(['choices' => [['message' => ['role' => 'assistant', 'content' => 'Siapkan satu contoh pengalaman nyata.'], 'finish_reason' => 'stop']]])]);
         $service = new class extends KawanKerjaService {
             public function buildUserContext(User $user): array { return ['user_name' => $user->name, 'pipeline_available' => false]; }
         };
@@ -46,7 +46,7 @@ class NaraChatContractTest extends TestCase
         $this->assertSame(['user', 'model'], \App\Models\NaraMessage::where('user_id', $user->id)->orderBy('id')->pluck('role')->all());
         $this->assertNotNull($result['message_id']);
         Http::assertSent(function ($request) {
-            $prompt = $request['system_instruction']['parts'][0]['text'];
+            $prompt = $request['messages'][0]['content'];
             return str_contains($prompt, 'Anda adalah Nara') && str_contains($prompt, 'Interview practice:')
                 && str_contains($prompt, 'Jangan mengarang') && str_contains($prompt, 'primary_resume hanya judul file');
         });
@@ -54,7 +54,7 @@ class NaraChatContractTest extends TestCase
 
     public function test_requests_without_a_mode_use_the_all_in_one_focus_and_failures_do_not_save_history(): void
     {
-        Http::fake(['generativelanguage.googleapis.com/*' => Http::response(['error' => 'fixture'], 503)]);
+        Http::fake(['api.openai.com/*' => Http::response(['error' => 'fixture'], 503)]);
         $service = new class extends KawanKerjaService {
             public function buildUserContext(User $user): array { return []; }
         };
@@ -66,12 +66,12 @@ class NaraChatContractTest extends TestCase
         $this->assertFalse($result['success']);
         $this->assertSame(0, \App\Models\NaraMessage::where('user_id', $user->id)->count());
         // One chat for everything: Nara reads the intent itself (the mode tabs were removed).
-        Http::assertSent(fn ($request) => str_contains($request['system_instruction']['parts'][0]['text'], 'Asisten serba bisa:'));
+        Http::assertSent(fn ($request) => str_contains($request['messages'][0]['content'], 'Asisten serba bisa:'));
     }
 
     public function test_pure_greetings_skip_context_queries_and_provider_for_both_chat_paths(): void
     {
-        config(['services.gemini.key' => null]);
+        config(['services.openai.key' => null]);
         Http::fake();
         $service = new class extends KawanKerjaService {
             public function buildUserContext(User $user): array { throw new \RuntimeException('Greeting must not query career context'); }
@@ -93,7 +93,7 @@ class NaraChatContractTest extends TestCase
 
     public function test_greetings_with_a_request_and_other_short_messages_still_use_the_provider(): void
     {
-        Http::fake(['generativelanguage.googleapis.com/*' => Http::response(['candidates' => [['content' => ['parts' => [['text' => 'A tailored response.']]]]]])]);
+        Http::fake(['api.openai.com/*' => Http::response(['choices' => [['message' => ['role' => 'assistant', 'content' => 'A tailored response.'], 'finish_reason' => 'stop']]])]);
         $service = new class extends KawanKerjaService {
             public int $contexts = 0;
             public function buildUserContext(User $user): array { $this->contexts++; return []; }

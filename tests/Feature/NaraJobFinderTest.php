@@ -91,13 +91,11 @@ class NaraJobFinderTest extends TestCase
 
     public function test_nara_gets_the_catalogue_and_replies_with_real_job_cards(): void
     {
-        config(['services.gemini.nara_tools' => false]); // the fallback flow: keyword pre-search, no tools
-        config(['services.gemini.key' => 'fake-test-key']);
+        config(['services.openai.nara_tools' => false]); // the fallback flow: keyword pre-search, no tools
+        config(['services.openai.key' => 'fake-test-key']);
         $user = User::factory()->create();
         $job = $this->makeVacancy(['title' => 'Data Analyst', 'region' => 'Kota Bandung', 'company' => 'Maju Jaya']);
-        Http::fake(['https://generativelanguage.googleapis.com/*' => Http::response(['candidates' => [['content' => ['parts' => [
-            ['text' => "Ini loker yang cocok dengan SQL kamu:\n\n[job:{$job->id}]\n\n[job:424242]"],
-        ]]]]])]);
+        Http::fake(['https://api.openai.com/*' => Http::response(['choices' => [['message' => ['role' => 'assistant', 'content' => "Ini loker yang cocok dengan SQL kamu:\n\n[job:{$job->id}]\n\n[job:424242]"], 'finish_reason' => 'stop']]])]);
 
         $result = (new KawanKerjaService)->chat('carikan loker data analyst di bandung', $user);
 
@@ -105,7 +103,7 @@ class NaraJobFinderTest extends TestCase
         $this->assertStringContainsString("[job:{$job->id}|Data Analyst|Maju Jaya|", $result['reply']);
         $this->assertStringNotContainsString('424242', $result['reply'], 'an invented id is dropped');
         Http::assertSent(function (Request $request) use ($job) {
-            $prompt = $request['system_instruction']['parts'][0]['text'] ?? '';
+            $prompt = $request['messages'][0]['content'] ?? '';
 
             return str_contains($prompt, 'KATALOG LOKER TRAKERJA (hasil pencarian nyata')
                 && str_contains($prompt, '"id":'.$job->id) && str_contains($prompt, 'open_jobs_in_catalogue');
@@ -183,12 +181,12 @@ class NaraJobFinderTest extends TestCase
 
     public function test_the_stream_ends_with_the_reply_that_carries_job_cards(): void
     {
-        config(['services.gemini.nara_tools' => false]); // the fallback flow: keyword pre-search, no tools
-        config(['services.gemini.key' => 'fake-test-key']);
+        config(['services.openai.nara_tools' => false]); // the fallback flow: keyword pre-search, no tools
+        config(['services.openai.key' => 'fake-test-key']);
         $user = User::factory()->create();
         $job = $this->makeVacancy(['title' => 'Data Analyst', 'region' => 'Kota Bandung', 'company' => 'Maju Jaya']);
-        $sse = fn (string $text) => 'data: '.json_encode(['candidates' => [['content' => ['parts' => [['text' => $text]]]]]])."\n\n";
-        Http::fake(['https://generativelanguage.googleapis.com/*' => Http::response($sse('Ini pilihannya:').$sse("\n\n[job:{$job->id}]"), 200, ['Content-Type' => 'text/event-stream'])]);
+        $sse = fn (string $text) => 'data: '.json_encode(['choices' => [['index' => 0, 'delta' => ['content' => $text], 'finish_reason' => null]]])."\n\n";
+        Http::fake(['https://api.openai.com/*' => Http::response($sse('Ini pilihannya:').$sse("\n\n[job:{$job->id}]"), 200, ['Content-Type' => 'text/event-stream'])]);
 
         $body = $this->actingAs($user)->post(route('kawankerja.stream'), ['message' => 'carikan loker data analyst di bandung'])->assertOk()->streamedContent();
 

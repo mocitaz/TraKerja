@@ -16,7 +16,7 @@ class CoverLetterWorkspaceTest extends TestCase
         $letter = CoverLetter::create(['user_id' => $user->id, 'job_title' => 'Actual engineer', 'company_name' => 'Actual company', 'tone' => 'professional', 'language' => 'en', 'content' => "Dear team,\n\n<script>bad()</script>\nThank you."]);
         $this->actingAs($user)->get(route('cover-letters.show', $letter))->assertOk()
             ->assertSee('Actual engineer')->assertSee('Actual company')->assertSee('English')
-            ->assertSee('Download TXT')->assertSee('Print letter')->assertSee('Copy letter')
+            ->assertSee('TXT')->assertSee('Download PDF')->assertSee('Copy letter')->assertSee('Ask for a revision')
             ->assertSee('&lt;script&gt;bad()&lt;/script&gt;', false)->assertDontSee('<script>bad()</script>', false);
         $this->assertSame("Dear team,\n\n<script>bad()</script>\nThank you.", $letter->fresh()->content);
     }

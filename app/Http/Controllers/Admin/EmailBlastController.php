@@ -18,7 +18,7 @@ class EmailBlastController extends Controller
             'audienceCounts' => collect(['all', 'verified', 'unverified', 'premium', 'free', 'new'])->mapWithKeys(fn ($key) => [$key => $this->audienceQuery($key)->count()])->all(),
             'templates' => EmailTemplateCatalog::groups(),
             'savedTemplates' => EmailBlastTemplate::whereNotNull('reviewed_at')->latest()->get(['id', 'name', 'language', 'subject', 'content', 'button_text', 'button_url']),
-            'geminiReady' => (bool) config('services.gemini.key'),
+            'geminiReady' => (bool) \App\Services\Ai\OpenAiChat::key(),
         ]);
     }
 

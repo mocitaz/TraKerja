@@ -20,9 +20,9 @@ class KawanKerjaService
 
     public function __construct()
     {
-        $this->apiKey = config('services.gemini.key', env('GEMINI_API_KEY'));
-        $this->primaryModel = config('services.gemini.model', env('GEMINI_MODEL', 'gemini-flash-lite-latest'));
-        $this->fallbackModel = 'gemini-3.1-flash-lite';
+        $this->apiKey = \App\Services\Ai\OpenAiChat::key();
+        $this->primaryModel = \App\Services\Ai\OpenAiChat::model();
+        $this->fallbackModel = (string) \App\Services\Ai\OpenAiChat::fallbackModel();
     }
 
     /**
@@ -46,33 +46,7 @@ class KawanKerjaService
         $jobs = $this->jobSearch($user, $message);
         $systemPrompt = $this->buildSystemPrompt($context, $mode, $jobs, self::replyLanguage($message));
 
-        // Format conversation history for Gemini API
-        $contents = [];
-        foreach ($history as $item) {
-            if (!empty($item['role']) && !empty($item['content'])) {
-                $contents[] = [
-                    'role' => $item['role'] === 'user' ? 'user' : 'model',
-                    'parts' => [['text' => $item['content']]],
-                ];
-            }
-        }
-
-        // Append current message
-        $contents[] = [
-            'role' => 'user',
-            'parts' => [['text' => $message]],
-        ];
-
-        $payload = [
-            'system_instruction' => [
-                'parts' => [['text' => $systemPrompt]],
-            ],
-            'contents' => $contents,
-            'generationConfig' => [
-                'temperature' => 0.4,
-                'maxOutputTokens' => 3072,
-            ],
-        ];
+        $payload = $this->plainPayload($systemPrompt, $history, $message);
 
         // 1. Try Primary Model, 2. the fallback model
         $response = $this->executeRequest($this->primaryModel, $payload) ?? $this->executeRequest($this->fallbackModel, $payload);
@@ -87,7 +61,7 @@ class KawanKerjaService
         ];
     }
 
-    // ------------------------------------------------------------------ Nara with tools (Gemini function calling)
+    // ------------------------------------------------------------------ Nara with tools (OpenAI function calling)
 
     /** Rounds of "model asks for a tool, we answer" before the model must write its reply. */
     private const MAX_TOOL_ROUNDS = 4;
@@ -95,25 +69,23 @@ class KawanKerjaService
     /** Nara's usual model; heavy tasks (evaluating answers, drafts, strategy) use the stronger one when configured. */
     private function strongModel(): ?string
     {
-        return config('services.gemini.nara_strong_model') ?: null;
+        return config('services.openai.strong_model') ?: null;
     }
 
     private function toolsEnabled(): bool
     {
-        return (bool) config('services.gemini.nara_tools', true);
+        return (bool) config('services.openai.nara_tools', true);
     }
 
     /**
-     * Whether this message deserves the stronger (slower, smarter) model: writing, evaluating, comparing, planning, or
-     * a long message (a pasted answer or draft). Simple questions and job searches stay on the fast model.
+     * Whether this message deserves more thinking (higher reasoning effort, and OPENAI_STRONG_MODEL when set): writing,
+     * evaluating, comparing, planning, or a long message (a pasted answer or draft). Simple questions and job searches
+     * stay quick.
      *
      * @param  array<int, array{role: string, content: string}>  $history
      */
     public function wantsStrongModel(string $message, array $history = []): bool
     {
-        if (! $this->strongModel()) {
-            return false;
-        }
         $text = mb_strtolower($message);
         if (mb_strlen($text) > 320) {
             return true;
@@ -160,31 +132,28 @@ class KawanKerjaService
         $turn = new \App\JobEngine\Personalization\NaraTurn($onStatus);
         $finder = app(\App\JobEngine\Personalization\NaraJobFinder::class);
         $tools = app(\App\JobEngine\Personalization\NaraTools::class);
+        $chat = app(\App\Services\Ai\OpenAiChat::class);
         $system = $this->buildSystemPrompt($this->buildUserContext($user), $mode, null, self::replyLanguage($message), true);
-        $contents = $this->historyContents($history);
-        $contents[] = ['role' => 'user', 'parts' => [['text' => $message]]];
+        $messages = [['role' => 'system', 'content' => $system], ...$this->historyMessages($history), ['role' => 'user', 'content' => $message]];
 
         $strong = $this->wantsStrongModel($message, $history);
         $models = array_values(array_unique(array_filter([$strong ? $this->strongModel() : null, $this->primaryModel, $this->fallbackModel])));
+        $effort = $strong ? config('services.openai.strong_reasoning_effort', 'low') : config('services.openai.reasoning_effort', 'low');
         if ($strong) {
             $turn->status(__('Working through this carefully…'));
         }
+        $declarations = \App\Services\Ai\OpenAiChat::tools(\App\JobEngine\Personalization\NaraTools::declarations());
 
         $text = '';
         for ($round = 0; $round < self::MAX_TOOL_ROUNDS; $round++) {
-            $payload = [
-                'system_instruction' => ['parts' => [['text' => $system]]],
-                'contents' => $contents,
-                'generationConfig' => ['temperature' => 0.4, 'maxOutputTokens' => 3072],
-            ];
+            $payload = ['messages' => $messages, 'reasoning_effort' => $effort, 'max_completion_tokens' => 6000];
             if ($round < self::MAX_TOOL_ROUNDS - 1) { // the last round must be the written reply
-                $payload['tools'] = \App\JobEngine\Personalization\NaraTools::declarations();
+                $payload['tools'] = $declarations;
                 // "Ingat ya, ..." / "lupakan ...": the first round must call that tool, so Nara cannot claim it did.
                 $forced = $round === 0 ? self::forcedTool($message) : null;
-                $mode = $forced ? ['mode' => 'ANY', 'allowedFunctionNames' => [$forced]] : (self::asksWhatIsRemembered($message) ? ['mode' => 'NONE'] : ['mode' => 'AUTO']);
-                $payload['toolConfig'] = ['functionCallingConfig' => $mode];
+                $payload['tool_choice'] = $forced ? ['type' => 'function', 'function' => ['name' => $forced]] : (self::asksWhatIsRemembered($message) ? 'none' : 'auto');
             }
-            $out = $this->callModels($models, $payload, $onChunk);
+            $out = $chat->callModels($models, $payload, $onChunk, $strong ? 45 : 60);
             if (! $out['ok']) {
                 // Nothing reached the user yet and nothing ran: let the plain flow try.
                 if ($round === 0 && ! $out['emitted']) {
@@ -197,15 +166,12 @@ class KawanKerjaService
             if (! $out['calls']) {
                 break;
             }
-            // Echo the model's own parts back (they carry thought signatures), then answer each call.
-            $contents[] = ['role' => 'model', 'parts' => $out['parts']];
-            $answers = [];
+            // The assistant turn that asked for the tools goes back first, then one result per call.
+            $messages[] = \App\Services\Ai\OpenAiChat::assistantToolMessage($out);
             foreach ($out['calls'] as $call) {
                 $turn->status(\App\JobEngine\Personalization\NaraTools::status($call['name']));
-                $result = $tools->execute($call['name'], $call['args'], $user, $turn);
-                $answers[] = ['functionResponse' => array_filter(['name' => $call['name'], 'id' => $call['id'] ?? null, 'response' => ['result' => $result]])];
+                $messages[] = \App\Services\Ai\OpenAiChat::toolResult($call['id'], $tools->execute($call['name'], $call['args'], $user, $turn));
             }
-            $contents[] = ['role' => 'user', 'parts' => $answers];
         }
 
         $reply = trim($text);
@@ -221,130 +187,29 @@ class KawanKerjaService
         return ['success' => true, 'reply' => $this->withJobCards($reply, $turn->asJobs($finder, $user), $user, $turn->interview)];
     }
 
-    /**
-     * Try the models in order. A model that fails before sending any text hands over to the next one; one that fails
-     * after streaming text does not (the user would see the answer twice).
-     *
-     * @param  array<int, string>  $models
-     * @return array{ok: bool, parts: array, text: string, calls: array, emitted: bool}
-     */
-    private function callModels(array $models, array $payload, ?callable $onChunk): array
+    /** Conversation history as chat messages; long job cards in old replies are shortened to what the model needs. */
+    private function historyMessages(array $history): array
     {
-        $failed = ['ok' => false, 'parts' => [], 'text' => '', 'calls' => [], 'emitted' => false];
-        foreach ($models as $model) {
-            $out = $this->callModel($model, $payload, $onChunk);
-            if ($out['ok']) {
-                return $out;
-            }
-            $failed = $out;
-            if ($out['emitted']) {
-                break;
-            }
-        }
-
-        return $failed;
-    }
-
-    /** One request to one model, streamed when $onChunk is given. Never throws. @return array{ok: bool, parts: array, text: string, calls: array, emitted: bool} */
-    private function callModel(string $model, array $payload, ?callable $onChunk): array
-    {
-        $acc = ['ok' => false, 'parts' => [], 'text' => '', 'calls' => [], 'emitted' => false];
-        if ($model === $this->strongModel()) {
-            $payload['generationConfig']['thinkingConfig'] = ['thinkingLevel' => 'low']; // keep the stronger model quick
-        }
-        $strong = $model === $this->strongModel();
-        try {
-            if ($onChunk) {
-                $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:streamGenerateContent?alt=sse";
-                $response = Http::withHeaders(['x-goog-api-key' => $this->apiKey])->withOptions(['stream' => true])->timeout($strong ? 25 : 60)->post($url, $payload);
-                if (! $response->successful()) {
-                    Log::warning("Gemini stream {$model} status {$response->status()}: ".mb_substr($response->body(), 0, 300));
-
-                    return $acc;
-                }
-                $body = $response->toPsrResponse()->getBody();
-                $buffer = '';
-                while (! $body->eof()) {
-                    $data = $body->read(4096);
-                    if ($data === '' || $data === false) {
-                        $body->eof() ? null : usleep(25000);
-                        continue;
-                    }
-                    $buffer .= $data;
-                    while (($pos = strpos($buffer, "\n")) !== false) {
-                        $line = trim(substr($buffer, 0, $pos));
-                        $buffer = substr($buffer, $pos + 1);
-                        if (str_starts_with($line, 'data: ') && ($json = json_decode(substr($line, 6), true)) !== null) {
-                            $this->absorb($json, $acc, $onChunk);
-                        }
-                    }
-                }
-            } else {
-                $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent";
-                $response = Http::withHeaders(['x-goog-api-key' => $this->apiKey])->timeout($strong ? 25 : 30)->post($url, $payload);
-                if (! $response->successful()) {
-                    Log::warning("Gemini {$model} status {$response->status()}: ".mb_substr($response->body(), 0, 300));
-
-                    return $acc;
-                }
-                $this->absorb((array) $response->json(), $acc, null);
-            }
-        } catch (\App\Services\NaraClientStopped $e) {
-            throw $e; // the user pressed Stop: not an error of the model
-        } catch (Throwable $e) {
-            Log::warning("Gemini {$model} error: ".$this->scrub($e->getMessage()));
-
-            return $acc;
-        }
-        // A reply needs text or a tool call; an empty answer (blocked, cut off) lets the next model try.
-        $acc['ok'] = trim($acc['text']) !== '' || $acc['calls'] !== [];
-
-        return $acc;
-    }
-
-    /** Fold one response (or one stream event) into the accumulator, sending text to $onChunk. */
-    private function absorb(array $json, array &$acc, ?callable $onChunk): void
-    {
-        foreach ((array) data_get($json, 'candidates.0.content.parts', []) as $part) {
-            if (! empty($part['thought'])) {
-                continue; // thought summaries are not part of the reply
-            }
-            if (isset($part['functionCall']) && empty($part['functionCall']['args'])) {
-                $part['functionCall']['args'] = (object) []; // an empty list is rejected when the call is echoed back; it must be an object
-            }
-            $acc['parts'][] = $part;
-            if (isset($part['functionCall']['name'])) {
-                $acc['calls'][] = ['name' => (string) $part['functionCall']['name'], 'args' => (array) ($part['functionCall']['args'] ?? []), 'id' => $part['functionCall']['id'] ?? null];
-            } elseif (isset($part['text']) && $part['text'] !== '') {
-                $acc['text'] .= $part['text'];
-                if ($onChunk) {
-                    $acc['emitted'] = true;
-                    $onChunk($part['text']);
-                }
-            }
-        }
-    }
-
-    /** Remove the API key from text that may end up in logs (cURL errors can quote the URL). */
-    private function scrub(string $text): string
-    {
-        return $this->apiKey ? str_replace((string) $this->apiKey, '***', $text) : $text;
-    }
-
-    /** @param array<int, array{role?: string, content?: string}> $history @return array<int, array<string, mixed>> */
-    private function historyContents(array $history): array
-    {
-        $contents = [];
+        $messages = [];
         foreach ($history as $item) {
             if (! empty($item['role']) && ! empty($item['content'])) {
-                // A job card in an old reply is long; the model only needs to know which job it was.
                 $content = preg_replace('/\[job:(\d+)\|([^|\]]*)\|([^|\]]*)\|[^\]]*\]/', '(job #$1: $2 at $3)', (string) $item['content']);
                 $content = preg_replace('/\[savesearch:[^\]]*\]/', '', $content);
-                $contents[] = ['role' => $item['role'] === 'user' ? 'user' : 'model', 'parts' => [['text' => trim($content)]]];
+                $messages[] = ['role' => $item['role'] === 'user' ? 'user' : 'assistant', 'content' => trim($content)];
             }
         }
 
-        return $contents;
+        return $messages;
+    }
+
+    /** Request body for the plain flow (no tools). */
+    private function plainPayload(string $systemPrompt, array $history, string $message): array
+    {
+        return [
+            'messages' => [['role' => 'system', 'content' => $systemPrompt], ...$this->historyMessages($history), ['role' => 'user', 'content' => $message]],
+            'reasoning_effort' => config('services.openai.reasoning_effort', 'low'),
+            'max_completion_tokens' => 6000,
+        ];
     }
 
     /** Send a user message to Nara and return the reply. */
@@ -901,33 +766,14 @@ TXT;
 
     protected function executeRequest(string $model, array $payload): ?string
     {
-        try {
-            $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent";
-            $res = Http::withHeaders(['x-goog-api-key' => $this->apiKey])->timeout(20)->post($url, $payload);
+        $out = app(\App\Services\Ai\OpenAiChat::class)->call($model, $payload, null, 30);
+        $clean = trim($out['text']);
 
-            if ($res->successful()) {
-                $parts = $res->json('candidates.0.content.parts') ?? [];
-                $text = '';
-                foreach ($parts as $part) {
-                    if (isset($part['text'])) {
-                        $text .= $part['text'];
-                    }
-                }
-
-                $clean = trim($text);
-                return !empty($clean) ? $clean : null;
-            }
-
-            Log::warning("Gemini model {$model} response status {$res->status()}: " . $res->body());
-        } catch (Throwable $e) {
-            Log::warning("Gemini model {$model} error: " . $this->scrub($e->getMessage()));
-        }
-
-        return null;
+        return $clean !== '' ? $clean : null;
     }
 
     /**
-     * Stream a chat response from Gemini using SSE (Server-Sent Events).
+     * Stream a chat response (plain flow, no tools) using SSE (Server-Sent Events).
      *
      * @param string $message
      * @param User $user
@@ -954,33 +800,7 @@ TXT;
         $jobs = $this->jobSearch($user, $message);
         $systemPrompt = $this->buildSystemPrompt($context, $mode, $jobs, self::replyLanguage($message));
 
-        // Format conversation history for Gemini API
-        $contents = [];
-        foreach ($history as $item) {
-            if (!empty($item['role']) && !empty($item['content'])) {
-                $contents[] = [
-                    'role' => $item['role'] === 'user' ? 'user' : 'model',
-                    'parts' => [['text' => $item['content']]],
-                ];
-            }
-        }
-
-        // Append current message
-        $contents[] = [
-            'role' => 'user',
-            'parts' => [['text' => $message]],
-        ];
-
-        $payload = [
-            'system_instruction' => [
-                'parts' => [['text' => $systemPrompt]],
-            ],
-            'contents' => $contents,
-            'generationConfig' => [
-                'temperature' => 0.4,
-                'maxOutputTokens' => 3072,
-            ],
-        ];
+        $payload = $this->plainPayload($systemPrompt, $history, $message);
 
         $started = false;
         $emit = function (string $chunk) use ($onChunk, &$started) {
@@ -1007,84 +827,9 @@ TXT;
 
     protected function executeStreamRequest(string $model, array $payload, callable $onChunk): ?string
     {
-        try {
-            $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:streamGenerateContent?alt=sse";
+        $out = app(\App\Services\Ai\OpenAiChat::class)->call($model, $payload, $onChunk, 60);
+        $clean = trim($out['text']);
 
-            $accumulated = '';
-            $response = Http::withHeaders(['x-goog-api-key' => $this->apiKey])->withOptions(['stream' => true])
-                ->timeout(60)
-                ->post($url, $payload);
-
-            if (!$response->successful()) {
-                Log::warning("Gemini stream model {$model} error status {$response->status()}: " . $response->body());
-                return null;
-            }
-
-            $body = $response->toPsrResponse()->getBody();
-            $buffer = '';
-
-            while (!$body->eof()) {
-                $chunkData = $body->read(4096);
-                if ($chunkData === '' || $chunkData === false) {
-                    if ($body->eof()) {
-                        break;
-                    }
-                    usleep(25000); // 25ms pause to allow next network packet to arrive
-                    continue;
-                }
-                $buffer .= $chunkData;
-
-                while (($newlinePos = strpos($buffer, "\n")) !== false) {
-                    $line = trim(substr($buffer, 0, $newlinePos));
-                    $buffer = substr($buffer, $newlinePos + 1);
-
-                    if (str_starts_with($line, 'data: ')) {
-                        $jsonStr = substr($line, 6);
-                        if ($jsonStr === '[DONE]') {
-                            break 2;
-                        }
-                        $decoded = json_decode($jsonStr, true);
-                        if (isset($decoded['candidates'][0]['content']['parts'][0]['text'])) {
-                            $chunkText = $decoded['candidates'][0]['content']['parts'][0]['text'];
-                            if ($chunkText !== '') {
-                                $accumulated .= $chunkText;
-                                $onChunk($chunkText);
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Flush any remaining data left in buffer
-            if (trim($buffer) !== '' && str_starts_with(trim($buffer), 'data: ')) {
-                $jsonStr = substr(trim($buffer), 6);
-                $decoded = json_decode($jsonStr, true);
-                if (isset($decoded['candidates'][0]['content']['parts'][0]['text'])) {
-                    $chunkText = $decoded['candidates'][0]['content']['parts'][0]['text'];
-                    if ($chunkText !== '') {
-                        $accumulated .= $chunkText;
-                        $onChunk($chunkText);
-                    }
-                }
-            }
-
-            // Fallback parsing if response body was not line-buffered SSE (e.g. in mocks)
-            if ($accumulated === '') {
-                $data = $response->json();
-                $parts = $data['candidates'][0]['content']['parts'] ?? [];
-                foreach ($parts as $part) {
-                    if (isset($part['text']) && $part['text'] !== '') {
-                        $accumulated .= $part['text'];
-                        $onChunk($part['text']);
-                    }
-                }
-            }
-
-            $clean = trim($accumulated);
-            return !empty($clean) ? $clean : null;
-        } catch (Throwable $e) {
-            Log::warning("Gemini stream model {$model} exception: " . $this->scrub($e->getMessage()));
-            return null;
-        }
+        return $clean !== '' ? $clean : null;
     }
 }

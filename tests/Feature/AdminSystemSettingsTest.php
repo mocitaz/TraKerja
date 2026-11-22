@@ -57,9 +57,9 @@ class AdminSystemSettingsTest extends TestCase
 
     public function test_integrations_show_configuration_without_disclosing_provider_secrets(): void
     {
-        config(['services.gemini.key' => 'private-gemini-test-value', 'pakasir.api_key' => 'private-pakasir-test-value']);
-        Livewire::test(IntegrationHub::class)->assertSee('Gemini')->assertSee('Pakasir')
-            ->assertSee('Configured')->assertDontSee('private-gemini-test-value', false)->assertDontSee('private-pakasir-test-value', false)
+        config(['services.openai.key' => 'private-openai-test-value', 'pakasir.api_key' => 'private-pakasir-test-value']);
+        Livewire::test(IntegrationHub::class)->assertSee('OpenAI')->assertSee('Pakasir')
+            ->assertSee('Configured')->assertDontSee('private-openai-test-value', false)->assertDontSee('private-pakasir-test-value', false)
             ->set('webhookEnabled', true)->set('webhookUrl', 'javascript:alert(1)')->call('saveWebhook')->assertHasErrors('webhookUrl')
             ->set('webhookUrl', 'https://example.test/events')->call('saveWebhook')->assertHasNoErrors();
         $this->assertTrue(Setting::get('webhook_enabled'));

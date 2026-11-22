@@ -10,40 +10,36 @@ use Database\Seeders\JobEngineReferenceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Tests\Concerns\FakesOpenAi;
 use Tests\Concerns\MakesVacancies;
 use Tests\TestCase;
 
 /** Structured interview practice, suggestion chips, the comparison table and conversation controls. */
 class NaraInterviewAndCardsTest extends TestCase
 {
-    use MakesVacancies, RefreshDatabase;
+    use FakesOpenAi, MakesVacancies, RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
         Cache::flush();
         $this->seed(JobEngineReferenceSeeder::class);
-        config(['services.gemini.key' => 'fake-test-key', 'services.gemini.nara_strong_model' => null]);
+        config(['services.openai.key' => 'fake-test-key', 'services.openai.strong_model' => null]);
     }
 
     private function toolCall(string $name, array $args): array
     {
-        return ['candidates' => [['content' => ['role' => 'model', 'parts' => [['functionCall' => ['name' => $name, 'args' => $args, 'id' => 'c'], 'thoughtSignature' => 's']]]]]];
+        return $this->openAiToolCall($name, $args, 'call_'.$name);
     }
 
     private function text(string $text): array
     {
-        return ['candidates' => [['content' => ['role' => 'model', 'parts' => [['text' => $text]]]]]];
+        return $this->openAiText($text);
     }
 
-    private function gemini(array ...$replies): void
+    private function script(array ...$replies): void
     {
-        Http::swap(new \Illuminate\Http\Client\Factory);
-        $sequence = Http::sequence();
-        foreach ($replies as $reply) {
-            $sequence->push($reply);
-        }
-        Http::fake(['https://generativelanguage.googleapis.com/*' => $sequence]);
+        $this->openAi(...$replies);
     }
 
     private function ask(User $user, string $message): \Illuminate\Testing\TestResponse
@@ -61,24 +57,24 @@ class NaraInterviewAndCardsTest extends TestCase
     public function test_an_interview_session_is_stored_scored_and_summarised(): void
     {
         $user = User::factory()->create();
-        $this->gemini($this->toolCall('start_interview', ['role' => 'Data Analyst', 'company' => 'Acme']), $this->text('> Ceritakan proyek data terakhirmu.'));
+        $this->script($this->toolCall('start_interview', ['role' => 'Data Analyst', 'company' => 'Acme']), $this->text('> Ceritakan proyek data terakhirmu.'));
         $reply = $this->ask($user, 'Latih aku interview data analyst')->json('reply');
 
         $session = NaraInterview::activeFor($user);
         $this->assertSame(5, $session->total);
         $this->assertStringContainsString('[interview:0|5|', $reply);
 
-        $this->gemini($this->toolCall('record_answer', ['question_number' => 1, 'score' => 7.5, 'strength' => 'Jelas', 'improvement' => 'Tambah angka']), $this->text('> Pertanyaan 2'));
+        $this->script($this->toolCall('record_answer', ['question_number' => 1, 'score' => 7.5, 'strength' => 'Jelas', 'improvement' => 'Tambah angka']), $this->text('> Pertanyaan 2'));
         $this->ask($user, 'Jawaban saya...');
         $this->assertSame(7.5, $session->fresh()->average());
         $this->assertSame(1, $session->fresh()->answered());
 
         // The next prompt carries the running session so the model can continue it.
-        $this->gemini($this->text('ok'));
+        $this->script($this->text('ok'));
         $this->ask($user, 'Lanjut');
-        Http::assertSent(fn ($r) => str_contains($r['system_instruction']['parts'][0]['text'], 'active_interview'));
+        Http::assertSent(fn ($r) => str_contains(self::systemPrompt($r), 'active_interview'));
 
-        $this->gemini($this->toolCall('record_answer', ['question_number' => 2, 'score' => 99]), $this->toolCall('finish_interview', ['reason' => 'stopped']), $this->text('Ringkasan'));
+        $this->script($this->toolCall('record_answer', ['question_number' => 2, 'score' => 99]), $this->toolCall('finish_interview', ['reason' => 'stopped']), $this->text('Ringkasan'));
         $this->ask($user, 'Udahan');
         $this->assertNull(NaraInterview::activeFor($user));
         $this->assertSame(10.0, (float) $session->fresh()->answers[1]['score'], 'scores are capped at 10');
@@ -87,11 +83,11 @@ class NaraInterviewAndCardsTest extends TestCase
     public function test_bad_interview_calls_are_refused_and_sessions_are_private(): void
     {
         $user = User::factory()->create();
-        $this->gemini($this->toolCall('record_answer', ['question_number' => 1, 'score' => 5]), $this->text('Belum ada sesi.'));
+        $this->script($this->toolCall('record_answer', ['question_number' => 1, 'score' => 5]), $this->text('Belum ada sesi.'));
         $this->ask($user, 'nilai jawaban saya');
         $this->assertSame(0, NaraInterview::count());
 
-        $this->gemini($this->toolCall('start_interview', ['role' => 'PM']), $this->toolCall('record_answer', ['question_number' => 9, 'score' => 5]), $this->text('x'));
+        $this->script($this->toolCall('start_interview', ['role' => 'PM']), $this->toolCall('record_answer', ['question_number' => 9, 'score' => 5]), $this->text('x'));
         $this->ask($user, 'latihan interview');
         $this->assertSame(0, NaraInterview::activeFor($user)->answered(), 'question 9 of 5 is rejected');
 
@@ -101,7 +97,7 @@ class NaraInterviewAndCardsTest extends TestCase
     public function test_suggestion_chips_keep_the_last_tag_and_at_most_three(): void
     {
         $user = User::factory()->create();
-        $this->gemini($this->text("Halo\n[suggest:Satu|Dua]\nIsi\n[suggest:Tulis cover letter|Latih interview|Bandingkan loker|Cari yang remote|Simpan pencarian]"));
+        $this->script($this->text("Halo\n[suggest:Satu|Dua]\nIsi\n[suggest:Tulis cover letter|Latih interview|Bandingkan loker|Cari yang remote|Simpan pencarian]"));
         $reply = $this->ask($user, 'Apa langkah berikutnya untuk lamaran saya?')->json('reply');
 
         $this->assertSame(1, substr_count($reply, '[suggest:'));
@@ -114,7 +110,7 @@ class NaraInterviewAndCardsTest extends TestCase
         $user = User::factory()->create();
         $a = $this->makeVacancy(['title' => 'Data Analyst']);
         $b = $this->makeVacancy(['title' => 'Data Scientist']);
-        $this->gemini($this->toolCall('compare_jobs', ['job_ids' => [$a->id, $b->id]]), $this->text('Bandingannya begini.'));
+        $this->script($this->toolCall('compare_jobs', ['job_ids' => [$a->id, $b->id]]), $this->text('Bandingannya begini.'));
         $reply = $this->ask($user, 'bandingkan loker ini')->json('reply');
 
         $this->assertStringContainsString('[compare:', $reply, 'added even if the model forgot the tag');

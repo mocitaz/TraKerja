@@ -5,24 +5,24 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\CustomEmailBlastMail;
 use App\Models\EmailBlastTemplate;
-use App\Services\{GeminiEmailTemplateService, StudioProviderException};
+use App\Services\{EmailTemplateAiService, StudioProviderException};
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class EmailBlastTemplateController extends Controller
 {
-    public function generate(Request $request, GeminiEmailTemplateService $gemini)
+    public function generate(Request $request, EmailTemplateAiService $writer)
     {
         abort_unless($request->user()->isAdmin(), 403);
         $data = $request->validate(['prompt' => 'required|string|min:15|max:3000', 'language' => 'required|in:id,en']);
         try {
-            return response()->json(['draft' => $gemini->generate($data['prompt'], $data['language'])]);
+            return response()->json(['draft' => $writer->generate($data['prompt'], $data['language'])]);
         } catch (StudioProviderException $e) {
             return response()->json(['message' => __(match ($e->reason) {
-                'configuration' => 'Gemini is not configured. Ask the administrator to check the API key and model.',
-                'rate_limit' => 'Gemini is busy. Wait a moment before trying again.',
-                'invalid_result', 'incomplete' => 'Gemini returned an incomplete draft. Try again or adjust your brief.',
-                default => 'Gemini could not complete this draft. Your message has not been changed.',
+                'configuration' => 'The AI writer is not configured. Ask the administrator to check the OpenAI key and model.',
+                'rate_limit' => 'The AI writer is busy. Wait a moment before trying again.',
+                'invalid_result', 'incomplete' => 'The AI writer returned an incomplete draft. Try again or adjust your brief.',
+                default => 'The AI writer could not complete this draft. Your message has not been changed.',
             })], 503);
         }
     }

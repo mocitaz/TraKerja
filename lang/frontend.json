@@ -172,5 +172,9 @@
     "Job comparison",
     "Completed · :answered of :total answered",
     "Question :current of :total",
-    "Average"
+    "Average",
+    "Optional: paste the job requirements to make the message more specific.",
+    "Paste the job requirements so your draft speaks to the role.",
+    "The revision could not be completed. Your draft has not changed.",
+    "Paste the job description. Attach your CV with the paperclip."
 ]

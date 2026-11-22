@@ -10,7 +10,7 @@ use App\Models\Vacancy;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * The tools Nara can call (Gemini function calling). Nara decides when to search the TraKerja 2.0 catalogue and with
+ * The tools Nara can call (OpenAI function calling). Nara decides when to search the TraKerja 2.0 catalogue and with
  * which filters; this class does the work on the server, on the user's own data only, and records which vacancies
  * were offered so that only those can become job cards in the reply.
  *
@@ -21,7 +21,7 @@ class NaraTools
 {
     public function __construct(private NaraJobFinder $finder) {}
 
-    /** Gemini tool declarations. @return array<int, array<string, mixed>> */
+    /** Tool declarations (converted for OpenAI by OpenAiChat::tools). @return array<int, array<string, mixed>> */
     public static function declarations(): array
     {
         $string = fn (string $description, ?array $enum = null) => array_filter(['type' => 'STRING', 'description' => $description, 'enum' => $enum]);

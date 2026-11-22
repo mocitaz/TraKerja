@@ -14,51 +14,44 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Tests\Concerns\FakesOpenAi;
 use Tests\Concerns\MakesVacancies;
 use Tests\TestCase;
 
-/** Nara with tools: Gemini decides when to search the catalogue and with which filters; the server runs the tools. */
+/** Nara with tools: the model decides when to search the catalogue and with which filters; the server runs the tools. */
 class NaraToolsTest extends TestCase
 {
-    use MakesVacancies, RefreshDatabase;
+    use FakesOpenAi, MakesVacancies, RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
         Cache::flush();
         $this->seed(JobEngineReferenceSeeder::class);
-        config(['services.gemini.key' => 'fake-test-key', 'services.gemini.nara_strong_model' => null]);
+        config(['services.openai.key' => 'fake-test-key', 'services.openai.strong_model' => null]);
     }
 
-    /** A Gemini reply that asks for a tool. */
+    /** A model reply that asks for a tool. */
     private function toolCall(string $name, array $args): array
     {
-        return ['candidates' => [['content' => ['role' => 'model', 'parts' => [['functionCall' => ['name' => $name, 'args' => $args, 'id' => 'call_1'], 'thoughtSignature' => 'sig-'.$name]]]]]];
+        return $this->openAiToolCall($name, $args, 'call_'.$name);
     }
 
     private function text(string $text): array
     {
-        return ['candidates' => [['content' => ['role' => 'model', 'parts' => [['text' => $text]]]]]];
+        return $this->openAiText($text);
     }
 
-    /** Gemini answers with these replies, one per request, and every request is kept for inspection. */
-    private function gemini(array ...$replies): void
+    /** The model answers with these replies, one per request, and every request is kept for inspection. */
+    private function script(array ...$replies): void
     {
-        Http::swap(new \Illuminate\Http\Client\Factory); // a new script replaces the previous one (and its recorded requests)
-        $sequence = Http::sequence();
-        foreach ($replies as $reply) {
-            $sequence->push($reply);
-        }
-        Http::fake(['https://generativelanguage.googleapis.com/*' => $sequence]);
+        $this->openAi(...$replies);
     }
 
-    /** The function responses Nara sent back to the model in request number $n (0-based). */
+    /** The tool result Nara sent back to the model in request number $n (0-based): the last one. */
     private function toolResult(int $n): array
     {
-        $request = Http::recorded()[$n][0];
-        $last = collect($request['contents'])->last();
-
-        return $last['parts'][0]['functionResponse']['response']['result'];
+        return collect(self::toolResults(Http::recorded()[$n][0]))->last();
     }
 
     public function test_nara_searches_the_catalogue_with_filters_it_chose_itself(): void
@@ -68,7 +61,7 @@ class NaraToolsTest extends TestCase
         $this->makeVacancy(['title' => 'Backend Engineer', 'region' => 'Kota Bandung', 'company' => 'Other', 'work_mode' => 'onsite']);
         $this->makeVacancy(['title' => 'Barista', 'region' => 'Kota Bandung']);
         // The user wrote "programer web" (a typo and Indonesian); Nara turned it into related English titles.
-        $this->gemini(
+        $this->script(
             $this->toolCall('search_jobs', ['keywords' => ['web developer', 'frontend', 'backend engineer'], 'location' => 'Bandung', 'work_mode' => 'remote']),
             $this->text("Ini yang cocok:\n\n[job:{$dev->id}]\nCocok untuk pengalaman web kamu."),
         );
@@ -80,12 +73,15 @@ class NaraToolsTest extends TestCase
         $found = $this->toolResult(1);
         $this->assertSame([$dev->id], array_column($found['jobs'], 'id'), 'remote filter applied, Barista and the onsite job left out');
         $this->assertSame(1, $found['total_matching']);
-        // The model's own parts (with the thought signature) went back, so the conversation stays valid.
+        // The assistant turn that asked for the tool went back before its result, so the conversation stays valid.
         $second = Http::recorded()[1][0];
-        $this->assertSame('sig-search_jobs', collect($second['contents'])->firstWhere('role', 'model')['parts'][0]['thoughtSignature']);
-        $this->assertNotNull($second->header('x-goog-api-key')[0] ?? null, 'the key travels in a header');
+        $asked = collect($second['messages'])->firstWhere('role', 'assistant');
+        $this->assertSame('call_search_jobs', $asked['tool_calls'][0]['id']);
+        $this->assertSame('call_search_jobs', collect($second['messages'])->firstWhere('role', 'tool')['tool_call_id']);
+        $this->assertSame('Bearer fake-test-key', $second->header('Authorization')[0] ?? null, 'the key travels in a header');
         $this->assertStringNotContainsString('fake-test-key', $second->url(), 'never in the URL');
-        $this->assertArrayHasKey('tools', $second->data());
+        $this->assertSame('function', $second['tools'][0]['type']);
+        $this->assertSame('object', $second['tools'][0]['function']['parameters']['type'], 'schema types are JSON schema (lower case)');
     }
 
     public function test_structured_filters_level_salary_deadline_company_and_more(): void
@@ -136,7 +132,7 @@ class NaraToolsTest extends TestCase
     {
         $user = User::factory()->create();
         $job = $this->makeVacancy(['title' => 'Data Analyst', 'region' => 'Kota Bandung']);
-        $this->gemini(
+        $this->script(
             $this->toolCall('search_jobs', ['keywords' => ['data analyst'], 'location' => 'Bandung']),
             $this->toolCall('save_job', ['job_id' => $job->id]),
             $this->toolCall('create_job_alert', ['name' => 'Data Bandung']),
@@ -158,7 +154,7 @@ class NaraToolsTest extends TestCase
     {
         $user = User::factory()->create();
         $job = $this->makeVacancy(['title' => 'Data Analyst']);
-        $this->gemini(
+        $this->script(
             $this->toolCall('get_job_details', ['job_id' => 999999]),
             $this->toolCall('definitely_not_a_tool', []),
             $this->text("Maaf, aku tidak menemukannya.\n\n[job:999999]\n[job:{$job->id}]"),
@@ -178,7 +174,7 @@ class NaraToolsTest extends TestCase
         $user = User::factory()->create();
         $a = $this->makeVacancy(['title' => 'Frontend Engineer', 'company' => 'A Corp']);
         $b = $this->makeVacancy(['title' => 'Backend Engineer', 'company' => 'B Corp']);
-        $this->gemini(
+        $this->script(
             $this->toolCall('compare_jobs', ['job_ids' => [$a->id, $b->id]]),
             $this->toolCall('remember_preference', ['fact' => 'Looking for remote frontend roles', 'category' => 'role']),
             $this->text('Pilih A.'),
@@ -190,9 +186,9 @@ class NaraToolsTest extends TestCase
 
         // The next conversation starts with the memory in the prompt; forgetting removes it.
         $memory = NaraMemory::where('user_id', $user->id)->sole();
-        $this->gemini($this->toolCall('forget_preference', ['memory_id' => $memory->id]), $this->text('Oke, kulupakan.'));
+        $this->script($this->toolCall('forget_preference', ['memory_id' => $memory->id]), $this->text('Oke, kulupakan.'));
         (new KawanKerjaService)->chat('lupakan soal frontend remote itu', $user);
-        Http::assertSent(fn (Request $r) => str_contains($r['system_instruction']['parts'][0]['text'] ?? '', 'Looking for remote frontend roles'));
+        Http::assertSent(fn (Request $r) => str_contains(self::systemPrompt($r), 'Looking for remote frontend roles'));
         $this->assertSame([], NaraMemory::listFor($user));
         $this->assertFalse(NaraMemory::where('user_id', User::factory()->create()->id)->exists());
     }
@@ -225,9 +221,9 @@ class NaraToolsTest extends TestCase
         $this->assertArrayHasKey('remembered_preferences', $context);
     }
 
-    public function test_heavy_tasks_use_the_stronger_model_and_light_ones_do_not(): void
+    public function test_heavy_tasks_think_harder_and_light_ones_stay_quick(): void
     {
-        config(['services.gemini.nara_strong_model' => 'strong-model']);
+        config(['services.openai.strong_model' => 'strong-model', 'services.openai.reasoning_effort' => 'low', 'services.openai.strong_reasoning_effort' => 'medium']);
         $service = new KawanKerjaService;
 
         $this->assertTrue($service->wantsStrongModel('Tolong tuliskan cover letter untuk posisi data analyst'));
@@ -237,19 +233,20 @@ class NaraToolsTest extends TestCase
         $this->assertFalse($service->wantsStrongModel('carikan loker frontend di jakarta'));
         $this->assertFalse($service->wantsStrongModel('apa langkah saya berikutnya?'));
 
-        $models = [];
-        Http::fake(function (Request $request) use (&$models) {
-            $models[] = $request->url();
+        $sent = [];
+        Http::fake(function (Request $request) use (&$sent) {
+            $sent[] = [$request['model'], $request['reasoning_effort']];
 
             return Http::response($this->text('Baik.'));
         });
         $service->chat('Tolong tuliskan email follow-up untuk recruiter', User::factory()->create());
-        $this->assertStringContainsString('strong-model', $models[0]);
+        $this->assertSame(['strong-model', 'medium'], $sent[0]);
         $service->chat('apa langkah saya berikutnya?', User::factory()->create());
-        $this->assertStringNotContainsString('strong-model', $models[1]);
+        $this->assertSame(['gpt-5-mini', 'low'], $sent[1]);
 
-        config(['services.gemini.nara_strong_model' => null]);
-        $this->assertFalse($service->wantsStrongModel('Tolong tuliskan cover letter'), 'off when no strong model is configured');
+        config(['services.openai.strong_model' => null]);
+        $service->chat('Tolong tuliskan cover letter', User::factory()->create());
+        $this->assertSame(['gpt-5-mini', 'medium'], $sent[2], 'no larger model configured: the same model thinks more');
     }
 
     public function test_the_api_key_never_reaches_the_log(): void
@@ -271,10 +268,7 @@ class NaraToolsTest extends TestCase
     {
         $user = User::factory()->create();
         $job = $this->makeVacancy(['title' => 'Data Analyst', 'region' => 'Kota Bandung', 'company' => 'Maju Jaya']);
-        $sse = fn (array $part) => 'data: '.json_encode(['candidates' => [['content' => ['parts' => [$part]]]]])."\n\n";
-        Http::fake(['https://generativelanguage.googleapis.com/*' => Http::sequence()
-            ->push($sse(['functionCall' => ['name' => 'search_jobs', 'args' => ['keywords' => ['data analyst']]]]), 200, ['Content-Type' => 'text/event-stream'])
-            ->push($sse(['text' => 'Ini pilihannya:'])."\n".$sse(['text' => "\n\n[job:{$job->id}]"]), 200, ['Content-Type' => 'text/event-stream'])]);
+        $this->openAi($this->openAiStream(['tool' => 'search_jobs', 'args' => ['keywords' => ['data analyst']]]), $this->openAiStream('Ini pilihannya:', "\n\n[job:{$job->id}]"));
 
         $body = $this->actingAs($user)->post(route('kawankerja.stream'), ['message' => 'cari data analyst'])->assertOk()->streamedContent();
 
@@ -295,15 +289,15 @@ class NaraToolsTest extends TestCase
         $this->assertFalse(KawanKerjaService::asksWhatIsRemembered('carikan loker frontend'));
 
         $user = User::factory()->create();
-        $this->gemini($this->toolCall('remember_preference', ['fact' => 'Looking for remote frontend roles']), $this->text('Sudah kucatat.'));
+        $this->script($this->toolCall('remember_preference', ['fact' => 'Looking for remote frontend roles']), $this->text('Sudah kucatat.'));
         (new KawanKerjaService)->chat('Ingat ya, aku cari frontend remote', $user);
         $first = Http::recorded()[0][0]->data();
-        $this->assertSame(['mode' => 'ANY', 'allowedFunctionNames' => ['remember_preference']], $first['toolConfig']['functionCallingConfig']);
-        $this->assertSame('AUTO', Http::recorded()[1][0]->data()['toolConfig']['functionCallingConfig']['mode'], 'only the first round is forced');
+        $this->assertSame(['type' => 'function', 'function' => ['name' => 'remember_preference']], $first['tool_choice']);
+        $this->assertSame('auto', Http::recorded()[1][0]->data()['tool_choice'], 'only the first round is forced');
 
-        $this->gemini($this->text('Kamu mencari frontend remote.'));
+        $this->script($this->text('Kamu mencari frontend remote.'));
         (new KawanKerjaService)->chat('Apa yang kamu ingat tentang aku?', $user);
-        $this->assertSame('NONE', Http::recorded()[0][0]->data()['toolConfig']['functionCallingConfig']['mode']);
+        $this->assertSame('none', Http::recorded()[0][0]->data()['tool_choice']);
     }
 
     public function test_job_cards_carry_the_company_logo_when_it_is_safe(): void

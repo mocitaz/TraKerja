@@ -57,7 +57,7 @@ class IntegrationHub extends Component
     {
         $mailer = config('mail.default');
         return view('livewire.admin.integration-hub', ['providers' => [
-            ['name' => 'Gemini', 'purpose' => __('AI writing and resume analysis'), 'detail' => config('services.gemini.model'), 'configured' => (bool) config('services.gemini.key'), 'icon' => 'cpu'],
+            ['name' => 'OpenAI', 'purpose' => __('AI writing and resume analysis'), 'detail' => config('services.openai.model'), 'configured' => (bool) \App\Services\Ai\OpenAiChat::key(), 'icon' => 'cpu'],
             ['name' => __('Email'), 'purpose' => __('Campaigns and account messages'), 'detail' => strtoupper((string) $mailer), 'configured' => $mailer === 'smtp' && (bool) config('mail.mailers.smtp.host'), 'icon' => 'envelope-simple'],
             ['name' => 'Pakasir', 'purpose' => __('Payment processing'), 'detail' => config('pakasir.sandbox') ? __('Sandbox mode') : __('Live mode'), 'configured' => (bool) config('pakasir.api_key') && (bool) config('pakasir.slug'), 'icon' => 'credit-card'],
             ['name' => 'Telegram', 'purpose' => __('Administrative notifications'), 'detail' => config('services.telegram.enabled') ? __('Enabled in configuration') : __('Disabled in configuration'), 'configured' => (bool) config('services.telegram.enabled') && (bool) config('services.telegram.bot_token'), 'icon' => 'chat-circle-text'],

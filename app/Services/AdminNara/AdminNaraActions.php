@@ -23,7 +23,7 @@ use Illuminate\Validation\Rule;
  */
 class AdminNaraActions
 {
-    private const SERVICES = ['platform', 'login', 'gemini', 'email', 'payment', 'storage'];
+    private const SERVICES = ['platform', 'login', 'ai', 'email', 'payment', 'storage'];
 
     /** @return array<string, array<string, mixed>> validation rules per action type */
     public static function rules(): array

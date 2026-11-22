@@ -71,28 +71,32 @@ return [
         'allowed_chat_ids' => array_values(array_filter(array_map('trim', explode(',', (string) env('TELEGRAM_ALLOWED_CHAT_IDS', ''))), fn ($id) => $id !== '')),
     ],
 
-    'gemini' => [
-        'key' => env('GEMINI_API_KEY'),
-        'model' => env('GEMINI_MODEL', 'gemini-flash-lite-latest'),
-        // Nara: tools (search the job catalogue, save, alerts, memory) and a stronger model for heavy tasks
-        // (evaluating interview answers, drafts, strategy). Set GEMINI_NARA_STRONG_MODEL= (empty) to use one model.
-        'nara_tools' => env('GEMINI_NARA_TOOLS', true),
-        'nara_strong_model' => env('GEMINI_NARA_STRONG_MODEL', 'gemini-3-flash-preview'),
-        'email_model' => env('GEMINI_EMAIL_MODEL', env('GEMINI_MODEL', 'gemini-flash-lite-latest')),
-        'studio_models' => [
-            'analyzer' => env('GEMINI_STUDIO_ANALYZER_MODEL', env('GEMINI_MODEL', 'gemini-flash-lite-latest')),
-            'cover-letter' => env('GEMINI_STUDIO_WRITING_MODEL', env('GEMINI_MODEL', 'gemini-flash-lite-latest')),
-            'outreach' => env('GEMINI_STUDIO_WRITING_MODEL', env('GEMINI_MODEL', 'gemini-flash-lite-latest')),
-        ],
-    ],
-
     // Jooble official job API (free key: https://jooble.org/api/about). Used by the job engine.
     'jooble' => [
         'key' => env('JOOBLE_API_KEY'),
     ],
 
     'openai' => [
-        'key' => env('OPENAI_API_KEY'),
+        // User-facing AI (Nara, Nara Admin, AI Studio, email templates, copilot). Same key as the job engine unless
+        // OPENAI_API_KEY is set; these calls are not counted in the job engine's daily budget.
+        'key' => env('OPENAI_API_KEY') ?: env('OPENAI_JOBS_API_KEY'),
+        'model' => env('OPENAI_MODEL', 'gpt-5-mini'),
+        'fallback_model' => env('OPENAI_MODEL_FALLBACK', 'gpt-5-nano'),
+        // minimal | low | medium | high. "low" keeps replies around 10 s; "medium" was about twice as slow for drafts
+        // and admin analysis without a visible gain. Heavy tasks (evaluating answers, drafts, strategy) can get their own
+        // effort and OPENAI_STRONG_MODEL can name a larger model for them (empty: same model).
+        'reasoning_effort' => env('OPENAI_REASONING_EFFORT', 'low'),
+        'strong_reasoning_effort' => env('OPENAI_STRONG_REASONING_EFFORT', 'low'),
+        'strong_model' => env('OPENAI_STRONG_MODEL'),
+        'nara_tools' => env('NARA_TOOLS', true),
+        'email_model' => env('OPENAI_EMAIL_MODEL'),
+        // The CV review runs in the background: it can think longer for a better review (about 30-60 s).
+        'studio_reasoning_effort' => env('OPENAI_STUDIO_ANALYZER_REASONING_EFFORT', 'medium'),
+        'studio_models' => [
+            'analyzer' => env('OPENAI_STUDIO_ANALYZER_MODEL'),
+            'cover-letter' => env('OPENAI_STUDIO_WRITING_MODEL'),
+            'outreach' => env('OPENAI_STUDIO_WRITING_MODEL'),
+        ],
 
         // Job-data engine only (scraping, extraction, cleanup). Uses its own key so it never
         // activates the admin copilot's OpenAI fallback, and has its own daily spending cap.

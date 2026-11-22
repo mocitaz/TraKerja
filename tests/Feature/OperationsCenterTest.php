@@ -45,8 +45,8 @@ class OperationsCenterTest extends TestCase
         $admin = $this->admin();
         $member = User::factory()->create();
         $component = Livewire::actingAs($admin)->test(OperationsCenter::class)->call('newIncident')
-            ->set('title', 'Gemini metadata is failing')->set('description', 'The model metadata endpoint cannot be reached.')
-            ->set('severity', 'critical')->set('service', 'gemini')->set('assignedTo', $admin->id)->set('affectedUser', $member->id)
+            ->set('title', 'AI metadata is failing')->set('description', 'The model metadata endpoint cannot be reached.')
+            ->set('severity', 'critical')->set('service', 'ai')->set('assignedTo', $admin->id)->set('affectedUser', $member->id)
             ->call('createIncident')->assertHasNoErrors()->assertSee('Incident details');
         $incident = OperationIncident::firstOrFail();
         $this->assertSame($admin->id, $incident->assigned_to);
@@ -155,23 +155,23 @@ class OperationsCenterTest extends TestCase
     public function test_service_checks_are_real_bounded_redacted_and_not_run_on_page_load(): void
     {
         Http::preventStrayRequests();
-        Http::fake(['generativelanguage.googleapis.com/*' => Http::response(['name' => 'models/test'])]);
-        config(['services.gemini.key' => 'test-secret', 'services.gemini.model' => 'test']);
+        Http::fake(['api.openai.com/*' => Http::response(['id' => 'gpt-test', 'object' => 'model'])]);
+        config(['services.openai.key' => 'test-secret', 'services.openai.model' => 'gpt-test']);
         $component = Livewire::actingAs($this->admin())->test(OperationsCenter::class)->call('selectTab', 'services')->assertSee('No check has been run');
         Http::assertNothingSent();
-        $component->call('checkServiceNow', 'gemini')->assertHasNoErrors();
+        $component->call('checkServiceNow', 'ai')->assertHasNoErrors();
         $this->assertSame('healthy', OperationServiceCheck::first()->status);
         $this->assertTrue(OperationServiceCheck::first()->created_at->isSameMinute(now()));
         $this->assertStringNotContainsString('test-secret', OperationServiceCheck::first()->toJson());
-        $component->call('checkServiceNow', 'gemini')->assertHasErrors('monitor');
+        $component->call('checkServiceNow', 'ai')->assertHasErrors('monitor');
         Http::assertSentCount(1);
     }
 
     public function test_failed_check_never_stores_remote_body_or_exception_secret(): void
     {
         Http::fake(['*' => Http::response(['error' => 'secret-should-not-escape'], 401)]);
-        config(['services.gemini.key' => 'test-secret']);
-        $check = app(ServiceMonitor::class)->check('gemini', null);
+        config(['services.openai.key' => 'test-secret']);
+        $check = app(ServiceMonitor::class)->check('ai', null);
         $this->assertSame('degraded', $check->status);
         $this->assertStringNotContainsString('secret-should-not-escape', $check->toJson());
         $this->assertStringContainsString('401', $check->summary);
@@ -180,9 +180,9 @@ class OperationsCenterTest extends TestCase
     public function test_unconfigured_services_and_no_transaction_are_not_marked_healthy(): void
     {
         Http::preventStrayRequests();
-        config(['services.gemini.key' => '', 'mail.default' => 'array', 'pakasir.api_key' => 'key', 'pakasir.slug' => 'test']);
+        config(['services.openai.key' => '', 'mail.default' => 'array', 'pakasir.api_key' => 'key', 'pakasir.slug' => 'test']);
         $monitor = app(ServiceMonitor::class);
-        $this->assertSame('unconfigured', $monitor->check('gemini', null)->status);
+        $this->assertSame('unconfigured', $monitor->check('ai', null)->status);
         $this->assertSame('unconfigured', $monitor->check('email', null)->status);
         $this->assertSame('unchecked', $monitor->check('payment', null)->status);
     }
@@ -210,9 +210,9 @@ class OperationsCenterTest extends TestCase
     {
         $incident = $this->incident();
         $incident->update(['severity' => 'critical']);
-        OperationServiceCheck::create(['service' => 'gemini', 'status' => 'degraded', 'summary' => 'Connection check failed.', 'duration_ms' => 20]);
+        OperationServiceCheck::create(['service' => 'ai', 'status' => 'degraded', 'summary' => 'Connection check failed.', 'duration_ms' => 20]);
         Livewire::actingAs($this->admin())->test(OperationsCenter::class)->call('showSummary', 'critical')->assertSet('filter', 'unresolved')->assertSet('severityFilter', 'critical')
-            ->call('newIncident', 'gemini')->assertSet('service', 'gemini')->assertSet('description', fn ($value) => str_contains($value, 'Connection check failed.'));
+            ->call('newIncident', 'ai')->assertSet('service', 'ai')->assertSet('description', fn ($value) => str_contains($value, 'Connection check failed.'));
     }
 
     public function test_payment_check_reads_status_without_creating_or_mutating_a_transaction(): void

@@ -18,7 +18,7 @@ class StudioRequestController extends Controller
     {
         $model = $this->owned($request, $run);
         return response()->json(['success' => true, 'status' => $model->status, 'credit_state' => $model->credit_state,
-            'message' => $model->error_message, 'url' => $model->workspaceUrl()])->header('Cache-Control', 'no-store');
+            'message' => $model->error_message ? __($model->error_message) : null, 'url' => $model->workspaceUrl()])->header('Cache-Control', 'no-store');
     }
 
     public function retry(Request $request, int $run)

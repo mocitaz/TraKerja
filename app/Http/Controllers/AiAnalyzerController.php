@@ -55,4 +55,27 @@ class AiAnalyzerController extends Controller
 
         return app(\App\Support\AiStudioWorkspace::class)->render(Auth::user(), 'analyzer', $result);
     }
+
+    /**
+     * Show a saved review in the member's current language: translated once on first view, then kept with the
+     * result. No credit is used; only the owner can ask.
+     */
+    public function translate(AiAnalyzerResult $result): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($result->user_id === Auth::id(), 403);
+        $review = (array) $result->analysis_result;
+        $to = \App\Support\AppLocale::valid(Auth::user()->locale) ? Auth::user()->locale : app()->getLocale();
+        if (($review['schema_version'] ?? null) !== 3 || ($review['language'] ?? $to) === $to || isset($review['translations'][$to])) {
+            return response()->json(['ok' => true]);
+        }
+        try {
+            $translated = app(\App\Services\StudioAiService::class)->translateReview($review, $to);
+        } catch (\App\Services\StudioProviderException) {
+            return response()->json(['ok' => false, 'message' => __('The translation could not be completed. Please try again later.')], 503);
+        }
+        $review['translations'][$to] = $translated;
+        $result->update(['analysis_result' => $review]);
+
+        return response()->json(['ok' => true]);
+    }
 }

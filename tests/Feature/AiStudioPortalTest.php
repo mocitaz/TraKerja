@@ -17,12 +17,12 @@ class AiStudioPortalTest extends TestCase
         parent::setUp();
         \Illuminate\Support\Facades\Queue::fake();
         \Illuminate\Support\Facades\Storage::fake('local');
-        config(['services.gemini.key' => 'test', 'services.gemini.model' => 'gemini-test', 'services.gemini.studio_models' => []]);
+        config(['services.openai.key' => 'test', 'services.openai.model' => 'gpt-5-mini', 'services.openai.studio_models' => []]);
     }
 
     private function reply(array $data): array
     {
-        return ['candidates' => [['finishReason' => 'STOP', 'content' => ['parts' => [['text' => json_encode($data)]]]]]];
+        return ['choices' => [['index' => 0, 'message' => ['role' => 'assistant', 'content' => json_encode($data)], 'finish_reason' => 'stop']]];
     }
 
     public function test_portal_is_one_workspace_with_four_tasks_and_private_history(): void
@@ -62,7 +62,7 @@ class AiStudioPortalTest extends TestCase
     public function test_outreach_is_ai_generated_saved_and_paginated_without_other_owner_data(): void
     {
         \Illuminate\Support\Facades\Http::preventStrayRequests();
-        \Illuminate\Support\Facades\Http::fake(['https://generativelanguage.googleapis.com/*' => \Illuminate\Support\Facades\Http::response($this->reply(['content' => 'Hi Alex, I am interested in the Engineer role at Actual company. May we discuss the application process?']))]);
+        \Illuminate\Support\Facades\Http::fake(['https://api.openai.com/*' => \Illuminate\Support\Facades\Http::response($this->reply(['content' => 'Hi Alex, I am interested in the Engineer role at Actual company. May we discuss the application process?']))]);
         $owner = User::factory()->create();
         $this->actingAs($owner)->postJson(route('ai-studio.outreach'), [
             'request_key' => (string) \Illuminate\Support\Str::uuid(),

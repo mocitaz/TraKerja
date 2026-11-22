@@ -25,12 +25,12 @@ class NaraConversationTest extends TestCase
         parent::setUp();
         Cache::flush();
         $this->seed(JobEngineReferenceSeeder::class);
-        config(['services.gemini.key' => 'fake-test-key']);
+        config(['services.openai.key' => 'fake-test-key']);
     }
 
     private function fakeReply(string $text): void
     {
-        Http::fake(['https://generativelanguage.googleapis.com/*' => Http::response(['candidates' => [['content' => ['parts' => [['text' => $text]]]]]])]);
+        Http::fake(['https://api.openai.com/*' => Http::response(['choices' => [['message' => ['role' => 'assistant', 'content' => $text], 'finish_reason' => 'stop']]])]);
     }
 
     public function test_the_conversation_is_stored_per_user_and_survives_a_new_session(): void
@@ -48,7 +48,7 @@ class NaraConversationTest extends TestCase
 
         // The next question carries the stored exchange to the model.
         $this->actingAs($user)->postJson(route('kawankerja.chat'), ['message' => 'Kenapa yang itu?'])->assertOk();
-        Http::assertSent(fn ($request) => count($request['contents'] ?? []) === 3);
+        Http::assertSent(fn ($request) => count($request['messages'] ?? []) === 4);
 
         $this->actingAs(User::factory()->create())->getJson(route('kawankerja.history'))->assertJson(['history' => []]);
         $this->actingAs($user)->postJson(route('kawankerja.clear'))->assertOk();
@@ -160,9 +160,9 @@ class NaraConversationTest extends TestCase
 
         $prompts = [];
         Http::fake(function ($request) use (&$prompts) {
-            $prompts[] = $request['system_instruction']['parts'][0]['text'];
+            $prompts[] = $request['messages'][0]['content'];
 
-            return Http::response(['candidates' => [['content' => ['parts' => [['text' => 'ok']]]]]]);
+            return Http::response(['choices' => [['message' => ['role' => 'assistant', 'content' => 'ok'], 'finish_reason' => 'stop']]]);
         });
         $english = User::factory()->create(['locale' => 'en']);
         $indonesian = User::factory()->create(['locale' => 'id']);

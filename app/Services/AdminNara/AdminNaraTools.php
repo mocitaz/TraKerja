@@ -5,7 +5,7 @@ namespace App\Services\AdminNara;
 use App\Models\AdminNaraAudit;
 use App\Models\User;
 
-/** The tools Gemini may call for Nara Admin: declarations, the audited execution, and a last redaction pass. */
+/** The tools the model may call for Nara Admin: declarations, the audited execution, and a last redaction pass. */
 class AdminNaraTools
 {
     /** Keys that never reach the model, whatever a query returned. */
@@ -48,9 +48,9 @@ class AdminNaraTools
                 ]),
                 $tool('propose_action', 'Propose ONE change for the admin to approve. Nothing runs until they press Approve. Fill only the fields of the chosen type. Types and fields: reply_ticket{ticket_id,reply,status?}, set_ticket_status{ticket_id,status}, create_incident{title,description,service,severity}, update_incident{incident_id,status,note}, set_source_active{source_id,active}, flag_vacancy{vacancy_id,flag}, close_vacancy{vacancy_id,reason?}, grant_credits{user_id,kind(ai|cover_letter|photo),amount≤20}, sync_payments{}, run_service_check{service}. Look the target up first; never guess an id.', [
                     'type' => $s('Action type.', $actionTypes), 'summary' => $s('One sentence the admin reads on the approval card, in the language of the conversation.'),
-                    // Parameters are flat so the schema stays valid for Gemini; only those of the chosen type are used.
+                    // Parameters are flat (one schema for every type); only those of the chosen type are used.
                     'ticket_id' => $i('reply_ticket, set_ticket_status.'), 'reply' => $s('reply_ticket: the reply text.'), 'status' => $s('Ticket or incident status.'),
-                    'title' => $s('create_incident.'), 'description' => $s('create_incident.'), 'service' => $s('create_incident, run_service_check: platform, login, gemini, email, payment, storage.'),
+                    'title' => $s('create_incident.'), 'description' => $s('create_incident.'), 'service' => $s('create_incident: platform, login, ai, email, payment, storage. run_service_check: ai, email, payment, storage.'),
                     'severity' => $s('create_incident.', ['critical', 'high', 'medium', 'low']), 'incident_id' => $i('update_incident.'), 'note' => $s('update_incident: what changed.'),
                     'source_id' => $i('set_source_active.'), 'active' => ['type' => 'BOOLEAN', 'description' => 'set_source_active.'], 'vacancy_id' => $i('flag_vacancy, close_vacancy.'),
                     'flag' => $s('flag_vacancy.', ['suspected', 'none']), 'reason' => $s('close_vacancy.'), 'user_id' => $i('grant_credits.'), 'kind' => $s('grant_credits.', ['ai', 'cover_letter', 'photo']), 'amount' => $i('grant_credits, 1 to 20.'),

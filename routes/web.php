@@ -108,6 +108,7 @@ Route::get('/explore', \App\Livewire\ExploreJobs::class)
 // AI Studio routes (Only for regular users)
 Route::get('/ai-studio', [AiStudioController::class, 'index'])->middleware(['auth', 'verified'])->name('ai-studio.index');
 Route::post('/ai-studio/outreach', [AiStudioController::class, 'generateOutreach'])->middleware(['auth', 'verified'])->middleware('throttle:10,1')->name('ai-studio.outreach');
+Route::post('/ai-studio/revise', [AiStudioController::class, 'revise'])->middleware(['auth', 'verified', 'throttle:10,1'])->name('ai-studio.revise');
 Route::get('/ai-studio/requests/{run}', [\App\Http\Controllers\StudioRequestController::class, 'status'])->middleware(['auth', 'verified'])->name('ai-studio.status');
 Route::post('/ai-studio/requests/{run}/retry', [\App\Http\Controllers\StudioRequestController::class, 'retry'])->middleware(['auth', 'verified', 'throttle:10,1'])->name('ai-studio.retry');
 
@@ -117,6 +118,7 @@ Route::prefix('ai-analyzer')->middleware(['auth', 'verified'])->name('ai-analyze
     Route::post('/analyze', [AiAnalyzerController::class, 'analyze'])->middleware('throttle:10,1')->name('analyze');
     Route::get('/analyze', function() { return redirect()->route('ai-studio.index', ['tab' => 'analyzer']); });
     Route::get('/result/{result}', [AiAnalyzerController::class, 'show'])->name('show');
+    Route::post('/result/{result}/translate', [AiAnalyzerController::class, 'translate'])->middleware('throttle:6,1')->name('translate');
 });
 
 // AI Photo Studio routes (Only for regular users)

@@ -68,22 +68,13 @@ class KawanKerjaServiceTest extends TestCase
         $this->assertSame('Tokopedia', $context['upcoming_interviews'][0]['company']);
     }
 
-    public function test_it_calls_gemini_api_and_returns_clean_response(): void
+    public function test_it_calls_openai_and_returns_clean_response(): void
     {
-        config(['services.gemini.key' => 'fake-test-key']);
+        config(['services.openai.key' => 'fake-test-key']);
 
         Http::fake([
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent*' => Http::response([
-                'candidates' => [
-                    [
-                        'content' => [
-                            'parts' => [
-                                ['text' => 'Halo! Tentu, untuk interview di Tokopedia kamu bisa fokus pada arsitektur database dan scaling.']
-                            ]
-                        ]
-                    ]
-                ]
-            ], 200),
+            'https://api.openai.com/v1/chat/completions' => Http::response(['choices' => [['message' => ['role' => 'assistant',
+                'content' => 'Halo! Tentu, untuk interview di Tokopedia kamu bisa fokus pada arsitektur database dan scaling.'], 'finish_reason' => 'stop']]], 200),
         ]);
 
         $user = User::factory()->create();
@@ -92,26 +83,16 @@ class KawanKerjaServiceTest extends TestCase
 
         $this->assertTrue($result['success']);
         $this->assertStringContainsString('Tokopedia', $result['reply']);
+        Http::assertSent(fn ($request) => $request->hasHeader('Authorization', 'Bearer fake-test-key') && $request['model'] === 'gpt-5-mini');
     }
 
     public function test_it_falls_back_to_secondary_model_on_failure(): void
     {
-        config(['services.gemini.key' => 'fake-test-key']);
+        config(['services.openai.key' => 'fake-test-key', 'services.openai.model' => 'gpt-5-mini', 'services.openai.fallback_model' => 'gpt-5-nano']);
 
-        Http::fake([
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent*' => Http::response([
-                'candidates' => [
-                    [
-                        'content' => [
-                            'parts' => [
-                                ['text' => 'Jawaban dari fallback model 3.1 flash lite.']
-                            ]
-                        ]
-                    ]
-                ]
-            ], 200),
-        ]);
+        Http::fake(fn ($request) => $request['model'] === 'gpt-5-mini'
+            ? Http::response(['error' => ['message' => 'quota exceeded']], 429)
+            : Http::response(['choices' => [['message' => ['role' => 'assistant', 'content' => 'Jawaban dari fallback model nano.'], 'finish_reason' => 'stop']]], 200));
 
         $user = User::factory()->create();
         $service = new KawanKerjaService();
@@ -147,12 +128,9 @@ class KawanKerjaServiceTest extends TestCase
 
     public function test_it_returns_unavailable_message_when_models_fail_or_quota_runs_out(): void
     {
-        config(['services.gemini.key' => 'fake-test-key']);
+        config(['services.openai.key' => 'fake-test-key']);
 
-        Http::fake([
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent*' => Http::response(['error' => 'quota exceeded'], 429),
-        ]);
+        Http::fake(['https://api.openai.com/*' => Http::response(['error' => ['message' => 'quota exceeded']], 429)]);
 
         $user = User::factory()->create();
         $service = new KawanKerjaService();

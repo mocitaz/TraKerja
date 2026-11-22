@@ -8,19 +8,16 @@ use App\Models\SupportTicket;
 use App\Models\User;
 use App\Models\UserActivity;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class AiCopilotService
 {
-    protected ?string $geminiKey;
     protected ?string $openaiKey;
 
     public function __construct()
     {
-        $this->geminiKey = config('services.gemini.key', env('GEMINI_API_KEY'));
-        $this->openaiKey = config('services.openai.key', env('OPENAI_API_KEY'));
+        $this->openaiKey = \App\Services\Ai\OpenAiChat::key();
     }
 
     /**
@@ -44,19 +41,7 @@ class AiCopilotService
         // Collect live data snapshot from the database
         $context = $this->buildLiveContext();
 
-        // 1. Try Gemini API if configured
-        if (! empty($this->geminiKey)) {
-            try {
-                $response = $this->callGemini($cleanQuestion, $context, $sender);
-                if (! empty($response)) {
-                    return $response;
-                }
-            } catch (Throwable $e) {
-                Log::warning('Gemini Copilot API error: ' . $e->getMessage());
-            }
-        }
-
-        // 2. Try OpenAI API if configured
+        // 1. OpenAI (same key and model family as the rest of TraKerja's AI)
         if (! empty($this->openaiKey)) {
             try {
                 $response = $this->callOpenAi($cleanQuestion, $context, $sender);
@@ -68,7 +53,7 @@ class AiCopilotService
             }
         }
 
-        // 3. Fallback to Smart Native Domain Expert Engine
+        // 2. Fallback to Smart Native Domain Expert Engine
         return $this->smartNativeAnswer($cleanQuestion, $context, $sender);
     }
 
@@ -158,95 +143,35 @@ class AiCopilotService
     }
 
     /**
-     * Query Gemini API with structured prompt and system context.
-     */
-    protected function callGemini(string $question, array $context, string $sender): ?string
-    {
-        $systemPrompt = "Anda adalah TraKerja AI Copilot, asisten eksekutif cerdas berbasis AI untuk admin platform TraKerja (trakerja.com - PT Teknalogi Transformasi Digital).\n\n"
-                      . "Karakter Anda: Sangat cerdas, profesional, solutif, ringkas, dan ramah dalam bahasa Indonesia.\n\n"
-                      . "ATURAN FORMAT:\n"
-                      . "1. Gunakan format HTML Telegram saja: <b>tebal</b>, <code>kode</code>, <i>miring</i>, bullet poin (•).\n"
-                      . "2. JANGAN gunakan format markdown seperti **tebal**, # judul, atau ``` block.\n"
-                      . "3. Berikan jawaban yang padat, berbobot, to the point, dan langsung menjawab inti pertanyaan.\n\n"
-                      . "BATASAN DOMAIN (CRITICAL):\n"
-                      . "Anda HANYA boleh menjawab pertanyaan yang berkaitan dengan TraKerja, karir, pencarian kerja, rekrutmen, teknologi HR, operasional platform, data pengguna, strategi bisnis, atau fitur TraKerja. Jika user menanyakan topik yang sama sekali tidak berhubungan (misal: resep masakan, ramalan zodiak, fisika kuantum), tolak dengan sopan: 'Maaf, sebagai AI Copilot TraKerja, saya hanya melayani pertanyaan seputar platform, data operasional, dan karir TraKerja.'\n\n"
-                      . "DATA REAL-TIME PLATFORM SAAT INI:\n" . json_encode($context, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent"; // the key goes in a header: a cURL error quotes the URL
-
-        $payload = [
-            'system_instruction' => [
-                'parts' => [['text' => $systemPrompt]],
-            ],
-            'contents' => [
-                [
-                    'role' => 'user',
-                    'parts' => [['text' => "Pertanyaan dari {$sender}: {$question}"]],
-                ],
-            ],
-            'generationConfig' => [
-                'temperature' => 0.4,
-                'maxOutputTokens' => 800,
-            ],
-        ];
-
-        $res = Http::withHeaders(['x-goog-api-key' => $this->geminiKey])->timeout(8)->post($url, $payload);
-        if (! $res->successful()) {
-            $fallbackUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent";
-            $res = Http::withHeaders(['x-goog-api-key' => $this->geminiKey])->timeout(8)->post($fallbackUrl, $payload);
-        }
-
-        if ($res->successful()) {
-            $parts = $res->json('candidates.0.content.parts') ?? [];
-            $text = '';
-            foreach ($parts as $part) {
-                if (isset($part['text'])) {
-                    $text .= $part['text'];
-                }
-            }
-
-            if (! empty($text)) {
-                // Convert Markdown formatting to Telegram HTML formatting
-                $text = preg_replace('/\*\*(.*?)\*\*/', '<b>$1</b>', $text);
-                $text = preg_replace('/\*([^\*]+)\*/', '<i>$1</i>', $text);
-                $text = preg_replace('/^#+\s*(.*?)$/m', '<b>$1</b>', $text);
-                return "🧠 <b>AI COPILOT</b>\n\n" . trim($text);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Query OpenAI API as secondary fallback.
+     * Ask OpenAI, with the live platform snapshot as context. Answers in Telegram HTML.
      */
     protected function callOpenAi(string $question, array $context, string $sender): ?string
     {
-        $systemPrompt = "Anda adalah TraKerja AI Copilot, asisten eksekutif cerdas untuk admin platform TraKerja (trakerja.com).\n"
-                      . "Jawab dalam bahasa Indonesia menggunakan format HTML Telegram (<b>, <code>, <i>, bullet •). Jangan gunakan markdown **.\n"
-                      . "Hanya jawab terkait TraKerja, data platform, bisnis karir, dan operasional.\n"
-                      . "Data platform:\n" . json_encode($context, JSON_UNESCAPED_UNICODE);
+        $systemPrompt = "Anda adalah TraKerja AI Copilot, asisten eksekutif cerdas untuk admin platform TraKerja (trakerja.com - PT Teknalogi Transformasi Digital).\n"
+                      . "Karakter: cerdas, profesional, solutif, ringkas, ramah, dalam bahasa Indonesia.\n"
+                      . "FORMAT: hanya HTML Telegram (<b>, <code>, <i>, bullet •). Jangan gunakan markdown seperti **tebal**, # judul, atau blok ```.\n"
+                      . "Jawab padat dan langsung ke inti. Angka hanya dari data platform di bawah; jangan mengarang.\n"
+                      . "Hanya jawab hal terkait TraKerja, karir, rekrutmen, data platform, bisnis, dan operasional. Tolak topik lain dengan sopan.\n"
+                      . "Data platform saat ini:\n" . json_encode($context, JSON_UNESCAPED_UNICODE);
 
-        $res = Http::timeout(6)
-            ->withToken($this->openaiKey)
-            ->post('https://api.openai.com/v1/chat/completions', [
-                'model' => 'gpt-4o-mini',
-                'messages' => [
-                    ['role' => 'system', 'content' => $systemPrompt],
-                    ['role' => 'user', 'content' => "Pertanyaan: {$question}"],
-                ],
-                'temperature' => 0.4,
-                'max_tokens' => 800,
-            ]);
+        $out = app(\App\Services\Ai\OpenAiChat::class)->callModels(\App\Services\Ai\OpenAiChat::models(), [
+            'messages' => [
+                ['role' => 'system', 'content' => $systemPrompt],
+                ['role' => 'user', 'content' => "Pertanyaan dari {$sender}: {$question}"],
+            ],
+            'reasoning_effort' => config('services.openai.reasoning_effort', 'low'),
+            'max_completion_tokens' => 3000,
+        ], null, 30);
 
-        if ($res->successful()) {
-            $text = $res->json('choices.0.message.content');
-            if (! empty($text)) {
-                return "🧠 <b>AI COPILOT</b>\n\n" . trim($text);
-            }
+        $text = trim($out['text']);
+        if ($text === '') {
+            return null;
         }
+        // Markdown that slipped through becomes Telegram HTML.
+        $text = preg_replace('/\*\*(.*?)\*\*/', '<b>$1</b>', $text);
+        $text = preg_replace('/^#+\s*(.*?)$/m', '<b>$1</b>', $text);
 
-        return null;
+        return "🧠 <b>AI COPILOT</b>\n\n" . $text;
     }
 
     /**
@@ -271,7 +196,7 @@ class AiCopilotService
                  . "1. <b>Email Automation:</b> Targetkan pengguna Free yang kuota trial AI-nya habis dengan promosi diskon upgrade ke Premium Pro.\n"
                  . "2. <b>Perbanyak Template ATS:</b> Template CV dengan skor ATS tinggi adalah pemicu utama konversi berbayar.\n"
                  . "3. <b>Social Proof di Telegram:</b> Umumkan pencapaian tawaran kerja (Offer Celebration) secara berkala agar memicu motivasi & FOMO pengguna.\n\n"
-                 . "💡 <i>(Untuk analisis kustom mendalam, Anda dapat memasukkan GEMINI_API_KEY di file .env Anda!)</i>";
+                 . "💡 <i>(Untuk analisis kustom mendalam, isi OPENAI_API_KEY atau OPENAI_JOBS_API_KEY di file .env.)</i>";
         }
 
         // 3. Revenue / Keuangan / Omset
@@ -377,6 +302,6 @@ class AiCopilotService
              . "• <code>/ask berapa omset bulan ini?</code>\n"
              . "• <code>/ask top perusahaan terpopuler</code>\n"
              . "• <code>/ask apa saja rincian paket premium?</code>\n\n"
-             . "<i>Ingin jawaban generatif yang lebih fleksibel? Tambahkan GEMINI_API_KEY di file .env Anda!</i>";
+             . "<i>Ingin jawaban generatif yang lebih fleksibel? Isi OPENAI_API_KEY atau OPENAI_JOBS_API_KEY di file .env.</i>";
     }
 }

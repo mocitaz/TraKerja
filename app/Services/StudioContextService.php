@@ -44,6 +44,10 @@ final class StudioContextService
             'projects' => $user->projects()->ordered()->limit(15)->get(['project_name', 'role', 'description', 'technologies'])->toArray(),
         ];
         unset($data['request_key'], $data['resume'], $data['resume_id'], $data['application_id'], $data['target_company']);
+        // The CV review is written in the language of the member's TraKerja setting.
+        if ($task === 'analyzer') {
+            $data['language'] = \App\Support\AppLocale::valid($user->locale) ? $user->locale : app()->getLocale();
+        }
         $data += ['language' => app()->getLocale(), 'tone' => 'professional', 'length' => 'standard', 'purpose' => 'introduction', 'channel' => 'Email'];
         $data['candidate'] = $candidate;
         $data['application'] = $application ? ['company' => $application->company_name, 'role' => $application->position,

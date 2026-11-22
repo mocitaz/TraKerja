@@ -17,18 +17,18 @@ class AdminEmailComposerTest extends TestCase
         return ['name' => 'Career check-in', 'language' => 'en', 'subject' => 'Take your next step', 'content' => 'Take a moment to review your applications and decide what you want to work on next.', 'button_text' => 'Open tracker', 'button_url' => 'https://trakerja.com/dashboard'];
     }
 
-    public function test_gemini_uses_brand_references_and_returns_a_draft_without_saving_or_sending(): void
+    public function test_the_ai_writer_uses_brand_references_and_returns_a_draft_without_saving_or_sending(): void
     {
         Mail::fake();
         $this->actingAs(User::factory()->create(['role' => 'admin']));
-        config(['services.gemini.key' => 'fake-key', 'services.gemini.email_model' => 'gemini-test']);
-        Http::fake(['generativelanguage.googleapis.com/*' => Http::response(['candidates' => [['finishReason' => 'STOP', 'content' => ['parts' => [['text' => json_encode($this->draft() + ['notes' => 'Check the link.'])]]]]]])]);
+        config(['services.openai.key' => 'fake-key', 'services.openai.email_model' => 'gpt-5-mini']);
+        Http::fake(['api.openai.com/*' => Http::response(['choices' => [['message' => ['role' => 'assistant', 'content' => json_encode($this->draft() + ['notes' => 'Check the link.'])], 'finish_reason' => 'stop']]])]);
         $this->postJson(route('admin.email-blast.templates.generate'), ['prompt' => 'Write a friendly reminder to review job applications.', 'language' => 'en'])
             ->assertOk()->assertJsonPath('draft.subject', 'Take your next step')->assertJsonPath('draft.language', 'en');
-        Http::assertSent(fn ($request) => $request->hasHeader('x-goog-api-key', 'fake-key')
-            && str_contains($request['systemInstruction']['parts'][0]['text'], 'No HTML')
-            && str_contains($request['contents'][0]['parts'][0]['text'], 'voice_references')
-            && $request['generationConfig']['responseMimeType'] === 'application/json');
+        Http::assertSent(fn ($request) => $request->hasHeader('Authorization', 'Bearer fake-key')
+            && str_contains($request['messages'][0]['content'], 'No HTML')
+            && str_contains($request['messages'][1]['content'], 'voice_references')
+            && $request['response_format']['type'] === 'json_schema');
         $this->assertDatabaseCount('email_blast_templates', 0);
         Mail::assertNothingSent();
     }
@@ -71,13 +71,13 @@ class AdminEmailComposerTest extends TestCase
     public function test_provider_failures_and_unsafe_output_do_not_persist_a_template(): void
     {
         $this->actingAs(User::factory()->create(['role' => 'admin']));
-        config(['services.gemini.key' => null]);
+        config(['services.openai.key' => null]);
         Http::preventStrayRequests();
         $payload = ['prompt' => 'Please write a friendly update for members.', 'language' => 'id'];
         $this->postJson(route('admin.email-blast.templates.generate'), $payload)->assertStatus(503);
         Http::assertNothingSent();
-        config(['services.gemini.key' => 'fake-key', 'services.gemini.email_model' => 'gemini-test']);
-        Http::fake(['*' => Http::response(['candidates' => [['finishReason' => 'STOP', 'content' => ['parts' => [['text' => json_encode(array_replace($this->draft(), ['content' => '<script>alert(1)</script>'.str_repeat('x', 50), 'notes' => '']))]]]]]])]);
+        config(['services.openai.key' => 'fake-key', 'services.openai.email_model' => 'gpt-5-mini']);
+        Http::fake(['*' => Http::response(['choices' => [['message' => ['role' => 'assistant', 'content' => json_encode(array_replace($this->draft(), ['content' => '<script>alert(1)</script>'.str_repeat('x', 50), 'notes' => '']))], 'finish_reason' => 'stop']]])]);
         $this->postJson(route('admin.email-blast.templates.generate'), $payload)->assertStatus(503);
         $this->assertDatabaseCount('email_blast_templates', 0);
     }

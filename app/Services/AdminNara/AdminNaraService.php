@@ -5,13 +5,10 @@ namespace App\Services\AdminNara;
 use App\Models\AdminNaraAction;
 use App\Models\User;
 use App\Services\KawanKerjaService;
-use App\Services\NaraClientStopped;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Throwable;
+use App\Services\Ai\OpenAiChat;
 
 /**
- * Nara Admin: an operations analyst for the admin pages. Gemini decides which read tools to call (AdminNaraTools), the
+ * Nara Admin: an operations analyst for the admin pages. The model (OpenAI) decides which read tools to call (AdminNaraTools), the
  * server runs them and the model writes the answer from the returned numbers. Changes are only proposed
  * (propose_action): the controller runs them after the admin approves the card.
  */
@@ -37,18 +34,6 @@ class AdminNaraService
         'settings' => ['Settings', '/admin/settings'],
     ];
 
-    private ?string $apiKey;
-
-    private string $primaryModel;
-
-    private string $fallbackModel = 'gemini-3.1-flash-lite';
-
-    public function __construct()
-    {
-        $this->apiKey = config('services.gemini.key', env('GEMINI_API_KEY'));
-        $this->primaryModel = config('services.gemini.model', env('GEMINI_MODEL', 'gemini-flash-lite-latest'));
-    }
-
     /**
      * Answer an admin. $onChunk gets text as it arrives, $onStatus short progress texts while tools run.
      *
@@ -57,34 +42,31 @@ class AdminNaraService
      */
     public function answer(string $message, User $admin, array $history, ?string $page = null, ?callable $onChunk = null, ?callable $onStatus = null): array
     {
-        if (empty($this->apiKey)) {
+        $chat = app(OpenAiChat::class);
+        if (! OpenAiChat::key()) {
             return ['success' => false, 'reply' => __('Nara Admin is not available right now (the AI key is not configured).')];
         }
         $tools = app(AdminNaraTools::class);
         $tools->proposed = [];
-        $system = $this->systemPrompt($page, KawanKerjaService::messageLanguage($message) ?? 'id');
-        $contents = [];
+        $messages = [['role' => 'system', 'content' => $this->systemPrompt($page, KawanKerjaService::messageLanguage($message) ?? 'id')]];
         foreach ($history as $item) {
             if (! empty($item['content'])) {
-                $contents[] = ['role' => $item['role'] === 'user' ? 'user' : 'model', 'parts' => [['text' => trim(preg_replace('/\[adminaction:\d+\]/', '', $item['content']))]]];
+                $messages[] = ['role' => $item['role'] === 'user' ? 'user' : 'assistant', 'content' => trim(preg_replace('/\[adminaction:\d+\]/', '', $item['content']))];
             }
         }
-        $contents[] = ['role' => 'user', 'parts' => [['text' => $message]]];
-        $strong = config('services.gemini.nara_strong_model') ?: null;
-        $models = array_values(array_unique(array_filter([$strong, $this->primaryModel, $this->fallbackModel])));
+        $messages[] = ['role' => 'user', 'content' => $message];
+        $strong = config('services.openai.strong_model') ?: null;
+        $models = OpenAiChat::models($strong);
+        $declarations = OpenAiChat::tools(AdminNaraTools::declarations());
 
         $text = '';
         for ($round = 0; $round < self::MAX_TOOL_ROUNDS; $round++) {
-            $payload = [
-                'system_instruction' => ['parts' => [['text' => $system]]],
-                'contents' => $contents,
-                'generationConfig' => ['temperature' => 0.2, 'maxOutputTokens' => 3072],
-            ];
+            $payload = ['messages' => $messages, 'reasoning_effort' => config('services.openai.strong_reasoning_effort', 'low'), 'max_completion_tokens' => 8000];
             if ($round < self::MAX_TOOL_ROUNDS - 1) { // the last round must be the written reply
-                $payload['tools'] = AdminNaraTools::declarations();
-                $payload['toolConfig'] = ['functionCallingConfig' => ['mode' => 'AUTO']];
+                $payload['tools'] = $declarations;
+                $payload['tool_choice'] = 'auto';
             }
-            $out = $this->callModels($models, $payload, $onChunk, $strong);
+            $out = $chat->callModels($models, $payload, $onChunk, 60);
             if (! $out['ok']) {
                 return ['success' => false, 'reply' => $onChunk ? '' : __('Nara Admin could not answer right now. Please try again.')];
             }
@@ -92,16 +74,13 @@ class AdminNaraService
             if (! $out['calls']) {
                 break;
             }
-            $contents[] = ['role' => 'model', 'parts' => $out['parts']];
-            $answers = [];
+            $messages[] = OpenAiChat::assistantToolMessage($out);
             foreach ($out['calls'] as $call) {
                 if ($onStatus) {
                     $onStatus(AdminNaraTools::status($call['name']));
                 }
-                $result = $tools->execute($call['name'], $call['args'], $admin);
-                $answers[] = ['functionResponse' => array_filter(['name' => $call['name'], 'id' => $call['id'] ?? null, 'response' => ['result' => $result]])];
+                $messages[] = OpenAiChat::toolResult($call['id'], $tools->execute($call['name'], $call['args'], $admin));
             }
-            $contents[] = ['role' => 'user', 'parts' => $answers];
         }
 
         $reply = trim($text);
@@ -168,102 +147,6 @@ PROMPT;
     private function hereLabel(?string $label): string
     {
         return $label ?? 'tidak diketahui';
-    }
-
-    /** @param array<int, string> $models */
-    private function callModels(array $models, array $payload, ?callable $onChunk, ?string $strong): array
-    {
-        $failed = ['ok' => false, 'parts' => [], 'text' => '', 'calls' => [], 'emitted' => false];
-        foreach ($models as $model) {
-            $out = $this->callModel($model, $payload, $onChunk, $model === $strong);
-            if ($out['ok']) {
-                return $out;
-            }
-            $failed = $out;
-            if ($out['emitted']) {
-                break; // text already reached the admin: a second model would repeat it
-            }
-        }
-
-        return $failed;
-    }
-
-    /** One request to one model, streamed when $onChunk is given. Never throws (except the Stop button). */
-    private function callModel(string $model, array $payload, ?callable $onChunk, bool $strong): array
-    {
-        $acc = ['ok' => false, 'parts' => [], 'text' => '', 'calls' => [], 'emitted' => false];
-        if ($strong) {
-            $payload['generationConfig']['thinkingConfig'] = ['thinkingLevel' => 'low'];
-        }
-        try {
-            if ($onChunk) {
-                $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:streamGenerateContent?alt=sse";
-                $response = Http::withHeaders(['x-goog-api-key' => $this->apiKey])->withOptions(['stream' => true])->timeout($strong ? 30 : 60)->post($url, $payload);
-                if (! $response->successful()) {
-                    Log::warning("Nara Admin {$model} status {$response->status()}: ".mb_substr($response->body(), 0, 300));
-
-                    return $acc;
-                }
-                $body = $response->toPsrResponse()->getBody();
-                $buffer = '';
-                while (! $body->eof()) {
-                    $data = $body->read(4096);
-                    if ($data === '' || $data === false) {
-                        $body->eof() ? null : usleep(25000);
-
-                        continue;
-                    }
-                    $buffer .= $data;
-                    while (($pos = strpos($buffer, "\n")) !== false) {
-                        $line = trim(substr($buffer, 0, $pos));
-                        $buffer = substr($buffer, $pos + 1);
-                        if (str_starts_with($line, 'data: ') && ($json = json_decode(substr($line, 6), true)) !== null) {
-                            $this->absorb($json, $acc, $onChunk);
-                        }
-                    }
-                }
-            } else {
-                $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent";
-                $response = Http::withHeaders(['x-goog-api-key' => $this->apiKey])->timeout($strong ? 30 : 40)->post($url, $payload);
-                if (! $response->successful()) {
-                    Log::warning("Nara Admin {$model} status {$response->status()}: ".mb_substr($response->body(), 0, 300));
-
-                    return $acc;
-                }
-                $this->absorb((array) $response->json(), $acc, null);
-            }
-        } catch (NaraClientStopped $e) {
-            throw $e;
-        } catch (Throwable $e) {
-            Log::warning("Nara Admin {$model} error: ".str_replace((string) $this->apiKey, '***', $e->getMessage()));
-
-            return $acc;
-        }
-        $acc['ok'] = trim($acc['text']) !== '' || $acc['calls'] !== [];
-
-        return $acc;
-    }
-
-    private function absorb(array $json, array &$acc, ?callable $onChunk): void
-    {
-        foreach ((array) data_get($json, 'candidates.0.content.parts', []) as $part) {
-            if (! empty($part['thought'])) {
-                continue;
-            }
-            if (isset($part['functionCall']) && empty($part['functionCall']['args'])) {
-                $part['functionCall']['args'] = (object) []; // an empty list is rejected when the call is echoed back; it must be an object
-            }
-            $acc['parts'][] = $part;
-            if (isset($part['functionCall']['name'])) {
-                $acc['calls'][] = ['name' => (string) $part['functionCall']['name'], 'args' => (array) ($part['functionCall']['args'] ?? []), 'id' => $part['functionCall']['id'] ?? null];
-            } elseif (isset($part['text']) && $part['text'] !== '') {
-                $acc['text'] .= $part['text'];
-                if ($onChunk) {
-                    $acc['emitted'] = true;
-                    $onChunk($part['text']);
-                }
-            }
-        }
     }
 
     /** Cards for every [adminaction:ID] tag in these replies, for the admin who owns them. @return array<int, array<string, mixed>> */

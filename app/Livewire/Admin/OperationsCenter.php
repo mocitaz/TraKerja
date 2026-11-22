@@ -76,7 +76,7 @@ class OperationsCenter extends Component
 
     public const STATUSES = ['open' => 'Open', 'investigating' => 'Investigating', 'monitoring' => 'Monitoring', 'resolved' => 'Resolved'];
 
-    public const SERVICES = ['platform' => 'Platform', 'login' => 'Login', 'gemini' => 'Gemini', 'email' => 'Email', 'payment' => 'Pakasir', 'storage' => 'Storage'];
+    public const SERVICES = ['platform' => 'Platform', 'login' => 'Login', 'ai' => 'OpenAI', 'email' => 'Email', 'payment' => 'Pakasir', 'storage' => 'Storage'];
 
     public function boot(): void
     {
