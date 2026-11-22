@@ -271,7 +271,7 @@ class AiAnalyzerCreditTest extends TestCase
         $this->actingAs($user)->postJson(route('ai-analyzer.analyze'), $this->input())->assertAccepted();
         $sent = null;
         Http::fake(function ($request) use (&$sent) {
-            $sent = $request;
+            $sent ??= $request; // the review itself; a tidy-up call may follow
 
             return Http::response(self::reply(array_replace(self::analysis(), ['jd_quality' => 'thin'])));
         });
@@ -339,5 +339,28 @@ class AiAnalyzerCreditTest extends TestCase
         $this->get(route('ai-analyzer.show', $result))->assertOk()->assertSee('Perlu dipoles sebelum melamar')->assertSee('Pengalaman API-mu relevan.')
             ->assertDontSee('Menerjemahkan review ini');
         $this->actingAs(User::factory()->create())->postJson(route('ai-analyzer.translate', $result))->assertForbidden();
+    }
+
+    public function test_an_indonesian_review_with_english_sections_is_detected_as_mixed(): void
+    {
+        $review = ['verdict_reason' => 'Pengalaman kamu cukup relevan untuk posisi ini.', 'limitations' => ['The job description is short, so the review is based on the title.'],
+            'actions' => [['action' => 'Add the numbers to your latest role and show the impact.'], ['action' => 'Tambahkan angka pada peran terakhir kamu.']],
+            'interview_questions' => [['question' => 'How did you handle the deployment in your last project?']], 'red_flags' => [], 'findings' => [], 'strengths' => []];
+        $this->assertTrue(\App\Services\StudioAiService::isMixed($review, 'id'));
+
+        $clean = ['verdict_reason' => 'Pengalaman kamu cukup relevan untuk posisi ini.', 'limitations' => ['Deskripsi lowongan singkat, jadi review ini berdasarkan judulnya.'],
+            'actions' => [['action' => 'Tambahkan angka pada peran terakhir kamu dan tunjukkan dampaknya.']], 'interview_questions' => [], 'red_flags' => [], 'findings' => [], 'strengths' => []];
+        $this->assertFalse(\App\Services\StudioAiService::isMixed($clean, 'id'));
+    }
+
+    public function test_a_mixed_review_in_the_members_language_shows_the_tidy_up_banner(): void
+    {
+        $user = User::factory()->create(['locale' => 'id']);
+        $stored = (fn () => $this->review(\Tests\Feature\AiAnalyzerCreditTest::analysis(), 'id'))->call(app(\App\Services\StudioAiService::class));
+        $stored['actions'] = [['action' => 'Add the numbers to your latest role and show the impact.', 'priority' => 'high'], ['action' => 'Rewrite the summary so that it matches the role.', 'priority' => 'medium']];
+        $result = AiAnalyzerResult::create(['user_id' => $user->id, 'job_description' => 'Lead frontend', 'resume_file_name' => 'cv.pdf', 'analysis_result' => $stored]);
+
+        $this->assertTrue(\App\Services\StudioAiService::isMixed($stored, 'id'));
+        $this->actingAs($user)->get(route('ai-analyzer.show', $result))->assertOk()->assertSee('Menerjemahkan review ini ke Bahasa Indonesia');
     }
 }

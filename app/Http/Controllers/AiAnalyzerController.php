@@ -65,7 +65,9 @@ class AiAnalyzerController extends Controller
         abort_unless($result->user_id === Auth::id(), 403);
         $review = (array) $result->analysis_result;
         $to = \App\Support\AppLocale::valid(Auth::user()->locale) ? Auth::user()->locale : app()->getLocale();
-        if (($review['schema_version'] ?? null) !== 3 || ($review['language'] ?? $to) === $to || isset($review['translations'][$to])) {
+        $sameLanguage = ($review['language'] ?? $to) === $to;
+        // Translate when the setting changed, or tidy up a review that came out in two languages.
+        if (($review['schema_version'] ?? null) !== 3 || isset($review['translations'][$to]) || ($sameLanguage && ! \App\Services\StudioAiService::isMixed($review, $to))) {
             return response()->json(['ok' => true]);
         }
         try {

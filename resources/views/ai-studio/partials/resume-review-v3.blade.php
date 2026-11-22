@@ -5,7 +5,8 @@
     $uiLocale = app()->getLocale();
     $review = $stored['translations'][$uiLocale] ?? $stored;
     $reviewLocale = $review['language'] ?? $uiLocale;
-    $needsTranslation = $reviewLocale !== $uiLocale && $selected->exists && $selected->user_id === auth()->id();
+    $needsTranslation = ! isset($stored['translations'][$uiLocale]) && $selected->exists && $selected->user_id === auth()->id()
+        && ($reviewLocale !== $uiLocale || \App\Services\StudioAiService::isMixed($review, $uiLocale));
     $languageName = $uiLocale === 'id' ? 'Bahasa Indonesia' : 'English';
     $translateTexts = [
         'busy' => __('Translating this review into :language…', ['language' => $languageName]),

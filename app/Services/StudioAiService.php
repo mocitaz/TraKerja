@@ -72,7 +72,20 @@ final class StudioAiService
                 throw new StudioProviderException('invalid_result');
             }
 
-            return $analyzer ? $this->review($data, (string) ($context['language'] ?? 'en')) : $this->draft($data);
+            if (! $analyzer) {
+                return $this->draft($data);
+            }
+            $review = $this->review($data, (string) ($context['language'] ?? 'en'));
+            // The model sometimes slips into the CV's language for a few sections: make the whole review one language.
+            if (self::isMixed($review, $review['language'])) {
+                try {
+                    $review = $this->translateReview($review, $review['language']);
+                } catch (StudioProviderException) {
+                    // A mixed review is still better than none.
+                }
+            }
+
+            return $review;
         }
         throw new StudioProviderException('unavailable');
     }
@@ -95,7 +108,7 @@ final class StudioAiService
         return <<<PROMPT
 You are a senior recruiter and HR business partner with years of screening CVs for Indonesian and international companies. Review the attached CV for one specific job and give the candidate candid, kind, practical feedback, the way a good recruiter would in a one-to-one: verdict first, then evidence, then exactly what to change.
 
-LANGUAGE: write every text value in {$name}. Keep enum values exactly as given in the schema (they are codes, not text). Do not mix languages, except for job titles, tools and CV quotes that are in another language.
+LANGUAGE: write every text value in {$name}: the verdict, notes, strengths, findings, red flags, every action, every interview question with its answer, and the limitations. Even when the CV or the job text is in another language, explain in {$name}. Only these may stay in their own language: CV quotes (rewrites.before), the rewritten CV lines (rewrites.after, in the CV's language), job titles, tool names and keywords. Keep enum values exactly as given in the schema (they are codes, not text).
 
 EVIDENCE
 - Use only facts in the attached CV. Never invent employers, titles, dates, skills, tools, numbers, team sizes or achievements.
@@ -126,6 +139,26 @@ SECTIONS
 
 Keep each text short and specific (under 300 characters). No emoji, HTML or markdown.
 PROMPT;
+    }
+
+    /** Whether several of the review's own sentences are in the other language (CV quotes and keywords are ignored). */
+    public static function isMixed(array $review, string $language): bool
+    {
+        $other = $language === 'id' ? 'en' : 'id';
+        $texts = [
+            $review['verdict_reason'] ?? '', ...($review['limitations'] ?? []),
+            ...array_column($review['actions'] ?? [], 'action'), ...array_column($review['red_flags'] ?? [], 'issue'),
+            ...array_column($review['red_flags'] ?? [], 'fix'), ...array_column($review['interview_questions'] ?? [], 'question'),
+            ...array_column($review['findings'] ?? [], 'recommendation'), ...array_column($review['strengths'] ?? [], 'point'),
+        ];
+        $hits = 0;
+        foreach ($texts as $text) {
+            if (is_string($text) && KawanKerjaService::messageLanguage($text) === $other) {
+                $hits++;
+            }
+        }
+
+        return $hits >= 2;
     }
 
     /** Strict JSON schemas: every property required, no extra properties (OpenAI Structured Outputs). */
