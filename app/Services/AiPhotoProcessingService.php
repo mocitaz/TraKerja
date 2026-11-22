@@ -48,6 +48,7 @@ class AiPhotoProcessingService
                 }
                 $path = $store();
                 if (!$path) throw new \RuntimeException('Could not store private photo source');
+                \App\Support\WorkerReadableStorage::share($path);
                 $photo = new AiPhoto;
                 $photo->forceFill([
                     'user_id' => $locked->id, 'type' => $payload['type'], 'request_key' => $key,

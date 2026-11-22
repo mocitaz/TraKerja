@@ -33,6 +33,11 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
+            // Workers run as another user in the web server's group: private files are group-readable, never public.
+            'permissions' => [
+                'file' => ['public' => 0644, 'private' => 0640],
+                'dir' => ['public' => 0755, 'private' => 0770],
+            ],
             'serve' => true,
             'throw' => false,
             'report' => false,

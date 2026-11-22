@@ -38,6 +38,7 @@ final class AiStudioProcessingService
                         ? $context['file']->storeAs(dirname($path), basename($path), 'local')
                         : Storage::disk('local')->copy($context['resume']->file_path, $path);
                     if (!$stored) throw new \RuntimeException('Private source storage failed');
+                    \App\Support\WorkerReadableStorage::share($path);
                 }
                 $created = true;
                 return AiStudioRun::create([

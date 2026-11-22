@@ -27,6 +27,14 @@ class TelegramService
         $this->enabled = (bool) config('services.telegram.enabled', false);
     }
 
+    /** Remove the bot token from text that may reach the log (cURL errors quote the full URL). */
+    private function scrub(string $text): string
+    {
+        $text = $this->token ? str_replace($this->token, '***', $text) : $text;
+
+        return preg_replace('#/bot\d+:[A-Za-z0-9_-]+#', '/bot***', $text) ?? $text;
+    }
+
     /**
      * Send raw HTML message to the configured channel or a specific chat ID.
      */
@@ -85,7 +93,7 @@ class TelegramService
 
             return true;
         } catch (Throwable $e) {
-            Log::error('Telegram dispatch failed: ' . $e->getMessage());
+            Log::error('Telegram dispatch failed: ' . $this->scrub($e->getMessage()));
             return false;
         }
     }
@@ -104,7 +112,7 @@ class TelegramService
             try {
                 $callback();
             } catch (Throwable $e) {
-                Log::error('Telegram async dispatch failed: ' . $e->getMessage());
+                Log::error('Telegram async dispatch failed: ' . $this->scrub($e->getMessage()));
             }
         })->afterResponse();
     }
